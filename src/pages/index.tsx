@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { Navbar } from "../components/navbar";
+import { PageHero } from "../components/page-hero";
 
 interface PageProps {
     foo: string;
@@ -23,7 +24,8 @@ export default function Home({ foo }: PageProps) {
             </Head>
             <main>
                 <Navbar />
-                {"Ola criancada!!!!!!!!!!!!!!!!"}
+                <PageHero />
+                <PageHero />
             </main>
         </>
     );
