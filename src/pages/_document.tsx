@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
         return (
             <Html lang={"pt-BR"}>
                 <Head />
-                <body style={{ margin: "0px 15px" }}>
+                <body style={{ margin: "0px" }}>
                     <Main />
                     <NextScript />
                 </body>

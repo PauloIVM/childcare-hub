@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import { Navbar } from "../components/navbar";
 
 interface PageProps {
     foo: string;
@@ -20,9 +21,10 @@ export default function Home({ foo }: PageProps) {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div>
+            <main>
+                <Navbar />
                 {"Ola criancada!!!!!!!!!!!!!!!!"}
-            </div>
+            </main>
         </>
     );
 }
