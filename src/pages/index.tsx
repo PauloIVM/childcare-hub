@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { Navbar } from "../components/navbar";
+import { NavbarBottom } from "../components/navbar-bottom";
 import { PageHero } from "../components/page-hero";
 import { Card } from "../components/card";
 import { Container, Divider } from "@mui/material";
@@ -41,6 +42,7 @@ export default function Home({ foo }: PageProps) {
                     <h3>{"More Content"}</h3>
                     <p>{"Lorem ipsum dolor"}</p>
                 </Container>
+                <NavbarBottom />
             </main>
         </>
     );
