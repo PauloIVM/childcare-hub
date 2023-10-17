@@ -6,9 +6,12 @@ export const Section = styled.section`
 `;
 
 export const H1 = styled.h1`
-   
+   color: #3F3F3F;
 `;
 
 export const P = styled.p`
-   
+    color: #3F3F3F;
+    & a {
+        color: #3B5998;
+    }
 `;
