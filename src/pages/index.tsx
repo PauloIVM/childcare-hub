@@ -68,7 +68,10 @@ const LeftAds = styled.div`
 `;
 
 const MidWrapper = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 700px;
 `;
 
 const RightWrapper = styled.div`

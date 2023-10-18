@@ -11,6 +11,7 @@ import { Card } from "@mui/material";
 export const PostWrapper = styled(Card)`
     display: flex;
     flex-direction: column;
+    margin-bottom: 8px;
     gap: 16px;
     padding: 24px;
     .${avatarClasses.root} {

@@ -8,6 +8,8 @@ interface PageProps {
     foo: string;
 }
 
+// TODO: Ao invés de "cover-letter", talvez um simples "sobre" ("about").
+
 export default function CoverLetter({ foo }: PageProps) {
     return (
         <>
