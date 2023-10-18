@@ -34,7 +34,7 @@ export function Navbar() {
                         </Styles.DesktopIconWrapper>
                         <Styles.DesktopIconWrapper href={"/publish"}>
                             <PostIcon />
-                            <Badge badgeContent={"Publicação"} color={"default"} />
+                            <Badge badgeContent={"Publicar"} color={"default"} />
                         </Styles.DesktopIconWrapper>
                         <Styles.DesktopIconWrapper href={"/tools"}>
                             <StarIcon />

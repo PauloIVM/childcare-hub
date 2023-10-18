@@ -19,7 +19,7 @@ export function NavbarBottom() {
                         </Styles.IconWrapper>
                         <Styles.IconWrapper href={"/publish"}>
                             <PostIcon />
-                            <Badge badgeContent={"Publicação"} color="default" />
+                            <Badge badgeContent={"Publicar"} color="default" />
                         </Styles.IconWrapper>
                         <Styles.IconWrapper href={"/tools"}>
                             <StarIcon />

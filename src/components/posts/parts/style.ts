@@ -13,9 +13,6 @@ export const PostWrapper = styled(Card)`
     flex-direction: column;
     gap: 16px;
     padding: 24px;
-    @media (max-width: 768px) {
-        border-radius: 0px;
-    };
     .${avatarClasses.root} {
         color: #F7EFDA;
         background-color: #2E3B4F;
