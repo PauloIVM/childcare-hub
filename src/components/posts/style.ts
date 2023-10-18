@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Root = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     max-width: 700px;
-    gap: 8px;
+    min-height: 700px;
 `;

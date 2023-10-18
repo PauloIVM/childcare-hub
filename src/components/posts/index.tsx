@@ -1,10 +1,9 @@
+import React, { useEffect } from "react";
 import * as Styles from "./style";
-import { Post } from "./parts/post";
+import { Post, PostSkeleton } from "./parts";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 // TODO: Criar api;
-// TODO: Usar componente de infinity-loader;
-// TODO: Melhorar estilizações dos posts, talvez um "card" não seja o melhor design
-//       pra se usar aqui.
 // TODO: Ajustar fontes em geral pros dispositivos mobile. Criar um theme.
 
 const apiMock = [{
@@ -17,7 +16,7 @@ const apiMock = [{
     userName: "userName",
     userDesc: "userDesc",
     postTitle: "Post Title",
-    postDescription: "Post description Post description Post description Post description Post description Post description Post description Post description",
+    postDescription: "Post description - small",
     postLink: "/post-link"
 }, {
     userName: "userName",
@@ -39,10 +38,49 @@ const apiMock = [{
     postLink: "/post-link"
 }];
 
+async function getApiData() {
+    return apiMock;
+}
+
 export function Posts() {
+    const [hasMore, setHasMore] = React.useState(true);
+    const [offset, setOffset] = React.useState(0);
+    const [posts, setPosts] = React.useState<typeof apiMock>([]);
+    const limit = 5;
+
+    function onGetPosts(postsResponse: typeof apiMock) {
+        if (!postsResponse?.length) {
+            setHasMore(false);
+            return;
+        }
+        setPosts([...posts, ...postsResponse]);
+        setOffset(offset + limit);
+    }
+
+    function onReject() { setHasMore(false); }
+
+    function fetchMoreData() {
+        if (!hasMore) { return; }
+        setTimeout(
+            () => getApiData().then(onGetPosts).catch(onReject),
+            2000
+        )
+        // getApiData().then(onGetPosts).catch(onReject);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(fetchMoreData, []);
+
     return (
         <Styles.Root>
-            {apiMock.map((data, index) => <Post key={index} {...data}/>)}
+            <InfiniteScroll
+                dataLength={posts.length}
+                next={fetchMoreData}
+                hasMore={hasMore}
+                loader={<PostSkeleton />}
+            >
+                {posts.map((data, i) => <Post key={i} {...data} />)}
+            </InfiniteScroll>
         </Styles.Root>
     );
 }

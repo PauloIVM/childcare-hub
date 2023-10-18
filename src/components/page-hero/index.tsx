@@ -12,6 +12,9 @@ import { Container } from "@mui/material";
 // entrarem no site pela primeira vez. Contudo, não vou querer isso na parte com
 // as postagens, pra que o conteúdo permaneça rastreável pro google.
 
+// TODO: Depois do login, o page-hero virar um componente de publicar parece ser
+// uma ótima ideia, pq aí incentiva o user a fazer uma postagem.
+
 export function PageHero() {
     const title = "Bem vindo! 🤓"
     const paragraph = <>É sua primeira vez por aqui? Então confira a <Link href="/cover-letter">apresentação do site.</Link></>;

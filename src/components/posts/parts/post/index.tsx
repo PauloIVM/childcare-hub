@@ -9,12 +9,6 @@ import ShareIcon from "@mui/icons-material/Share";
 import CardHeader from "@mui/material/CardHeader";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 
-// INFO: A ideia é aqui mostrar apenas um pedaço do post, e um "continue lendo...",
-// daí ao clicar ser redirecionado pra uma página só com o post em si.
-
-// TODO: Acertar logo... por hora acho que podemos usar uma logo padrão pros users...
-// ou então na hora de criar o perfil permitir escolher entre um conjunto de avatares.
-
 // TODO: Num futuro, acho que seria bacana permitir o pessoal anexar imagens. Quando
 // tivermos isso feito, seria legal esse carinha aqui mostrar a imagem anexada.
 
