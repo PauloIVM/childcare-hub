@@ -5,6 +5,7 @@ import {
     buttonBaseClasses,
     cardActionsClasses
 } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import { Card } from "@mui/material";
 
 export const PostWrapper = styled(Card)`
@@ -59,4 +60,12 @@ export const UserName = styled.div`
     font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
+`;
+
+export const ExpandIconWrapper = styled(IconButton)`
+    flex-grow: 1;
+    justify-content: flex-end;
+    & svg {
+        transform: rotate(-90deg);
+    }
 `;

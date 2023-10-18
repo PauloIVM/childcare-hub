@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShareIcon from "@mui/icons-material/Share";
 import CardHeader from "@mui/material/CardHeader";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
@@ -18,10 +19,6 @@ import MoreIcon from "@mui/icons-material/MoreHoriz";
 // tivermos isso feito, seria legal esse carinha aqui mostrar a imagem anexada.
 
 // TODO: Implementar dinamicamente a info de quantas "curtidas" o post têm.
-
-// TODO: Criar um botão que abre a postagem, igual ao "continuar lendo", mas sendo um
-//       ícone. O símbolo tem que ser algo próximo de um "comentar"... isso pq alguém
-//       pode querer abrir o post para comentar e não pra ler.
 
 interface PostProps {
     userName: string;
@@ -50,8 +47,11 @@ export function Post(props: PostProps) {
                 <Styles.PostDescription>{description}{keepReadingLink}</Styles.PostDescription>
             </Styles.PostTextWrapper>
             <CardActions>
-                <IconButton aria-label="like"><FavoriteIcon /></IconButton>
-                <IconButton aria-label="share"><ShareIcon /></IconButton>
+                <IconButton><FavoriteIcon /></IconButton>
+                <IconButton><ShareIcon /></IconButton>
+                <Styles.ExpandIconWrapper>
+                    <ExpandMoreIcon />
+                </Styles.ExpandIconWrapper>
             </CardActions>
         </Styles.PostWrapper>
     );
