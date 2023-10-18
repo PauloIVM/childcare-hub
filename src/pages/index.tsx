@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import { Navbar } from "../components/navbar";
 import { NavbarBottom } from "../components/navbar-bottom";
 import { PageHero } from "../components/page-hero";
+import { Posts } from "../components/posts";
 import { Card } from "../components/card";
 import { Container, Divider } from "@mui/material";
 
@@ -28,6 +29,7 @@ export default function Home({ foo }: PageProps) {
             <main>
                 <Navbar />
                 <PageHero />
+                <Posts />
                 <Container sx={{ display: "flex", gap: "18px", flexWrap: "wrap", flexDirection: "row", justifyContent: "space-around", padding: "18px" }}>
                     <Card />
                     <Card />
