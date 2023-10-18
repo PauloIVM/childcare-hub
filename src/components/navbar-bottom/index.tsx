@@ -11,21 +11,21 @@ export function NavbarBottom() {
             <AppBar>
                 <Toolbar>
                     <Styles.IconsWrapper>
-                        <Styles.IconWrapper>
+                        <Styles.IconWrapper href={"/"}>
                             <Styles.HomeNotificationsBadge badgeContent={4}>
                                 <HomeIcon />
                             </Styles.HomeNotificationsBadge>
                             <Badge badgeContent={"Início"} color="default" />
                         </Styles.IconWrapper>
-                        <Styles.IconWrapper>
+                        <Styles.IconWrapper href={"/publish"}>
                             <PostIcon />
                             <Badge badgeContent={"Publicação"} color="default" />
                         </Styles.IconWrapper>
-                        <Styles.IconWrapper>
+                        <Styles.IconWrapper href={"/tools"}>
                             <StarIcon />
                             <Badge badgeContent={"Ferramentas"} color="default" />
                         </Styles.IconWrapper>
-                        <Styles.IconWrapper>
+                        <Styles.IconWrapper href={"/config"}>
                             <SettingsIcon />
                             <Badge badgeContent={"Configurações"} color="default" />
                         </Styles.IconWrapper>

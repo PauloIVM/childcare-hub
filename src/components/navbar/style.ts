@@ -21,7 +21,7 @@ export const Root = styled(Box)`
 
 export const IconsWrapper = styled(Box)`
     display: flex;
-    gap: 38px;
+    gap: 52px;
     flex-grow: 1;
     justify-content: flex-end;
 `;
@@ -41,9 +41,10 @@ export const AccountIconWrapper = styled(IconButton)`
     }
 `;
 
-export const DesktopIconWrapper = styled(IconButton)`
+export const DesktopIconWrapper = styled.a`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
     color: inherit;
     @media (max-width: 768px) {

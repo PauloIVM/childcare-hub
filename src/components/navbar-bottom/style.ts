@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { appBarClasses, toolbarClasses, badgeClasses } from "@mui/material";
-import { Box, IconButton, Badge } from "@mui/material";
+import { Box, Badge } from "@mui/material";
 
 export const Root = styled(Box)`
     display: none;    
@@ -24,7 +24,7 @@ export const Root = styled(Box)`
 
 export const IconsWrapper = styled(Box)`
     display: flex;
-    gap: 10px;
+    gap: 28px;
     flex-grow: 1;
     justify-content: space-around;
     padding-right: 18px;
@@ -34,8 +34,9 @@ export const IconsWrapper = styled(Box)`
     }
 `;
 
-export const IconWrapper = styled(IconButton)`
+export const IconWrapper = styled.a`
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 8px;
     color: inherit;

@@ -22,20 +22,20 @@ export function Navbar() {
                         <Styles.SearchIconWrapper>
                             <SearchIcon />
                         </Styles.SearchIconWrapper>
-                        <InputBase placeholder={"Search…"} />
+                        <InputBase placeholder={"Pesquisar..."} />
                     </Styles.Search>
                     <Styles.IconsWrapper>
-                        <Styles.DesktopIconWrapper>
+                        <Styles.DesktopIconWrapper href={"/"}>
                             <Badge badgeContent={4} color={"error"}>
                                 <HomeIcon />
                             </Badge>
                             <Badge badgeContent={"Início"} color={"default"} />
                         </Styles.DesktopIconWrapper>
-                        <Styles.DesktopIconWrapper>
+                        <Styles.DesktopIconWrapper href={"/publish"}>
                             <PostIcon />
                             <Badge badgeContent={"Publicação"} color={"default"} />
                         </Styles.DesktopIconWrapper>
-                        <Styles.DesktopIconWrapper>
+                        <Styles.DesktopIconWrapper href={"/tools"}>
                             <StarIcon />
                             <Badge badgeContent={"Ferramentas"} color={"default"} />
                         </Styles.DesktopIconWrapper>
@@ -47,7 +47,7 @@ export function Navbar() {
                             <MenuIcon />
                             <Badge badgeContent={"Menu"} color={"default"} />
                         </Styles.MobileIconWrapper>
-                        <Styles.DesktopIconWrapper>
+                        <Styles.DesktopIconWrapper href={"/config"}>
                             <SettingsIcon />
                             <Badge badgeContent={"Configurações"} color={"default"} />
                         </Styles.DesktopIconWrapper>
