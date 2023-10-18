@@ -17,7 +17,9 @@ export const PostWrapper = styled(Card)`
         border-radius: 0px;
     };
     .${avatarClasses.root} {
-        background-color: #F44336;
+        color: #F7EFDA;
+        background-color: #2E3B4F;
+        font-weight: bold;
     }
     .${cardHeaderClasses.root} {
         padding: 0px;

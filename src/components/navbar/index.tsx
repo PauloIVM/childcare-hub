@@ -1,4 +1,5 @@
 import * as Styles from "./style";
+import Image from "next/image";
 import { AppBar, Toolbar, InputBase, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -17,7 +18,7 @@ export function Navbar() {
                     <Styles.AccountIconWrapper>
                         <AccountIcon />
                     </Styles.AccountIconWrapper>
-                    <Styles.Logo>{"LOGO"}</Styles.Logo>
+                    <Image src={"/logo-small.svg"} alt={"logo"} width={118} height={43} />
                     <Styles.Search>
                         <Styles.SearchIconWrapper>
                             <SearchIcon />

@@ -17,6 +17,11 @@ export const Root = styled(Box)`
     .${toolbarClasses.root} {
         background: #2E3B4F;
     }
+    & img {
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
 `;
 
 export const IconsWrapper = styled(Box)`
@@ -38,6 +43,9 @@ export const AccountIconWrapper = styled(IconButton)`
     & svg {
         width: 35px;
         height: 35px;
+    }
+    & svg path {
+        fill: #F7EFDA;
     }
 `;
 
@@ -76,8 +84,8 @@ export const Search = styled.div`
     &:hover {
         background-color: rgba(255, 255, 255, 0.35);
     }
-    margin-right: 5px;
-    margin-left: 5px;
+    margin-right: 15px;
+    margin-left: 15px;
     width: auto;
     .${inputBaseClasses.root} {
         color: inherit;
