@@ -14,7 +14,7 @@ export default function CoverLetter({ foo }: PageProps) {
     return (
         <>
             <Head>
-                <title>{"Childcare | Apresentação"}</title>
+                <title>{"Apresentação | Nana-papais"}</title>
                 <meta name={"description"} content={""} />
                 <meta name={"viewport"} content={"width=device-width, initial-scale=1"} />
                 <link rel={"icon"} href={"/favicon.svg"} />

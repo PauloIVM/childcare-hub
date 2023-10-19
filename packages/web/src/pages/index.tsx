@@ -91,7 +91,7 @@ export default function Posts(props: PostsProps) {
     return (
         <>
             <Head>
-                <title>{"Posts"}</title>
+                <title>{"Posts | Nana-papais"}</title>
                 <meta name={"description"} content={""} />
                 <meta name={"viewport"} content={"width=device-width, initial-scale=1"} />
                 <link rel={"icon"} href={"/favicon.svg"} />

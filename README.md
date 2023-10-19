@@ -11,11 +11,14 @@ $ yarn dev:web
 
 // INFO: Cores legais pra começar um theme:
 // #2E3B4F      // main
-// #3F3F3F      // dark
+// #3F3F3F      // dark (cor mais escura para fonte)
 // #DEDBD5      // gray (talvez usar essa cor como background do site inteiro??)
 // #565656      // cor suave para fonte
 // #F44336      // vermelho forte... usado no avatar do user
 // #F7EFDA      // amarelo suave (cor da logo).
+// #E1E9F0      // azul cinza claro
+// #C0C7CF      // azul cinza escuro
+// #D2E8FC      // azul claro
 // #A8DADC
 // #FFFFFF
 // #3B5998
