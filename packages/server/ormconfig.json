@@ -1,0 +1,22 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "username": "root",
+    "password": "admin",
+    "database": "mcdb",
+    "port": 3306,
+    "logging": true,
+    "cache": {
+        "type": "ioredis",
+        "options": {
+            "host": "localhost",
+            "port": 6379
+        }
+    },
+    "migrations": ["build/migrations/*.js"],
+    "migrationsRun": true,
+    "cli": {
+        "migrationsDir": "src/migrations"
+    },
+    "entities": ["build/entities/**/*.js"]
+}
