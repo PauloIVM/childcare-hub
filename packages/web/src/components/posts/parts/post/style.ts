@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import {
+    Card,
+    IconButton,
     avatarClasses,
-    cardHeaderClasses,
     buttonBaseClasses,
+    cardHeaderClasses,
     cardActionsClasses
 } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import { Card } from "@mui/material";
 
 export const PostWrapper = styled(Card)`
     display: flex;
@@ -24,7 +24,6 @@ export const PostWrapper = styled(Card)`
     }
     .${cardActionsClasses.root} {
         display: flex;
-        gap: 12px;
         padding: 0px;
     }
     .${buttonBaseClasses.root} {
@@ -35,7 +34,6 @@ export const PostWrapper = styled(Card)`
 export const PostTextWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
 `;
 
 export const PostTitle = styled.div`
@@ -60,6 +58,13 @@ export const UserName = styled.div`
     font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
+`;
+
+export const LikesTotal = styled.span`
+    font-size: 11px;
+    color: #565656;
+    margin-left: 2px;
+    margin-right: 12px;
 `;
 
 export const ExpandIconWrapper = styled(IconButton)`

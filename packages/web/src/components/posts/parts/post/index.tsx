@@ -1,12 +1,14 @@
 import * as Styles from "./style";
+import {
+    Avatar,
+    CardActions,
+    CardHeader,
+    IconButton,
+} from "@mui/material";
 import Link from "next/link";
-import Avatar from "@mui/material/Avatar";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShareIcon from "@mui/icons-material/Share";
-import CardHeader from "@mui/material/CardHeader";
 import MoreIcon from "@mui/icons-material/MoreHoriz";
 
 // TODO: Num futuro, acho que seria bacana permitir o pessoal anexar imagens. Quando
@@ -42,6 +44,7 @@ export function Post(props: PostProps) {
             </Styles.PostTextWrapper>
             <CardActions>
                 <IconButton><FavoriteIcon /></IconButton>
+                <Styles.LikesTotal>{"1,2 mil"}</Styles.LikesTotal>
                 <IconButton><ShareIcon /></IconButton>
                 <Styles.ExpandIconWrapper>
                     <ExpandMoreIcon />

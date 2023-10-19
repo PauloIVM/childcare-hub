@@ -1,5 +1,14 @@
 # childcare-hub
 
+## Quick Start
+
+```console
+$ yarn
+$ yarn dev:web
+```
+
+## Theme (WIP)
+
 // INFO: Cores legais pra começar um theme:
 // #2E3B4F      // main
 // #3F3F3F      // dark
