@@ -3,21 +3,18 @@ import Image from "next/image";
 import { AppBar, Toolbar, InputBase, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountIcon from "@mui/icons-material/AccountCircle";
 import HomeIcon from "@mui/icons-material/Home";
 import PostIcon from "@mui/icons-material/PostAdd";
 import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
-import ContactsIcon from "@mui/icons-material/Contacts";
+import { DesktopUserIcon, MobileUserIcon } from "./parts";
 
 export function Navbar() {
     return (
         <Styles.Root>
             <AppBar>
                 <Toolbar>
-                    <Styles.AccountIconWrapper>
-                        <AccountIcon />
-                    </Styles.AccountIconWrapper>
+                    <MobileUserIcon />
                     <Image src={"/logo-small.svg"} alt={"logo"} width={118} height={43} />
                     <Styles.Search>
                         <Styles.SearchIconWrapper>
@@ -40,10 +37,7 @@ export function Navbar() {
                             <StarIcon />
                             <Badge badgeContent={"Ferramentas"} color={"default"} />
                         </Styles.DesktopIconWrapper>
-                        <Styles.DesktopIconWrapper>
-                            <ContactsIcon />
-                            <Badge badgeContent={"Contatos"} color={"default"} />
-                        </Styles.DesktopIconWrapper>
+                        <DesktopUserIcon />
                         <Styles.MobileIconWrapper>
                             <MenuIcon />
                             <Badge badgeContent={"Menu"} color={"default"} />

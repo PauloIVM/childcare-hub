@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, Dispatch, SetStateAction } from "react";
 import { useCallback, useEffect, useState } from "react";
 
 export interface UserData {
@@ -14,7 +14,10 @@ const mockedUserData: UserData = {
     userName: "Paulo Marinho"
 };
 
-interface ContextType { userData: UserData; }
+interface ContextType {
+    userData: UserData;
+    setUserData: Dispatch<SetStateAction<UserData>>;
+}
 
 export interface UserDataProps {
     children: React.ReactNode;
@@ -26,7 +29,7 @@ UserDataCtx.displayName = "UserDataCtx";
 export function UserDataProvider({ children }: UserDataProps) {
     const [ userData, setUserData ] = useState<UserData>(mockedUserData);
     return (
-        <UserDataCtx.Provider value={{ userData }}>
+        <UserDataCtx.Provider value={{ userData, setUserData }}>
             {children}
         </UserDataCtx.Provider>
     );

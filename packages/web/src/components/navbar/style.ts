@@ -22,6 +22,9 @@ export const Root = styled(Box)`
             display: none;
         }
     }
+    & svg path {
+        fill: #DEDBD5;
+    }
 `;
 
 export const IconsWrapper = styled(Box)`
@@ -45,7 +48,7 @@ export const AccountIconWrapper = styled(IconButton)`
         height: 35px;
     }
     & svg path {
-        fill: #F7EFDA;
+        fill: #DEDBD5;
     }
 `;
 
@@ -54,7 +57,7 @@ export const DesktopIconWrapper = styled.a`
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: inherit;
+    color: #DEDBD5;
     @media (max-width: 768px) {
         display: none;
     };
@@ -66,7 +69,7 @@ export const MobileIconWrapper = styled(IconButton)`
         display: flex;
         flex-direction: column;
         gap: 8px;
-        color: inherit;
+        color: #DEDBD5;
     };
 `;
 
@@ -88,7 +91,7 @@ export const Search = styled.div`
     margin-left: 15px;
     width: auto;
     .${inputBaseClasses.root} {
-        color: inherit;
+        color: #DEDBD5;
     }
     .${inputBaseClasses.input} {
         padding: 8px;
