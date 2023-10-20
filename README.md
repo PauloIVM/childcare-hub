@@ -25,6 +25,8 @@ yarn dev
 - Tutorial para usar gmail no nodemailer: https://miracleio.me/snippets/use-gmail-with-nodemailer
 - Como ter um email com domínio próprio do gmail: https://workspace.google.com/intl/pt-BR/pricing.html?gad=1&gclid=CjwKCAjwp8OpBhAFEiwAG7NaEo4RoM6Y9H2OLF7HaDHia6MsorDsKKNKgMAEgy9tY9NDLtcctw_jrxoC0SMQAvD_BwE&gclsrc=aw.ds
 
+- No MC, parece que tbm temos um sistema de email para recuperação de senha. Ao invés da lib que eu mencionei acima, parece que usamos um serviço da AWS. Eu só não sei se é um serviço pago ou n.
+
 
 - App pela vercel: https://childcare-hub-web.vercel.app/
 

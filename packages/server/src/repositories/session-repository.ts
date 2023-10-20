@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
+import { InjectorFactory, Declare } from "../utils";
 import Session from "../entities/session-entity";
 
+// TODO: Tentar remover esse export...
 @EntityRepository(Session)
 export class SessionRepository extends Repository<Session> {}
 
-export type GetSessionRepository = typeof getSessionRepository;
+export const sessionRepositoryFactory = new InjectorFactory<
+    Declare<SessionRepository>
+>().injectInstance(() => getCustomRepository(SessionRepository));
 
 // TODO: Documentar todas essas descobertas abaixo, acredito que a melhor
 // abordagem vá ser a que o pessoal vinha implementando mesmo.
@@ -31,7 +35,3 @@ export type GetSessionRepository = typeof getSessionRepository;
 // de concorrência??? Aparentemente sim, "trasanções compartilhadas".
 
 // export const sessionRepository = getCustomRepository(SessionRepository);
-
-export function getSessionRepository(): SessionRepository {
-    return getCustomRepository(SessionRepository);
-}
