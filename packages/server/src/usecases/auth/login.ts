@@ -1,4 +1,4 @@
-import { AuthLoginInput } from "./types";
+import { AuthLoginInput, ILogin } from "./types";
 import { UserRepository } from "../../repositories/user-repository";
 import { ok, error } from "../../utils";
 
@@ -7,7 +7,7 @@ const MONTH_IN_MILLISECONDS = 30 * 24 * 60 * 60 * 1000;
 // TODO: Testar se pra cada chamada vai realmente criar um novo userRepository,
 // na real isso é um teste automatizado interessante pro InjectorFactory...
 
-export class Login {
+export class Login implements ILogin {
     private userRepository: UserRepository;
     constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
