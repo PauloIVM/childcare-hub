@@ -3,13 +3,14 @@ import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { InjectorFactory, Declare } from "../utils";
 import Session from "../entities/session-entity";
 
-// TODO: Tentar remover esse export...
 @EntityRepository(Session)
-export class SessionRepository extends Repository<Session> {}
+export class SessionRepository extends Repository<Session> {
+    public getCustomRepository() {
+        return getCustomRepository(SessionRepository);
+    }
+}
 
-export const sessionRepositoryFactory = new InjectorFactory<
-    Declare<SessionRepository>
->().injectInstance(() => getCustomRepository(SessionRepository));
+export const sessionRepositoryFactory = new InjectorFactory(SessionRepository);
 
 // TODO: Documentar todas essas descobertas abaixo, acredito que a melhor
 // abordagem vá ser a que o pessoal vinha implementando mesmo.

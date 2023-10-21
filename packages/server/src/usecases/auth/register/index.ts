@@ -11,6 +11,7 @@ export class Register implements IRegister {
     async exec(input: IAuthRegisterInput) {
         const { session, user } = input;
         const errors = this.validateUser(user);
+        const userRepository = this.userRepository.getCustomRepository();
         if (errors) {
             return error({
                 status: 400,
@@ -18,14 +19,14 @@ export class Register implements IRegister {
                 errors,
             });
         }
-        if (await this.userRepository.findUserByEmail(user.email)) {
+        if (await userRepository.findUserByEmail(user.email)) {
             return error({
                 status: 400,
                 message: "user already exists",
                 errors: { email: "already exists" },
             });
         }
-        const newUser = await this.userRepository.saveUser(
+        const newUser = await userRepository.saveUser(
             user.email,
             user.userName,
             user.password,

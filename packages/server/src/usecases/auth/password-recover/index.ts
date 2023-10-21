@@ -11,7 +11,8 @@ export class PasswordRecover implements IPasswordRecover {
 
     async exec(input: IAuthPassRecoverInput) {
         const { email } = input;
-        const user = await this.userRepository.findUserByEmail(email);
+        const userRepository = this.userRepository.getCustomRepository();
+        const user = await userRepository.findUserByEmail(email);
         if (!user) {
             return error({ status: 400, message: "email not found" });
         }

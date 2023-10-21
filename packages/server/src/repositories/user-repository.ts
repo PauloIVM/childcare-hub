@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { InjectorFactory, Declare } from "../utils";
+import { InjectorFactory } from "../utils";
 import User from "../entities/user-entity";
 import bcryptjs from "bcryptjs";
 
-// TODO: Tentar remover esse export e ver se funciona ok
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
+    public getCustomRepository() {
+        return getCustomRepository(UserRepository);
+    }
+
     public findUserById(id: string) {
         return this.findOne({ where: { id } });
     }
@@ -37,6 +40,4 @@ export class UserRepository extends Repository<User> {
     }
 }
 
-export const userRepositoryFactory = new InjectorFactory<
-    Declare<UserRepository>
->().injectInstance(() => getCustomRepository(UserRepository));
+export const userRepositoryFactory = new InjectorFactory(UserRepository);

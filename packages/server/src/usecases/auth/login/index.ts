@@ -15,7 +15,8 @@ export class Login implements ILogin {
 
     async exec(input: IAuthLoginInput) {
         const { email, password, session } = input;
-        const user = await this.userRepository.findUserByEmailAndPassword(
+        const userRepository = this.userRepository.getCustomRepository();
+        const user = await userRepository.findUserByEmailAndPassword(
             email,
             password,
         );
