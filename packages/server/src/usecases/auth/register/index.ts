@@ -1,14 +1,14 @@
-import { Maybe, ok, error } from "../../utils";
-import { AuthRegisterInput } from "./types";
-import { UserRepository } from "../../repositories/user-repository";
+import { Maybe, ok, error } from "../../../utils";
+import { IRegister, IAuthRegisterInput } from "./types";
+import { UserRepository } from "../../../repositories/user-repository";
 
-export class Register {
+export class Register implements IRegister {
     private userRepository: UserRepository;
     constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
-    async exec(input: AuthRegisterInput) {
+    async exec(input: IAuthRegisterInput) {
         const { session, user } = input;
         const errors = this.validateUser(user);
         if (errors) {
@@ -39,7 +39,7 @@ export class Register {
     }
 
     private validateUser(
-        user: AuthRegisterInput["user"],
+        user: IAuthRegisterInput["user"],
     ): Maybe<Record<string, string>> {
         const errors: Record<string, string> = {};
         if (

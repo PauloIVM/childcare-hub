@@ -16,3 +16,8 @@ export const passwordRecoverFactory = new InjectorFactory(PasswordRecover, [
     userRepositoryFactory,
 ]);
 export * from "./types";
+export * from "./login/types";
+export * from "./logout/types";
+export * from "./me/types";
+export * from "./password-recover/types";
+export * from "./register/types";

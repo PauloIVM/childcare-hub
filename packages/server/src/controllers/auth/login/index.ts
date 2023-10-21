@@ -1,12 +1,10 @@
 import { Request, Response } from "express";
-import { ILogin } from "../usecases/auth";
+import { ILogin } from "../../../usecases/auth";
 
 export class LoginController {
     private loginUsecase: ILogin;
     constructor(login: ILogin) {
         this.loginUsecase = login;
-        // TODO: Tem como eu retornar as coisas pelo construtor???
-        return "";
     }
 
     async exec(req: Request, res: Response) {

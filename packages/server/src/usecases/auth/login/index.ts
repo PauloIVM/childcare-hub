@@ -1,6 +1,6 @@
-import { AuthLoginInput, ILogin } from "./types";
-import { UserRepository } from "../../repositories/user-repository";
-import { ok, error } from "../../utils";
+import { IAuthLoginInput, ILogin } from "./types";
+import { UserRepository } from "../../../repositories/user-repository";
+import { ok, error } from "../../../utils";
 
 const MONTH_IN_MILLISECONDS = 30 * 24 * 60 * 60 * 1000;
 
@@ -13,7 +13,7 @@ export class Login implements ILogin {
         this.userRepository = userRepository;
     }
 
-    async exec(input: AuthLoginInput) {
+    async exec(input: IAuthLoginInput) {
         const { email, password, session } = input;
         const user = await this.userRepository.findUserByEmailAndPassword(
             email,

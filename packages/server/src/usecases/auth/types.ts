@@ -1,51 +1,25 @@
 import { Session } from "express-session";
-import { Result, Maybe } from "../../utils";
+import { Maybe } from "../../utils";
 
-export interface AuthUser {
+interface IAuthUser {
     id?: string;
     userName?: string;
     email?: string;
 }
 
-export interface AuthPassRecoverInput {
-    email: string;
+export interface IAuthSessionInput extends Session {
+    user?: Maybe<IAuthUser>;
 }
 
-export interface AuthSessionInput extends Session {
-    user?: Maybe<AuthUser>;
-}
-
-export interface AuthLoginInput {
-    email?: string;
-    password?: string;
-    session: AuthSessionInput;
-}
-
-export interface AuthRegisterInput {
-    user: Maybe<{
-        userName: string;
-        email: string;
-        password: string;
-        passwordConfirmation: string;
-    }>;
-    session: AuthSessionInput;
-}
-
-// TODO: Será se é realmente bom ter um arquivão de interfaces? Acho que acaba sendo
-// melhor cada interface junto do seu respectivo componente. Mudar isso depois
-interface AuthUserSession {
+export interface IAuthUserSession {
     id: Maybe<string>;
-    user: Maybe<AuthUser>;
+    user: Maybe<IAuthUser>;
 }
 
-interface AuthError {
+export interface IAuthError {
     status?: number;
     message: string;
     errors?: {
         [key: string]: string | number | boolean;
     };
-}
-
-export interface ILogin {
-    exec(input: AuthLoginInput): Promise<Result<AuthUserSession, AuthError>>;
 }
