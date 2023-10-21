@@ -19,13 +19,9 @@ export class InjectorFactory<C extends new (...args: unknown[]) => any> {
     }
 
     create(): IInstance<C> {
-        if (this.instance) {
-            return this.instance();
-        }
+        if (this.instance) return this.instance();
         const dependencies = this.resolveDependencies();
-        if (!dependencies) {
-            return new this.method();
-        }
+        if (!dependencies) return new this.method();
         return new this.method(...dependencies);
     }
 
@@ -35,18 +31,14 @@ export class InjectorFactory<C extends new (...args: unknown[]) => any> {
     }
 
     private resolveDependencies() {
-        if (!this.dependencies) {
-            return [];
-        }
+        if (!this.dependencies) return [];
         const dependencies =
             (this.dependencies as unknown as InjectorFactory<C>[]) || [];
         const results: IInstance<C>[] = [];
-
         for (const dependency of dependencies) {
             const result = dependency.create();
             results.push(result);
         }
-
         return results;
     }
 }

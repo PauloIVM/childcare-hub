@@ -8,7 +8,7 @@
     "start": "node ./build/index.js",
     "dev": "nodemon --watch 'src/' --exec 'yarn build && yarn start' -e .ts",
     "test": "jest --forceExit --coverage --no-cache --verbose",
-    "lint": "eslint src -c .eslintrc.js --no-eslintrc",
+    "lint": "eslint src -c .eslintrc.json --no-eslintrc",
     "typeorm": "npx typeorm",
     "migration:run": "yarn build && typeorm migration:run",
     "migration:create": "typeorm migration:create",
