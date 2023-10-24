@@ -8,7 +8,7 @@ export function WelcomeHero() {
             {"É sua primeira vez por aqui? Então confira a "}
             <Link href="/cover-letter">{"apresentação do site"}</Link>
             {". Para utilizar nossas ferramentas e interagir com postagens, "}
-            <Link href="/login">{"faça seu login aqui."}</Link>
+            <Link href="/sign-in">{"faça seu login aqui."}</Link>
         </>
     );
     return (

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { GetServerSideProps } from "next";
 import { Navbar } from "../components/navbar";
 import { NavbarBottom } from "../components/navbar-bottom";
 import { PageHero } from "../components/page-hero";
@@ -7,9 +6,7 @@ import { Posts as PostsComponent } from "../components/posts";
 import { Divider } from "@mui/material";
 import styled from "styled-components";
 
-interface PostsProps {
-    foo: string;
-}
+interface PostsProps {}
 
 // TODO: Algumas coisas desse <Head> eu acredito que deveriam ser movidas para o
 //       _app.tsx, por exemplo o favicon, a meta de viewport e etc. Mas outras
@@ -87,7 +84,7 @@ const RightWrapper = styled.div`
     }
 `;
 
-export default function Posts(props: PostsProps) {
+export default function Home({}: PostsProps) {
     return (
         <>
             <Head>
@@ -116,7 +113,3 @@ export default function Posts(props: PostsProps) {
         </>
     );
 }
-
-export const getServerSideProps: GetServerSideProps<PostsProps> = async () => {
-    return { props: { foo: "" } };
-};

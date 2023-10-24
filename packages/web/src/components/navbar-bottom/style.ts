@@ -5,7 +5,8 @@ import { Box, Badge } from "@mui/material";
 export const Root = styled(Box)`
     display: none;    
     flex-grow: 1;
-    position: sticky;
+    position: fixed;
+    width: 100%;
     bottom: 0px;
     z-index: 500;
     .${appBarClasses.root} {
@@ -17,6 +18,17 @@ export const Root = styled(Box)`
     & svg {
         fill: #2E3B4F;
     }
+    @media (max-width: 768px) {
+        display: flex;
+    };
+`;
+
+export const Placeholder = styled.div`
+    display: none;    
+    flex-grow: 1;
+    position: sticky;
+    bottom: 0px;
+    min-height: 56px;
     @media (max-width: 768px) {
         display: flex;
     };
