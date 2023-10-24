@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 interface Props {
     children: React.ReactNode;
+    isActive: boolean;
 }
 
 const StyledButton = styled(Button)`
@@ -17,7 +18,8 @@ const StyledButton = styled(Button)`
     }
 `;
 
-export function SubmitButton({ children }: Props) {
+export function SubmitButton({ children, isActive }: Props) {
+    if (!isActive) return;
     return (
         <StyledButton
             type="submit"

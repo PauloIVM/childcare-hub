@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import "express-async-errors";
-import router from "./routes";
+import { router } from "./routes";
 
 const app = express();
 app.disable("x-powered-by");

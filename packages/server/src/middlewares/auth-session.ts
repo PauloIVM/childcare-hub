@@ -31,7 +31,9 @@ function authSession({
                 store: new TypeormStore({
                     cleanupLimit: 10,
                     limitSubquery: false,
-                }).connect(sessionRepositoryFactory.create()),
+                }).connect(
+                    sessionRepositoryFactory.create().getCustomRepository(),
+                ),
             });
         }
         return handler;
@@ -52,9 +54,7 @@ function authSession({
 // adicionando novos secrets, então isso não rolaria. Preciso entender melhor, e entender
 // inclusive as consequências de ter esse cara vazado...
 
-const sessionMiddleware = authSession({
+export const sessionMiddleware = authSession({
     secret: "MY_SUPER_SECRET",
     cookieDomain: "localhost",
 });
-
-export default sessionMiddleware;

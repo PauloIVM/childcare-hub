@@ -6,3 +6,5 @@ export { Form } from "./form";
 export { LinksWrapper } from "./links-wrapper";
 export { Title } from "./title";
 export { Container } from "./container";
+export { CircularProgress } from "./circular-progress";
+export { Alert } from "./alert";

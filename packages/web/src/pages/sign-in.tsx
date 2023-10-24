@@ -3,7 +3,9 @@ import { Navbar } from "@/components/navbar";
 import { NavbarBottom } from "@/components/navbar-bottom";
 import { Auth } from "@/components/auth";
 
-export default function SignIn() {
+interface Props {}
+
+export default function SignIn({}: Props) {
     return (
         <>
             <Head>

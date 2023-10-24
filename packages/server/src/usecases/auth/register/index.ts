@@ -23,14 +23,21 @@ export class Register implements IRegister {
             return error({
                 status: 400,
                 message: "user already exists",
-                errors: { email: "already exists" },
+                errors: {
+                    email: "O email fornecido já possui uma conta vinculada.",
+                },
             });
         }
         const newUser = await userRepository.saveUser(
             user.email,
-            user.userName,
             user.password,
+            user.userName,
         );
+        // INFO: Eu estava bastante na dúvida de como que na "session" do DB, nos cookies,
+        // tinham aquelas infos do user... é aqui q está sendo feito. Talvez o mais correto
+        // não seria chamar um método do repository? Acho que fica mais intuitivo... mas
+        // imagino que isso tbm não esteja errado, deve estar usando uma abstração da lib
+        // express-session...
         session.user = {
             id: newUser.id,
             email: newUser.email,
@@ -48,16 +55,18 @@ export class Register implements IRegister {
             user?.email.length < 5 ||
             !user?.email.includes("@")
         ) {
-            errors.email = "invalid email";
+            errors.email = "O email fornecido é inválido.";
         }
         if (!user?.userName || user?.userName.length < 2) {
-            errors.firstName = "invalid firstName";
+            errors.userName = "O nome de usuário fornecido é inválido.";
         }
         if (!user?.password || user?.password.length < 6) {
-            errors.password = "invalid password";
+            errors.password =
+                "A senha fornecida é inválida, escolha uma de no mínimo 6 caracteres.";
         }
         if (user?.password !== user?.passwordConfirmation) {
-            errors.passwordConfirmation = "invalid passwordConfirmation";
+            errors.passwordConfirmation =
+                "A confirmação de senha não corresponde com a senha informada, confira possíveis erros de digitação.";
         }
         if (Object.keys(errors).length) {
             return errors;

@@ -21,7 +21,7 @@ export function Recover() {
             <Parts.Form onSubmit={handleSubmit}>
                 <Parts.TextInput id={"password1"} autoComplete={"current-password"} label={"Senha"} type={"password"} />
                 <Parts.TextInput id={"password2"} autoComplete={"current-password"} label={"Repita a senha"} type={"password"} />
-                <Parts.SubmitButton>{"Alterar senha"}</Parts.SubmitButton>
+                <Parts.SubmitButton isActive={true}>{"Alterar senha"}</Parts.SubmitButton>
             </Parts.Form>
         </Parts.Container>
     );

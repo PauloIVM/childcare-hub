@@ -9,6 +9,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
 import { DesktopUserIcon, MobileUserIcon } from "./parts";
 
+// TODO: Ao invés de usar um link... usar o router vai deixar mais fluido (mas
+// prejudica um pouco SEO).
 export function Navbar() {
     return (
         <Styles.Root>

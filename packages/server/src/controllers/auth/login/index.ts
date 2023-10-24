@@ -8,7 +8,7 @@ export class LoginController {
     }
 
     async exec(req: Request, res: Response) {
-        const { email, password } = req.body;
+        const { email, password } = req.body?.user || {};
         const result = await this.loginUsecase.exec({
             email,
             password,

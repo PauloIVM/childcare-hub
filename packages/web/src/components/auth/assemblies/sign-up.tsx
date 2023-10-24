@@ -1,20 +1,50 @@
-import * as React from "react";
 import * as Parts from "../parts";
-import Avatar from "@mui/material/Avatar";
+import * as authApi from "@/api/auth";
+import { Avatar } from "@mui/material";
+import { useUserData } from "@/context/user-data";
+import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export function SignUp() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [successMessage, setSuccessMessage] = useState<string>("");
+    const { setUserData } = useUserData();
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const checkboxValue = (document?.getElementById("agree") as any)?.checked;
-        // TODO: Implementar chamada à api e consequênte atualização no front
-        console.log({
-            email: data.get("email"),
-            username: data.get("username"),
-            password: data.get("password"),
-            agree: checkboxValue
-        });
+        setErrorMessage("");
+        if (!checkboxValue) {
+            setErrorMessage("Por favor, leia os nossos termos de uso e marque o checkbox acima para prosseguir com o cadastro.");
+            return;
+        }
+        setLoading(true);
+        try {
+            // TODO: Parece que o "register" me responde com o sessionId... eu preciso pegar esse
+            // valor e usar de alguma forma no client? Conferir no código do MC.
+            const response = await authApi.register({
+                userName: data.get("username") as string,
+                email: data.get("email") as string,
+                password: data.get("password") as string,
+                passwordConfirmation: data.get("passwordConfirmation") as string,
+            });
+            // INFO: Talvez usar isso se eu for fazer redirect pelo router??
+            // setUserData({
+            //     userName: response.user.userName,
+            //     email: response.user.email,
+            //     isLogged: true
+            // });
+            setSuccessMessage("Cadastro realizado com sucesso! Estamos te redirecionando para a página inicial.");
+            setTimeout(() => { window.open("/", "_self"); }, 1000);
+        } catch (error: any) {
+            // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um
+            // then() e catch()... ou... adicionar o middleware de error na api...
+            const errors: Record<string, string> = error?.response?.data?.errors;
+            const message = Object.values(errors).join(" ");
+            setErrorMessage(message);
+            setLoading(false);
+        }
     };
 
     return (
@@ -25,9 +55,13 @@ export function SignUp() {
                 <Parts.TextInput id={"username"} autoComplete={"username"} label={"Nome de usuário"} />
                 <Parts.TextInput id={"email"} autoComplete={"email"} label={"Email"} />
                 <Parts.TextInput id={"password"} autoComplete={"current-password"} label={"Senha"} type={"password"} />
+                <Parts.TextInput id={"passwordConfirmation"} autoComplete={"current-password"} label={"Confirme sua senha"} type={"password"} />
                 {/* TODO: Criar link pra uma página com os termos, melhorar estilos... */}
                 <Parts.Checkbox id={"agree"} label={"Estou de acordo com os termos de uso."} />
-                <Parts.SubmitButton>{"Criar cadastro"}</Parts.SubmitButton>
+                <Parts.Alert isActive={!!errorMessage} severity={"error"}>{errorMessage}</Parts.Alert>
+                <Parts.Alert isActive={!!successMessage} severity={"success"}>{successMessage}</Parts.Alert>
+                <Parts.SubmitButton isActive={!successMessage && !isLoading}>{"Criar cadastro"}</Parts.SubmitButton>
+                <Parts.CircularProgress isActive={isLoading} />
                 <Parts.LinksWrapper>
                     <Parts.Link text={"Já possui uma conta? Faça o login aqui."} href={"/sign-in"} />
                     <Parts.Link text={"Já possui uma conta e esqueceu a senha?"} href={"/recover"} />

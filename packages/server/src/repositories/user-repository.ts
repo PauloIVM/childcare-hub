@@ -21,7 +21,7 @@ export class UserRepository extends Repository<User> {
     public async findUserByEmailAndPassword(email: string, password: string) {
         const user = await this.findOne({ where: { email } });
         if (bcryptjs.compareSync(password, user.passwordHash)) {
-            return this.findOne({ where: { email, passwordHash: password } });
+            return user;
         }
     }
 

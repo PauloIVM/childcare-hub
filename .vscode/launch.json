@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "request": "launch",
+        "name": "server:debug",
+        "runtimeArgs": ["dev:server"],
+        "runtimeExecutable": "yarn",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "type": "pwa-node",
+      }
+    ]
+}
