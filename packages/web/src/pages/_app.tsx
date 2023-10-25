@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
-import { UserDataProvider } from "@/context/user-data";
+import { UserDataProvider } from "@/context";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] })
 

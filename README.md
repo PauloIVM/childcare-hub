@@ -75,3 +75,4 @@ MC... ver no curso do branas como ele nomeia as classes com um simples metodo ex
 nomes estao muito "funcionais"; remover tantos 'exports default' por 'export'.
 - Criar um ENV para senha do banco, nao soh de prod, mas pra dev tbm, pra nao correr risco
 deu comitar minha senha local. Pra isso vou precisar de usar algo como o "extendConnectionOptions" q foi feito no MC.
+- Implementar cache do ioredis no mysql. Parece que é bem dizer uma config no orm e o setup do banco... eu apaguei a config pq não tinha feito o setup do banco.

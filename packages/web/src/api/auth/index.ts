@@ -1,4 +1,5 @@
 import { authApi } from "../instances";
+import { AxiosRequestConfig } from "axios";
 import * as Types from "./types";
 
 // TODO: Melhorar nomes e formas de importação/exportação...
@@ -25,10 +26,11 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
     return result.data;
 }
 
-// INFO: Parece que a ideia é o "me" ser usado client-side, num useEffect
-// por exemplo. Pode ser que isso facilite um pouco as coisas, pq aí eu posso
-// voltar o contextProvider pro app...
-export async function me(): Promise<Types.IAuthResponse["res"]> {
-    const result = await authApi.get("/me", { withCredentials: true });
+// INFO: Ainda estou um pouco na dúvida se é melhor usar esse "me" no client ou server
+// do front. Caso eu decida por manter no client, posso remover esse "cookie" dos params
+export async function me(cookie?: string): Promise<Types.IAuthResponse["res"]> {
+    const config: AxiosRequestConfig = { withCredentials: true };
+    if (cookie) config["headers"] = { Cookie: cookie };
+    const result = await authApi.get("/me", config);
     return result.data;
 }

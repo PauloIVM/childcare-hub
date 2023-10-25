@@ -1,4 +1,5 @@
 import * as Styles from "./style";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { AppBar, Toolbar, InputBase, Badge } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -9,9 +10,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
 import { DesktopUserIcon, MobileUserIcon } from "./parts";
 
-// TODO: Ao invés de usar um link... usar o router vai deixar mais fluido (mas
-// prejudica um pouco SEO).
 export function Navbar() {
+    const router = useRouter();
     return (
         <Styles.Root>
             <AppBar>
@@ -25,17 +25,17 @@ export function Navbar() {
                         <InputBase placeholder={"Pesquisar..."} />
                     </Styles.Search>
                     <Styles.IconsWrapper>
-                        <Styles.DesktopIconWrapper href={"/"}>
+                        <Styles.DesktopIconWrapper onClick={() => router.push("/")}>
                             <Badge badgeContent={4} color={"error"}>
                                 <HomeIcon />
                             </Badge>
                             <Badge badgeContent={"Início"} color={"default"} />
                         </Styles.DesktopIconWrapper>
-                        <Styles.DesktopIconWrapper href={"/publish"}>
+                        <Styles.DesktopIconWrapper onClick={() => router.push("/publish")}>
                             <PostIcon />
                             <Badge badgeContent={"Publicar"} color={"default"} />
                         </Styles.DesktopIconWrapper>
-                        <Styles.DesktopIconWrapper href={"/tools"}>
+                        <Styles.DesktopIconWrapper onClick={() => router.push("/tools")}>
                             <StarIcon />
                             <Badge badgeContent={"Ferramentas"} color={"default"} />
                         </Styles.DesktopIconWrapper>
@@ -44,7 +44,7 @@ export function Navbar() {
                             <MenuIcon />
                             <Badge badgeContent={"Menu"} color={"default"} />
                         </Styles.MobileIconWrapper>
-                        <Styles.DesktopIconWrapper href={"/config"}>
+                        <Styles.DesktopIconWrapper onClick={() => router.push("/config")}>
                             <SettingsIcon />
                             <Badge badgeContent={"Configurações"} color={"default"} />
                         </Styles.DesktopIconWrapper>

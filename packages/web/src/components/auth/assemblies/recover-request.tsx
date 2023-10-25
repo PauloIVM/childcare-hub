@@ -17,7 +17,7 @@ export function RecoverRequest() {
             <Parts.Title>{"Recuperação de senha"}</Parts.Title>
             <Parts.Form onSubmit={handleSubmit}>
                 <Parts.TextInput id={"email"} autoComplete={"email"} label={"Digite seu email"} />
-                <Parts.SubmitButton>{"Recuperar"}</Parts.SubmitButton>
+                <Parts.SubmitButton isActive={true}>{"Recuperar"}</Parts.SubmitButton>
             </Parts.Form>
         </Parts.Container>
     );

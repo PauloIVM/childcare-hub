@@ -20,8 +20,16 @@ export class Login implements ILogin {
             email,
             password,
         );
+        // TODO: Esses errors no formato de records não estão sendo muito úteis pra mim,
+        // refatorar no futuro.
         if (!user) {
-            return error({ status: 401, message: "invalid login" });
+            return error({
+                status: 401,
+                message: "invalid login",
+                errors: {
+                    email: "Ops, parece que seu email ou senha não conferem.",
+                },
+            });
         }
         session.user = {
             id: user.id,

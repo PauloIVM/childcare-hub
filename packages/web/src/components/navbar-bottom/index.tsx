@@ -4,8 +4,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import PostIcon from "@mui/icons-material/PostAdd";
 import SettingsIcon from "@mui/icons-material/Settings";
 import StarIcon from "@mui/icons-material/Star";
+import { useRouter } from "next/router";
 
 export function NavbarBottom() {
+    const router = useRouter();
     return (
         <>
             <Styles.Placeholder />
@@ -13,21 +15,21 @@ export function NavbarBottom() {
                 <AppBar>
                     <Toolbar>
                         <Styles.IconsWrapper>
-                            <Styles.IconWrapper href={"/"}>
+                            <Styles.IconWrapper onClick={() => router.push("/")}>
                                 <Styles.HomeNotificationsBadge badgeContent={4}>
                                     <HomeIcon />
                                 </Styles.HomeNotificationsBadge>
                                 <Badge badgeContent={"Início"} color="default" />
                             </Styles.IconWrapper>
-                            <Styles.IconWrapper href={"/publish"}>
+                            <Styles.IconWrapper onClick={() => router.push("/publish")}>
                                 <PostIcon />
                                 <Badge badgeContent={"Publicar"} color="default" />
                             </Styles.IconWrapper>
-                            <Styles.IconWrapper href={"/tools"}>
+                            <Styles.IconWrapper onClick={() => router.push("/tools")}>
                                 <StarIcon />
                                 <Badge badgeContent={"Ferramentas"} color="default" />
                             </Styles.IconWrapper>
-                            <Styles.IconWrapper href={"/config"}>
+                            <Styles.IconWrapper onClick={() => router.push("/config")}>
                                 <SettingsIcon />
                                 <Badge badgeContent={"Configurações"} color="default" />
                             </Styles.IconWrapper>
