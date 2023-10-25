@@ -52,7 +52,7 @@ export const AccountIconWrapper = styled(IconButton)`
     }
 `;
 
-export const DesktopIconWrapper = styled.a`
+export const DesktopIconWrapper = styled(IconButton)`
     display: flex;
     flex-direction: column;
     align-items: center;

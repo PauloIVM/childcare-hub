@@ -3,6 +3,7 @@ import * as Parts from "../parts";
 import * as authApi from "@/api/auth";
 import { useUserData } from "@/context";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -10,7 +11,13 @@ export function SignIn() {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
-    const { setUserData } = useUserData();
+    const { userData, setUserData } = useUserData();
+    const router = useRouter();
+
+    if (userData.isLogged) {
+        setTimeout(() => { router.push("/"); }, 1000);
+    }
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -29,20 +36,13 @@ export function SignIn() {
                 setErrorMessage("Ops, parece que seu email ou senha não conferem.");
                 return;
             }
-            // setUserData({
-            //     userName: response.user.userName,
-            //     email: response.user.email,
-            //     isLogged: true
-            // });
-            // TODO: Fazer todos os redirects window.open via "router"
-            // TODO: Preciso adicionar redirects nas páginas de auth caso o user acesse
-            // elas já loggado (enviar para a de logout ou perfil). Ainda que a navbar
-            // mude com base no userData, nada impede o cara copiar a url de login.
+            setUserData({
+                userName: response.user.userName,
+                email: response.user.email,
+                isLogged: true
+            });
             setSuccessMessage("Login efetuado com sucesso!");
-            window.open("/", "_self");
         } catch (error: any) {
-            // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um
-            // then() e catch()... ou... adicionar o middleware de error na api...
             const errors: Record<string, string> = error?.response?.data?.errors;
             const message = Object.values(errors).join(" ");
             setErrorMessage(message);

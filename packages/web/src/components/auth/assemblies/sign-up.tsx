@@ -3,6 +3,7 @@ import * as authApi from "@/api/auth";
 import { Avatar } from "@mui/material";
 import { useUserData } from "@/context";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 // TODO: Implementar confirmação de email tbm aqui na criação, e não apenas no recover.
@@ -11,7 +12,13 @@ export function SignUp() {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
-    const { setUserData } = useUserData();
+    const { userData, setUserData } = useUserData();
+    const router = useRouter();
+    
+    if (userData.isLogged) {
+        setTimeout(() => { router.push("/"); }, 1000);
+    }
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -24,21 +31,21 @@ export function SignUp() {
         setLoading(true);
         try {
             // TODO: Parece que o "register" me responde com o sessionId... eu preciso pegar esse
-            // valor e usar de alguma forma no client? Conferir no código do MC.
+            // valor e usar de alguma forma no client? Conferir no código do MC. Aparentemente n,
+            // acredito que talvez isso não devesse vir na api? Apenas nos cookies? Parece que está
+            // enviando outro id tbm, pode ser uma falha de segurança.
             const response = await authApi.register({
                 userName: data.get("username") as string,
                 email: data.get("email") as string,
                 password: data.get("password") as string,
                 passwordConfirmation: data.get("passwordConfirmation") as string,
             });
-            // INFO: Talvez usar isso se eu for fazer redirect pelo router??
-            // setUserData({
-            //     userName: response.user.userName,
-            //     email: response.user.email,
-            //     isLogged: true
-            // });
+            setUserData({
+                userName: response.user.userName,
+                email: response.user.email,
+                isLogged: true
+            });
             setSuccessMessage("Cadastro realizado com sucesso! Estamos te redirecionando para a página inicial.");
-            setTimeout(() => { window.open("/", "_self"); }, 1000);
         } catch (error: any) {
             // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um
             // then() e catch()... ou... adicionar o middleware de error na api...
