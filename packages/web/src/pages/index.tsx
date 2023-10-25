@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Navbar } from "../components/navbar";
 import { NavbarBottom } from "../components/navbar-bottom";
 import { PageHero } from "../components/page-hero";
+import { AntiFlickLoader } from "../components/anti-flick-loader";
 import { Posts as PostsComponent } from "../components/posts";
 import { Divider } from "@mui/material";
 import styled from "styled-components";
@@ -94,6 +95,7 @@ export default function Home({}: PostsProps) {
                 <link rel={"icon"} href={"/favicon.svg"} />
             </Head>
             <main>
+                <AntiFlickLoader />
                 <Navbar />
                 <MainWrapper>
                     <LeftWrapper>
