@@ -26,6 +26,11 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
     return result.data;
 }
 
+export async function logout(): Promise<Types.IAuthResponse["res"]> {
+    const result = await authApi.get("/logout", { withCredentials: true });
+    return result.data;
+}
+
 // INFO: Ainda estou um pouco na dúvida se é melhor usar esse "me" no client ou server
 // do front. Caso eu decida por manter no client, posso remover esse "cookie" dos params
 export async function me(cookie?: string): Promise<Types.IAuthResponse["res"]> {

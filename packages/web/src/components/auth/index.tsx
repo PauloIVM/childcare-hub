@@ -2,12 +2,20 @@ import * as React from "react";
 import * as Assemblies from "./assemblies";
 
 interface Props {
-    assembly: "sign-in" | "sign-up" | "recover" | "recover-request";
+    assembly:
+        | "sign-in"
+        | "sign-out"
+        | "sign-up"
+        | "recover"
+        | "recover-request";
 }
 
 export function Auth({ assembly }: Props) {
     if (assembly === "sign-in") {
         return (<Assemblies.SignIn />);
+    }
+    if (assembly === "sign-out") {
+        return (<Assemblies.SignOut />);
     }
     if (assembly === "sign-up") {
         return (<Assemblies.SignUp />);
