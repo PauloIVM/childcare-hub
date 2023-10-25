@@ -5,6 +5,8 @@ import { useUserData } from "@/context";
 import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+// TODO: Implementar confirmação de email tbm aqui na criação, e não apenas no recover.
+
 export function SignUp() {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
