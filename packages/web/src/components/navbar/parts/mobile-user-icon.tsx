@@ -1,7 +1,7 @@
 import * as Styles from "../style";
 import AccountIcon from "@mui/icons-material/AccountCircle";
 import LoginIcon from "@mui/icons-material/Login";
-import { useUserData } from "@/context/user-data";
+import { useUserData } from "@/context";
 
 export function MobileUserIcon() {
     const { userData } = useUserData();

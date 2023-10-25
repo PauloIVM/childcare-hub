@@ -1,7 +1,7 @@
 import * as Parts from "../parts";
 import * as authApi from "@/api/auth";
 import { Avatar } from "@mui/material";
-import { useUserData } from "@/context/user-data";
+import { useUserData } from "@/context";
 import { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 

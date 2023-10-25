@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Parts from "../parts";
 import * as authApi from "@/api/auth";
-import { useUserData } from "@/context/user-data";
+import { useUserData } from "@/context";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -14,6 +14,8 @@ export function SignIn() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        // TODO: Desenvolver lógica do remember (acho q está lembrando independente de marcar
+        // ou n).
         const checkboxValue = (document?.getElementById("remember") as any)?.checked;
         setLoading(true);
         try {
@@ -36,9 +38,7 @@ export function SignIn() {
             // TODO: Preciso adicionar redirects nas páginas de auth caso o user acesse
             // elas já loggado (enviar para a de logout ou perfil). Ainda que a navbar
             // mude com base no userData, nada impede o cara copiar a url de login.
-            setSuccessMessage(
-                "Login efetuado com sucesso!"
-            );
+            setSuccessMessage("Login efetuado com sucesso!");
             window.open("/", "_self");
         } catch (error: any) {
             // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um

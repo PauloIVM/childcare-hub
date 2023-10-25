@@ -2,7 +2,7 @@ import * as Styles from "../style";
 import { Badge } from "@mui/material";
 import AccountIcon from "@mui/icons-material/AccountCircle";
 import LoginIcon from "@mui/icons-material/Login";
-import { useUserData } from "@/context/user-data";
+import { useUserData } from "@/context";
 
 export function DesktopUserIcon() {
     const { userData } = useUserData();
