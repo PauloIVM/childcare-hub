@@ -24,10 +24,9 @@ export function SignIn() {
         // TODO: Desenvolver lógica do remember (acho q está lembrando independente de marcar
         // ou n).
         const checkboxValue = (document?.getElementById("remember") as any)?.checked;
+        setErrorMessage("");
         setLoading(true);
         try {
-            const meResponse = await authApi.me();
-            console.log("meResponse", meResponse);
             const response = await authApi.login({
                 email: data.get("email") as string,
                 password: data.get("password") as string,

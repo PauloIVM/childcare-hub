@@ -5,7 +5,7 @@ import { LinearProgress } from "@mui/material";
 
 export function AntiFlickLoader() {
     const { userData } = useUserData();
-    if (userData.isLogged) return <></>;
+    if (!userData.isLoading) return <></>;
     return (
         <div
             style={{
