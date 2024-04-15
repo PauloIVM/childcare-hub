@@ -8,3 +8,4 @@ export { Title } from "./title";
 export { Container } from "./container";
 export { CircularProgress } from "./circular-progress";
 export { Alert } from "./alert";
+export { Button } from "./button";

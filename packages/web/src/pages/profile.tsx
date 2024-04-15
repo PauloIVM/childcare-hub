@@ -28,7 +28,9 @@ const Box = styled.div`
 
 const AuthBox = styled(Box)`
     padding: 0px 24px;
+    width: 220px;
     @media (max-width: 768px) {
+        width: 100%;
         padding: 0px 16px;
     }
 `;

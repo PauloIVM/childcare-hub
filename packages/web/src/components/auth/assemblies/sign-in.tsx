@@ -21,9 +21,6 @@ export function SignIn() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // TODO: Desenvolver lógica do remember (acho q está lembrando independente de marcar
-        // ou n).
-        const checkboxValue = (document?.getElementById("remember") as any)?.checked;
         setErrorMessage("");
         setLoading(true);
         try {
@@ -56,7 +53,6 @@ export function SignIn() {
             <Parts.Form onSubmit={handleSubmit}>
                 <Parts.TextInput id={"email"} autoComplete={"email"} label={"Email"} />
                 <Parts.TextInput id={"password"} autoComplete={"current-password"} label={"Senha"} type={"password"} />
-                <Parts.Checkbox id={"remember"} label={"Lembrar senha"} />
                 <Parts.Alert isActive={!!errorMessage} severity={"error"}>{errorMessage}</Parts.Alert>
                 <Parts.Alert isActive={!!successMessage} severity={"success"}>{successMessage}</Parts.Alert>
                 <Parts.SubmitButton isActive={!successMessage && !isLoading}>{"Entrar"}</Parts.SubmitButton>
