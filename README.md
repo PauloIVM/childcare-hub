@@ -19,6 +19,11 @@ Na raiz:
 yarn dev
 ```
 
+Para criar uma nova migration (de uma nova entidade), rodar:
+```console
+yarn workspace @childcare-hub/server migration:create -n ENTITY_NAME
+```
+
 ## Infos
 
 - Para o serviço com email de recuperação de senha, o tabnews usa essa lib aqui: "nodemailer".

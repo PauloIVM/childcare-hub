@@ -7,6 +7,8 @@ const MONTH_IN_MILLISECONDS = 30 * 24 * 60 * 60 * 1000;
 // TODO: Testar se pra cada chamada vai realmente criar um novo userRepository,
 // na real isso é um teste automatizado interessante pro InjectorFactory...
 
+// TODO: Talvez um nome melhor pra esse usecase seja: create-user-session
+
 export class Login implements ILogin {
     private userRepository: UserRepository;
     constructor(userRepository: UserRepository) {

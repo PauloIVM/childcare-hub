@@ -1,5 +1,6 @@
 import * as http from "http";
-import { createConnection, getConnectionOptions } from "typeorm";
+import { createConnection, ConnectionOptions } from "typeorm";
+import connectionOptions from "./ormconfig.json";
 import app from "./app";
 
 function logFatal(err: Error) {
@@ -13,8 +14,7 @@ async function run() {
     // eh justamente pra sobrescrever as variaveis de producao do banco... como a senha
     // e url q esta ali no ormconfig. Depois vou ter que fazer a mesma coisa aqui; vai
     // ser bom eu usar isso tbm pra senha local do DB, nao correr risco da pessoa commitar.
-    const connectionOptions = await getConnectionOptions();
-    return createConnection(connectionOptions).then(async (connection) => {
+    return createConnection(connectionOptions as ConnectionOptions).then(async (connection) => {
         const server = http.createServer(app);
         server.listen(3001, "::", () => {
             if (process.env.NODE_ENV !== "production") {
