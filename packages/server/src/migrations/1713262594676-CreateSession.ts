@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 
-export class CreateSession1697819988666 implements MigrationInterface {
+export class CreateSession1713262594676 implements MigrationInterface {
+
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
@@ -44,4 +45,5 @@ export class CreateSession1697819988666 implements MigrationInterface {
         await queryRunner.dropTable("session");
         await queryRunner.dropIndex("session", "session_expired_at");
     }
+
 }
