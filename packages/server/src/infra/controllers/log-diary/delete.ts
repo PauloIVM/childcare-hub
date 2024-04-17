@@ -7,14 +7,19 @@ export class DeleteLogDiaryController {
 
     async exec(req: Request, res: Response) {
         const id = req.body?.id;
-        const usecase = new DeleteLogUsecase(new LogDiaryRepository());
-        const result = await usecase.exec(id);
-        if (result.err) {
-            return res.status(result.err.status).json({
-                message: result.err.message,
-                errors: result.err.errors,
-            });
+        const userId = req.session?.user?.id;
+        if (!userId) {
+            return res.status(400).json({ message: "User authentication failed" });
         }
-        res.json(result.res);
+        if (!id) {
+            return res.status(400).json({ message: "Nothing to delete" });
+        }
+        try {
+            const usecase = new DeleteLogUsecase(new LogDiaryRepository());
+            await usecase.exec(id, userId);
+            res.json({ message: "ok" });
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
     }
 }

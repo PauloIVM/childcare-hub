@@ -1,24 +1,23 @@
 import { ILogDiaryRepository } from "../repositories/log-diary-repository";
-import { ok, error } from "../../utils";
 
 export class DeleteLogUsecase {
     private logDiaryRepository: ILogDiaryRepository;
     constructor(logDiaryRepository: ILogDiaryRepository) {
-        this.logDiaryRepository = logDiaryRepository;
+        this.logDiaryRepository = logDiaryRepository.getCustomRepository();
     }
 
-    async exec(id: string) {
-        const result = await this.logDiaryRepository.deleteLog(id);
-        if (!result) {
-            return error({
-                // Status é algo do http, n deveria estar aqui...
-                status: 401,
-                message: "invalid log",
-                errors: {
-                    log: "Não foi possível deletar o log.",
-                },
-            });
+    async exec(id: string, userId: string) {
+        try {
+            const logToChange = await this.logDiaryRepository.findById(id);
+            if (userId !== logToChange.userId) {
+                throw new Error("You have not permission to delete this log");
+            }
+            const result = await this.logDiaryRepository.deleteLog(id);
+            if (!result) {
+                throw new Error("Failed to delete log on 'logDiaryRepository.insertLog'");    
+            }
+        } catch (error) {
+            throw new Error("Failed to delete log on 'logDiaryRepository.insertLog'");
         }
-        return ok({});
     }
 }

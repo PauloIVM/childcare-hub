@@ -7,14 +7,19 @@ export class UpdateLogDiaryController {
 
     async exec(req: Request, res: Response) {
         const { fields, id } = req.body || {};
-        const usecase = new UpdateLogUsecase(new LogDiaryRepository());
-        const result = await usecase.exec(id, fields);
-        if (result.err) {
-            return res.status(result.err.status).json({
-                message: result.err.message,
-                errors: result.err.errors,
-            });
+        const userId = req.session?.user?.id;
+        if (!userId) {
+            return res.status(400).json({ message: "User authentication failed" });
         }
-        res.json(result.res);
+        if (!id || !fields) {
+            return res.status(400).json({ message: "Nothing to change" });
+        }
+        try {
+            const usecase = new UpdateLogUsecase(new LogDiaryRepository());
+            await usecase.exec(id, userId, fields);
+            res.json({ message: "ok" });
+        } catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
     }
 }

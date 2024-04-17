@@ -15,6 +15,10 @@ export class LogDiaryRepository extends Repository<LogDiaryModel> implements ILo
         return this.find({ where: { userId } });
     }
 
+    public async findById(id: string): Promise<LogDiary> {
+        return this.findOne({ where: { id } });
+    }
+
     public findByUserEmail(email: string) {
         return this.find({ where: { user: { email } } });
     }
