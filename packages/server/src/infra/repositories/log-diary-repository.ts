@@ -2,7 +2,7 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { InjectorFactory } from "../../utils";
 import { LogDiaryModel } from "../models/log-diary-model";
-import { LogDiary } from "../../domain/LogDiary";
+import { LogDiary } from "../../domain/log-diary";
 import { ILogDiaryRepository } from "../../usecases/repositories/log-diary-repository";
 
 @EntityRepository(LogDiaryModel)

@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 
 @Entity({ name: "users" })
-export default class User {
+export class UserModel {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;
 
@@ -46,7 +46,7 @@ export default class User {
     })
     public createdAt!: Date;
 
-    public static build(this: new () => User, params: Partial<User>): User {
+    public static build(this: new () => UserModel, params: Partial<UserModel>): UserModel {
         return Object.assign(new this(), params);
     }
 }

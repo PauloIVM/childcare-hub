@@ -1,4 +1,4 @@
-import { LogDiary } from "../../domain/LogDiary";
+import { LogDiary } from "../../domain/log-diary";
 import { ILogDiaryRepository } from "../repositories/log-diary-repository";
 import { ok, error } from "../../utils";
 

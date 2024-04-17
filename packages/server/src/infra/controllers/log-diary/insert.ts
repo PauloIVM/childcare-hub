@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { LogDiaryRepository } from "../../../infra/repositories/log-diary-repository";
 import { InsertLogUsecase } from "../../../usecases/log-diary/insert";
-import { LogDiary } from "../../../domain/LogDiary";
+import { LogDiary } from "../../../domain/log-diary";
 
 export class InsertLogDiaryController {
     constructor() {}

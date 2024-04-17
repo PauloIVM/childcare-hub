@@ -9,8 +9,8 @@ import {
     CreateDateColumn,
     Index
 } from "typeorm";
-import User from "./user-model";
-import { LogDiary } from "../../domain/LogDiary";
+import { UserModel } from "./user-model";
+import { LogDiary } from "../../domain/log-diary";
 
 @Entity({ name: "log_diary" })
 export class LogDiaryModel implements LogDiary {
@@ -25,9 +25,9 @@ export class LogDiaryModel implements LogDiary {
     })
     public userId!: string;
 
-    @ManyToOne(() => User, (user) => user.id)
+    @ManyToOne(() => UserModel, (user) => user.id)
     @JoinColumn({ name: "user_id" })
-    user!: User;
+    user!: UserModel;
 
     @Column({
         type: "varchar",

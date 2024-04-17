@@ -1,4 +1,4 @@
-import { LogDiary } from "../../domain/LogDiary";
+import { LogDiary } from "../../domain/log-diary";
 
 export interface ILogDiaryRepository {
     findByUserId(userId: string): Promise<LogDiary[]>;
