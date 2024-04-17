@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
-import { DeleteLogUsecase } from "../../../usecases/baby-record/delete";
+import { DeleteBabyRecordUsecase } from "../../../usecases/baby-record/delete";
 
 export class DeleteBabyRecordController {
     constructor() {}
@@ -15,7 +15,7 @@ export class DeleteBabyRecordController {
             return res.status(400).json({ message: "Nothing to delete" });
         }
         try {
-            const usecase = new DeleteLogUsecase(new BabyRecordRepository());
+            const usecase = new DeleteBabyRecordUsecase(new BabyRecordRepository());
             await usecase.exec(id, userId);
             res.json({ message: "ok" });
         } catch (error) {

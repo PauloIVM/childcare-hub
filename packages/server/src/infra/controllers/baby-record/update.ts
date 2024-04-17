@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
-import { UpdateLogUsecase } from "../../../usecases/baby-record/update";
+import { UpdateBabyRecordUsecase } from "../../../usecases/baby-record/update";
 
 export class UpdateBabyRecordController {
     constructor() {}
@@ -15,7 +15,7 @@ export class UpdateBabyRecordController {
             return res.status(400).json({ message: "Nothing to change" });
         }
         try {
-            const usecase = new UpdateLogUsecase(new BabyRecordRepository());
+            const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());
             await usecase.exec(id, userId, fields);
             res.json({ message: "ok" });
         } catch (error) {

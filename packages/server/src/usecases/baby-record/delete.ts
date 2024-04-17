@@ -1,6 +1,6 @@
 import { IBabyRecordRepository } from "../repositories/baby-record-repository";
 
-export class DeleteLogUsecase {
+export class DeleteBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
     constructor(babyRecordRepository: IBabyRecordRepository) {
         this.babyRecordRepository = babyRecordRepository.getCustomRepository();
@@ -8,16 +8,16 @@ export class DeleteLogUsecase {
 
     async exec(id: string, userId: string) {
         try {
-            const logToChange = await this.babyRecordRepository.findById(id);
-            if (userId !== logToChange.userId) {
-                throw new Error("You have not permission to delete this log");
+            const recordToChange = await this.babyRecordRepository.findById(id);
+            if (userId !== recordToChange.userId) {
+                throw new Error("You have not permission to delete this record");
             }
-            const result = await this.babyRecordRepository.deleteLog(id);
+            const result = await this.babyRecordRepository.deleteRecord(id);
             if (!result) {
-                throw new Error("Failed to delete log on 'babyRecordRepository.insertLog'");    
+                throw new Error("Failed to delete record on 'babyRecordRepository.delete'");    
             }
         } catch (error) {
-            throw new Error("Failed to delete log on 'babyRecordRepository.insertLog'");
+            throw new Error("Failed to delete record on 'babyRecordRepository.delete'");
         }
     }
 }

@@ -1,3 +1,3 @@
-export { DeleteLogUsecase } from "./delete";
-export { InsertLogUsecase } from "./insert";
-export { UpdateLogUsecase } from "./update";
+export { DeleteBabyRecordUsecase } from "./delete";
+export { InsertBabyRecordUsecase } from "./insert";
+export { UpdateBabyRecordUsecase } from "./update";

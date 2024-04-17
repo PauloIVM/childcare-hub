@@ -23,8 +23,8 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return this.find({ where: { user: { email } } });
     }
 
-    public async insertLog({ action, observations, init, end, userId }: BabyRecord) {
-        const log = BabyRecordModel.build({
+    public async insertRecord({ action, observations, init, end, userId }: BabyRecord) {
+        const record = BabyRecordModel.build({
             action,
             observations,
             init,
@@ -33,23 +33,20 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             createdAt: new Date(),
             updatedAt: new Date()
         });
-        await this.save(log);
-        // TODO: Adicionar um try-catch e em caso de um error, lançar um exceção com
-        // uma mensagem que deverá ser capturada lá no controller...
+        await this.save(record);
         return true;
     }
 
-    public async updateLog(id: string, fields: Partial<BabyRecord>) {
+    public async updateRecord(id: string, fields: Partial<BabyRecord>) {
         const result = await this.createQueryBuilder()
             .update(BabyRecordModel)
             .set(fields)
             .where({ id })
             .execute();
-        // TODO: O que é retornado se houver um error? Conferir aqui...
         return !!result.affected;
     }
 
-    public async deleteLog(id: string) {
+    public async deleteRecord(id: string) {
         const result = await this.createQueryBuilder()
             .delete()
             .from(BabyRecordModel)

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
-import { InsertLogUsecase } from "../../../usecases/baby-record/insert";
+import { InsertBabyRecordUsecase } from "../../../usecases/baby-record/insert";
 import { BabyRecord } from "../../../domain/baby-record";
 
 export class InsertBabyRecordController {
@@ -8,16 +8,16 @@ export class InsertBabyRecordController {
 
     async exec(req: Request, res: Response) {
         // INFO: Interface-adapter - Como isolar isso melhor??
-        let log: BabyRecord;
+        let record: BabyRecord;
         try {
-            log = this.parseReqBody(req);
+            record = this.parseReqBody(req);
         } catch (error) {
             return res.status(400).json({ message: error.message });
         }
         // INFO: Fim do interface-adapter
         try {
-            const usecase = new InsertLogUsecase(new BabyRecordRepository());
-            await usecase.exec(log);
+            const usecase = new InsertBabyRecordUsecase(new BabyRecordRepository());
+            await usecase.exec(record);
             res.json({ message: "ok" });
         } catch (error) {
             return res.status(400).json({ message: error.message });
@@ -42,7 +42,7 @@ export class InsertBabyRecordController {
             throw new Error("User authentication failed");
         }
         if (!isAllStringFields) {
-            throw new Error("Invalid some log field type");
+            throw new Error("Invalid some record field type");
         }
         const initAsDate = new Date(init);
         const endAsDate = new Date(end);
@@ -50,7 +50,7 @@ export class InsertBabyRecordController {
             return d instanceof Date && !isNaN(d.getDate());
         }
         if (!isValidDate(initAsDate) || !isValidDate(endAsDate)) {
-            throw new Error("Failed to build log init/end fields");
+            throw new Error("Failed to build record init/end fields");
         }
         return new BabyRecord(
             userId,

@@ -1,20 +1,20 @@
 import { BabyRecord } from "../../domain/baby-record";
 import { IBabyRecordRepository } from "../repositories/baby-record-repository";
 
-export class InsertLogUsecase {
+export class InsertBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
     constructor(babyRecordRepository: IBabyRecordRepository) {
         this.babyRecordRepository = babyRecordRepository.getCustomRepository();
     }
 
-    async exec(log: BabyRecord) {
+    async exec(record: BabyRecord) {
         try {
-            const result = await this.babyRecordRepository.insertLog(log);
+            const result = await this.babyRecordRepository.insertRecord(record);
             if (!result) {
-                throw new Error("Failed to insert log on 'babyRecordRepository.insertLog'");    
+                throw new Error("Failed to insert record on 'babyRecordRepository.insert'");    
             }
         } catch (error) {
-            throw new Error("Failed to insert log on 'babyRecordRepository.insertLog'");
+            throw new Error("Failed to insert record on 'babyRecordRepository.insert'");
         }
     }
 }
