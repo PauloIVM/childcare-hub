@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { LogDiaryRepository } from "../../../infra/repositories/log-diary-repository";
-import { UpdateLogUsecase } from "../../../usecases/log-diary/update";
+import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
+import { UpdateLogUsecase } from "../../../usecases/baby-record/update";
 
-export class UpdateLogDiaryController {
+export class UpdateBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
@@ -15,7 +15,7 @@ export class UpdateLogDiaryController {
             return res.status(400).json({ message: "Nothing to change" });
         }
         try {
-            const usecase = new UpdateLogUsecase(new LogDiaryRepository());
+            const usecase = new UpdateLogUsecase(new BabyRecordRepository());
             await usecase.exec(id, userId, fields);
             res.json({ message: "ok" });
         } catch (error) {

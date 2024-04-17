@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from "typeorm";
 
-export class CreateLogDiary1713269480952 implements MigrationInterface {
+export class CreateBabyRecord1713269480952 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "log_diary",
+                name: "baby_record",
                 columns: [
                     {
                         name: "id",
@@ -52,15 +52,15 @@ export class CreateLogDiary1713269480952 implements MigrationInterface {
         );
 
         await queryRunner.createIndex(
-            "log_diary",
+            "baby_record",
             new TableIndex({
-                name: "log_diary_user_index",
+                name: "baby_record_user_index",
                 columnNames: ["user_id"],
             }),
         );
 
         await queryRunner.createForeignKey(
-            "log_diary",
+            "baby_record",
             new TableForeignKey({
                 name: "user_id_fk",
                 columnNames: ["user_id"],
@@ -74,10 +74,10 @@ export class CreateLogDiary1713269480952 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropIndex(
-            "log_diary",
-            "log_diary_user_index",
+            "baby_record",
+            "baby_record_user_index",
         );
-        await queryRunner.dropTable("log_diary");
+        await queryRunner.dropTable("baby_record");
     }
 
 }

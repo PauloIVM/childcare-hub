@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import { LogDiaryRepository } from "../../../infra/repositories/log-diary-repository";
-import { InsertLogUsecase } from "../../../usecases/log-diary/insert";
-import { LogDiary } from "../../../domain/log-diary";
+import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
+import { InsertLogUsecase } from "../../../usecases/baby-record/insert";
+import { BabyRecord } from "../../../domain/baby-record";
 
-export class InsertLogDiaryController {
+export class InsertBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
         // INFO: Interface-adapter - Como isolar isso melhor??
-        let log: LogDiary;
+        let log: BabyRecord;
         try {
             log = this.parseReqBody(req);
         } catch (error) {
@@ -16,7 +16,7 @@ export class InsertLogDiaryController {
         }
         // INFO: Fim do interface-adapter
         try {
-            const usecase = new InsertLogUsecase(new LogDiaryRepository());
+            const usecase = new InsertLogUsecase(new BabyRecordRepository());
             await usecase.exec(log);
             res.json({ message: "ok" });
         } catch (error) {
@@ -24,7 +24,7 @@ export class InsertLogDiaryController {
         }
     }
 
-    private parseReqBody(req: Request): LogDiary {
+    private parseReqBody(req: Request): BabyRecord {
         // TODO: Futuramente talvez seja legal eu não puxar esse "session" via middleware,
         // mas via algum service ou usecase. Contudo, pra eu fazer isso, acho q eu mesmo
         // teria que implementar esse tratamento que é feito por essa lib.
@@ -52,7 +52,7 @@ export class InsertLogDiaryController {
         if (!isValidDate(initAsDate) || !isValidDate(endAsDate)) {
             throw new Error("Failed to build log init/end fields");
         }
-        return new LogDiary(
+        return new BabyRecord(
             userId,
             action,
             observations,

@@ -1,4 +1,4 @@
-export class LogDiary {
+export class BabyRecord {
     public readonly userId: string;
     public readonly action: string;
     public readonly observations: string;

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { LogDiaryRepository } from "../../../infra/repositories/log-diary-repository";
-import { DeleteLogUsecase } from "../../../usecases/log-diary/delete";
+import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
+import { DeleteLogUsecase } from "../../../usecases/baby-record/delete";
 
-export class DeleteLogDiaryController {
+export class DeleteBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
@@ -15,7 +15,7 @@ export class DeleteLogDiaryController {
             return res.status(400).json({ message: "Nothing to delete" });
         }
         try {
-            const usecase = new DeleteLogUsecase(new LogDiaryRepository());
+            const usecase = new DeleteLogUsecase(new BabyRecordRepository());
             await usecase.exec(id, userId);
             res.json({ message: "ok" });
         } catch (error) {

@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { InjectorFactory } from "../../utils";
-import { LogDiaryModel } from "../models/log-diary-model";
-import { LogDiary } from "../../domain/log-diary";
-import { ILogDiaryRepository } from "../../usecases/repositories/log-diary-repository";
+import { BabyRecordModel } from "../models/baby-record-model";
+import { BabyRecord } from "../../domain/baby-record";
+import { IBabyRecordRepository } from "../../usecases/repositories/baby-record-repository";
 
-@EntityRepository(LogDiaryModel)
-export class LogDiaryRepository extends Repository<LogDiaryModel> implements ILogDiaryRepository {
+@EntityRepository(BabyRecordModel)
+export class BabyRecordRepository extends Repository<BabyRecordModel> implements IBabyRecordRepository {
     public getCustomRepository() {
-        return getCustomRepository(LogDiaryRepository);
+        return getCustomRepository(BabyRecordRepository);
     }
 
-    public async findByUserId(userId: string): Promise<LogDiary[]> {
+    public async findByUserId(userId: string): Promise<BabyRecord[]> {
         return this.find({ where: { userId } });
     }
 
-    public async findById(id: string): Promise<LogDiary> {
+    public async findById(id: string): Promise<BabyRecord> {
         return this.findOne({ where: { id } });
     }
 
@@ -23,8 +23,8 @@ export class LogDiaryRepository extends Repository<LogDiaryModel> implements ILo
         return this.find({ where: { user: { email } } });
     }
 
-    public async insertLog({ action, observations, init, end, userId }: LogDiary) {
-        const log = LogDiaryModel.build({
+    public async insertLog({ action, observations, init, end, userId }: BabyRecord) {
+        const log = BabyRecordModel.build({
             action,
             observations,
             init,
@@ -39,9 +39,9 @@ export class LogDiaryRepository extends Repository<LogDiaryModel> implements ILo
         return true;
     }
 
-    public async updateLog(id: string, fields: Partial<LogDiary>) {
+    public async updateLog(id: string, fields: Partial<BabyRecord>) {
         const result = await this.createQueryBuilder()
-            .update(LogDiaryModel)
+            .update(BabyRecordModel)
             .set(fields)
             .where({ id })
             .execute();
@@ -52,11 +52,11 @@ export class LogDiaryRepository extends Repository<LogDiaryModel> implements ILo
     public async deleteLog(id: string) {
         const result = await this.createQueryBuilder()
             .delete()
-            .from(LogDiaryModel)
+            .from(BabyRecordModel)
             .where({ id })
             .execute();
         return !!result.affected;
     }
 }
 
-export const userRepositoryFactory = new InjectorFactory(LogDiaryRepository);
+export const userRepositoryFactory = new InjectorFactory(BabyRecordRepository);

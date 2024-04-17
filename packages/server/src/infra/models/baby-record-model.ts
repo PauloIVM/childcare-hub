@@ -10,10 +10,10 @@ import {
     Index
 } from "typeorm";
 import { UserModel } from "./user-model";
-import { LogDiary } from "../../domain/log-diary";
+import { BabyRecord } from "../../domain/baby-record";
 
-@Entity({ name: "log_diary" })
-export class LogDiaryModel implements LogDiary {
+@Entity({ name: "baby_record" })
+export class BabyRecordModel implements BabyRecord {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;
 
@@ -70,7 +70,7 @@ export class LogDiaryModel implements LogDiary {
     })
     public createdAt!: Date;
 
-    public static build(this: new () => LogDiaryModel, params: Partial<LogDiaryModel>): LogDiaryModel {
+    public static build(this: new () => BabyRecordModel, params: Partial<BabyRecordModel>): BabyRecordModel {
         return Object.assign(new this(), params);
     }
 }
