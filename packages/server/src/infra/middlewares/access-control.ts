@@ -6,6 +6,8 @@ export function accessControlMiddleware(
     next: NextFunction,
 ) {
     // TODO: use lib https://github.com/expressjs/cors
+    // TODO: Condicionar para aceitar o localhost apenas se estiver rodando local...
+    // res.header("Access-Control-Allow-Origin", "*");
     const allowedOrigins = ["http://localhost:3000"];
     if (req.headers.origin) {
         const origin = req.headers.origin;

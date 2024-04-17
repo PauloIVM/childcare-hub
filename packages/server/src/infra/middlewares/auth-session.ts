@@ -2,12 +2,23 @@ import { RequestHandler, Request, Response, NextFunction } from "express";
 import session from "express-session";
 import { TypeormStore } from "connect-typeorm";
 import { sessionRepositoryFactory } from "../repositories/session-repository";
+import User from "../../domain/User";
+
+declare module 'express-session' {
+    interface SessionData {
+      user: User;
+    }
+}
 
 interface Settings {
     secret: string;
     cookieDomain: string;
     cookieMaxAge?: number;
 }
+
+// TODO: Implementar minha própria versão do 'express-session', vai me permitir
+// tratar isso em um usecase ou domain, e sem ter q ser via middleware dependendo
+// do express
 
 function authSession({
     secret,

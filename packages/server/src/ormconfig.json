@@ -11,5 +11,5 @@
     "cli": {
         "migrationsDir": "src/migrations"
     },
-    "entities": ["build/entities/**/*.js"]
+    "entities": ["build/infra/models/**/*.js"]
 }

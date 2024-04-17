@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { InjectorFactory } from "../utils";
-import User from "../entities/user-entity";
+import { InjectorFactory } from "../../utils";
+import User from "../models/user-model";
 import bcryptjs from "bcryptjs";
 
 @EntityRepository(User)

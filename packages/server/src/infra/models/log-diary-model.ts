@@ -9,10 +9,11 @@ import {
     CreateDateColumn,
     Index
 } from "typeorm";
-import User from "./user-entity";
+import User from "./user-model";
+import { LogDiary } from "../../domain/LogDiary";
 
 @Entity({ name: "log_diary" })
-export default class LogDiary {
+export class LogDiaryModel implements LogDiary {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;
 
@@ -69,7 +70,7 @@ export default class LogDiary {
     })
     public createdAt!: Date;
 
-    public static build(this: new () => LogDiary, params: Partial<LogDiary>): LogDiary {
+    public static build(this: new () => LogDiaryModel, params: Partial<LogDiaryModel>): LogDiaryModel {
         return Object.assign(new this(), params);
     }
 }

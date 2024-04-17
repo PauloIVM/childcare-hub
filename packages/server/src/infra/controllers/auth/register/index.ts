@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
-import { ILogin } from "../../../usecases/auth";
+import { IRegister } from "../../../../usecases/auth";
 
-export class LoginController {
-    private loginUsecase: ILogin;
-    constructor(login: ILogin) {
-        this.loginUsecase = login;
+export class RegisterController {
+    private registerUsecase: IRegister;
+    constructor(register: IRegister) {
+        this.registerUsecase = register;
     }
 
     async exec(req: Request, res: Response) {
-        const { email, password } = req.body?.user || {};
-        const result = await this.loginUsecase.exec({
-            email,
-            password,
+        const result = await this.registerUsecase.exec({
+            user: req.body?.user,
             session: req.session,
         });
         if (result.err) {
