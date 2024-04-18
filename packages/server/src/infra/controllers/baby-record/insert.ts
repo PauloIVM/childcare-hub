@@ -24,6 +24,8 @@ export class InsertBabyRecordController {
         }
     }
 
+    // TODO: Acho q esse método aqui n ficou muito legal... preciso descobrir como capturar
+    // o error e então definir o status-code.
     private parseReqBody(req: Request): BabyRecord {
         // TODO: Futuramente talvez seja legal eu não puxar esse "session" via middleware,
         // mas via algum service ou usecase. Contudo, pra eu fazer isso, acho q eu mesmo

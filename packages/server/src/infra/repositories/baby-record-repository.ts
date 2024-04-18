@@ -11,14 +11,23 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return getCustomRepository(BabyRecordRepository);
     }
 
-    public async findByUserId(userId: string): Promise<BabyRecord[]> {
-        return this.find({ where: { userId } });
+    // TODO: Instanciar a entidade BabyRecord
+    public async findByUserId(userId: string, skip: number = 0, limit: number): Promise<BabyRecord[]> {
+        const maxLimit = 100;
+        return this.find({
+            where: { userId },
+            order: { init: "ASC" },
+            skip,
+            take: limit <= maxLimit ? limit : maxLimit
+        });
     }
 
+    // TODO: Instanciar a entidade BabyRecord
     public async findById(id: string): Promise<BabyRecord> {
         return this.findOne({ where: { id } });
     }
 
+    // TODO: Instanciar a entidade BabyRecord
     public findByUserEmail(email: string) {
         return this.find({ where: { user: { email } } });
     }

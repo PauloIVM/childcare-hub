@@ -9,7 +9,7 @@ export class DeleteBabyRecordController {
         const id = req.body?.id;
         const userId = req.session?.user?.id;
         if (!userId) {
-            return res.status(400).json({ message: "User authentication failed" });
+            return res.status(401).json({ message: "User authentication failed" });
         }
         if (!id) {
             return res.status(400).json({ message: "Nothing to delete" });

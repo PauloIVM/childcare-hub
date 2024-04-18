@@ -9,7 +9,7 @@ export class UpdateBabyRecordController {
         const { fields, id } = req.body || {};
         const userId = req.session?.user?.id;
         if (!userId) {
-            return res.status(400).json({ message: "User authentication failed" });
+            return res.status(401).json({ message: "User authentication failed" });
         }
         if (!id || !fields) {
             return res.status(400).json({ message: "Nothing to change" });
