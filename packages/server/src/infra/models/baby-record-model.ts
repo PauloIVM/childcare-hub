@@ -35,7 +35,6 @@ export class BabyRecordModel implements BabyRecord {
         length: 150,
         nullable: true,
     })
-    // TODO: Tem como passar essa validação pro DB pra garantir mais integridade?
     public action!: string;
 
     @Column({
