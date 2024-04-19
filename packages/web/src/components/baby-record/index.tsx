@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import * as Styles from "./style";
+import { Accordion } from "../accordion";
 import { Box } from "../box";
 import { Pagination, Divider } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
 import { fetchRecords } from "../../api/baby-record";
 import { IFetchRecordResponse } from "../../api/baby-record/types";
 import { Record } from "./parts/record";
+import * as Styles from "./style";
 
 export function BabyRecord() {
     const limit = 5;
@@ -27,10 +28,15 @@ export function BabyRecord() {
         <Box>
             <Styles.Container>
                 <Styles.AddRecordWrapper>
-                    <Styles.RecordItem>{"Adicionar evento..."}</Styles.RecordItem>
-                    <Styles.RecordItem>
-                        <AddCircle />
-                    </Styles.RecordItem>
+                    <Accordion
+                        icon={<AddCircle />}
+                        summary={
+                            <Styles.RecordItem>{"Adicionar evento..."}</Styles.RecordItem>
+                        }
+                        details={
+                            "teste"
+                        }
+                    />
                 </Styles.AddRecordWrapper>
                 <Divider />
                 <Styles.RecordsWrapper>

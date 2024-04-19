@@ -30,6 +30,7 @@ export function Record({ id, action, init, end, observations }: RecordProps) {
     function onClickDelete() {
         setShow(false);
         deleteRecord({ recordId: id });
+        // TODO: Caso falhe em deletar, mostrar isso em um popup ou similar...
     }
 
     return (
