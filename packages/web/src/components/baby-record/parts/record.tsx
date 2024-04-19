@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import * as Styles from "../style";
+import { Accordion } from "../../accordion";
 import { Tooltip } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
 import { Fade } from "@mui/material";
 import { deleteRecord } from "../../../api/baby-record";
+import * as Styles from "../style";
 
 // TODO: Adicionar skeleton e outros ajustes finos de design...
 // TODO: Criar variação pro componente sem o "end"... os ícones viram
@@ -35,25 +36,32 @@ export function Record({ id, action, init, end, observations }: RecordProps) {
 
     return (
         <Fade in={show} timeout={500}>
-            <Styles.RecordWrapper>
-                <Styles.RecordName><p>{action}</p></Styles.RecordName>
-                <Styles.RecordDateWrapper>
-                    <Styles.RecordDate>{`${initParsed} a ${endParsed}`}</Styles.RecordDate>
-                    <Styles.RecordDate>{date}</Styles.RecordDate>
-                </Styles.RecordDateWrapper>
-                <Styles.IconsWrapper>
-                    <Tooltip
-                        placement={"top-end"}
-                        title={observations}
-                        leaveTouchDelay={10000}
-                        enterTouchDelay={100}
-                    >
-                        <Info />
-                    </Tooltip>
-                    <Edit color={"success"} />
-                    <Delete color={"error"} onClick={onClickDelete} />
-                </Styles.IconsWrapper>
-            </Styles.RecordWrapper>
+            <Styles.RecordRoot>
+            <Accordion
+                icon={<Edit color={"success"} />}
+                summary={
+                    <Styles.RecordWrapper>
+                        <Styles.RecordName><p>{action}</p></Styles.RecordName>
+                        <Styles.RecordDateWrapper>
+                            <Styles.RecordDate>{`${initParsed} a ${endParsed}`}</Styles.RecordDate>
+                            <Styles.RecordDate>{date}</Styles.RecordDate>
+                        </Styles.RecordDateWrapper>
+                        <Styles.IconsWrapper>
+                            <Tooltip
+                                placement={"top-end"}
+                                title={observations}
+                                leaveTouchDelay={10000}
+                                enterTouchDelay={100}
+                            >
+                                <Info />
+                            </Tooltip>
+                            <Delete color={"error"} onClick={onClickDelete} />
+                        </Styles.IconsWrapper>
+                    </Styles.RecordWrapper>
+                }
+                details={"teste"}
+            />
+            </Styles.RecordRoot>
         </Fade>
     );
 }

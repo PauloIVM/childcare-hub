@@ -15,7 +15,7 @@ export const Container = styled.div`
     }
 `;
 
-export const RecordWrapper = styled.div`
+export const RecordRoot = styled.div`
     display: flex;
     flex-direction: row;
     width: -webkit-fill-available;
@@ -24,6 +24,13 @@ export const RecordWrapper = styled.div`
     padding: 12px;
     justify-content: space-between;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+`;
+
+export const RecordWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
 `;
 
 export const RecordsWrapper = styled.div`
@@ -45,6 +52,8 @@ export const IconsWrapper = styled.div`
     display: flex;
     flex-direction: row;
     gap: 6px;
+    align-items: center;
+    margin-right: 6px;
 `;
 
 export const AddRecordWrapper = styled(RecordWrapper)`
