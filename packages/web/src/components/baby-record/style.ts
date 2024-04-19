@@ -63,11 +63,22 @@ export const RecordItem = styled.div`
 `;
 
 export const RecordName = styled(RecordItem)`
-    width: 80px;
+    width: 30%;
     border-radius: 15px;
     color: #F7EFDA;
     background-color: #2E3B4F;
     justify-content: center;
+    & p {
+        margin: 0px;
+        padding: 0px 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        @media (max-width: 768px) {
+            font-size: 12px;
+        }
+    }
 `;
 
 export const RecordDateWrapper = styled.div`

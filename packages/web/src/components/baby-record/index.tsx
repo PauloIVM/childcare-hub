@@ -42,7 +42,7 @@ export function BabyRecord() {
                         const date = r.init.toLocaleDateString();
                         return (
                             <Styles.RecordWrapper key={i}>
-                                <Styles.RecordName>{r.action}</Styles.RecordName>
+                                <Styles.RecordName><p>{r.action}</p></Styles.RecordName>
                                 <Styles.RecordDateWrapper>
                                     <Styles.RecordDate>{`${init} a ${end}`}</Styles.RecordDate>
                                     <Styles.RecordDate>{date}</Styles.RecordDate>
