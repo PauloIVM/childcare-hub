@@ -1,11 +1,8 @@
 import Head from "next/head";
-import { Navbar } from "../components/navbar";
-import { NavbarBottom } from "../components/navbar-bottom";
 import { PageHero } from "../components/page-hero";
-import { AntiFlickLoader } from "../components/anti-flick-loader";
 import { Posts as PostsComponent } from "../components/posts";
-import { Divider } from "@mui/material";
-import styled from "styled-components";
+import { ColumnAdsLayout } from "../layouts";
+
 
 interface PostsProps {}
 
@@ -15,75 +12,6 @@ interface PostsProps {}
 
 // TODO: Aparentemente o "page-hero" está usando uma section... se eu for mantê-lo dentro
 //       de um container, a semantica então está errada. Trocar.
-
-const MainWrapper = styled.div`
-    display: flex;
-    gap: 20px;
-    background-color: #DEDBD5;
-    padding: 20px;
-    justify-content: center;
-    @media (max-width: 768px) {
-        padding: 12px;
-    }
-`;
-
-const LeftWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const LeftAccount = styled.div`
-    background-color: #FFFFFF;
-    min-width: 220px;
-    min-height: 250px;
-    max-height: 250px;
-    border-radius: 4px;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-`;
-
-const LeftDisclaimer = styled.div`
-    background-color: #FFFFFF;
-    min-width: 220px;
-    min-height: 60px;
-    max-height: 60px;
-    border-radius: 4px;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-`;
-
-const LeftAds = styled.div`
-    position: sticky;
-    top: 76px;
-    background-color: #FFFFFF;
-    min-width: 220px;
-    min-height: 250px;
-    max-height: 250px;
-    border-radius: 4px;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-`;
-
-const MidWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    max-width: 700px;
-`;
-
-const RightWrapper = styled.div`
-    position: sticky;
-    top: 76px;
-    background-color: #FFFFFF;
-    max-height: 550px;
-    min-width: 220px;
-    border-radius: 4px;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
 
 export default function Home({}: PostsProps) {
     return (
@@ -95,22 +23,10 @@ export default function Home({}: PostsProps) {
                 <link rel={"icon"} href={"/favicon.svg"} />
             </Head>
             <main>
-                <AntiFlickLoader />
-                <Navbar />
-                <MainWrapper>
-                    <LeftWrapper>
-                        <LeftAccount />
-                        <LeftDisclaimer />
-                        <LeftAds>{"ADS"}</LeftAds>
-                    </LeftWrapper>
-                    <MidWrapper>
-                        <PageHero />
-                        <Divider sx={{ borderColor: "#2E3B4F", margin: "12px 0px" }} />
-                        <PostsComponent />
-                    </MidWrapper>
-                    <RightWrapper>{"ADS"}</RightWrapper>
-                </MainWrapper>
-                <NavbarBottom />
+                <ColumnAdsLayout
+                    pageHero={<PageHero />}
+                    body={<PostsComponent />}
+                />
             </main>
         </>
     );
