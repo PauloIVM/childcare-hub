@@ -34,9 +34,17 @@ export const RecordsWrapper = styled.div`
     flex-direction: column;
     width: -webkit-fill-available;
     gap: 10px;
+    min-height: 330px;
     @media (max-width: 768px) {
+        min-height: 310px;
         gap: 6px;
     }
+`;
+
+export const IconsWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
 `;
 
 export const AddRecordWrapper = styled(RecordWrapper)`
@@ -50,13 +58,28 @@ export const AddRecordWrapper = styled(RecordWrapper)`
 export const RecordItem = styled.div`
     display: flex;
     align-items: center;
-    min-height: 24px;
+    min-height: 30px;
+    white-space: nowrap;
 `;
 
 export const RecordName = styled(RecordItem)`
-    width: 100px;
-    border-radius: 12px;
+    width: 80px;
+    border-radius: 15px;
     color: #F7EFDA;
     background-color: #2E3B4F;
     justify-content: center;
+`;
+
+export const RecordDateWrapper = styled.div`
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    width: min-content;
+    justify-content: center;
+`;
+
+export const RecordDate = styled(RecordItem)`
+    font-size: 11px;
+    word-spacing: 3px;
+    min-height: unset;
 `;
