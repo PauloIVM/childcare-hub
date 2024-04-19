@@ -32,6 +32,10 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return this.find({ where: { user: { email } } });
     }
 
+    public async getCount(userId: string): Promise<number> {
+        return this.count({ where: { userId } });
+    }
+
     public async insertRecord({ action, observations, init, end, userId }: BabyRecord) {
         const record = BabyRecordModel.build({
             action,

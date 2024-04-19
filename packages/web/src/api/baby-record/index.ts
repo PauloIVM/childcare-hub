@@ -9,6 +9,7 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
     return {
         ok: result.status === 200,
         message: result.data.message,
+        count: result.data.count,
         records: result.data.records?.map((r: any) => ({
             id: r.id,
             action: r.action,

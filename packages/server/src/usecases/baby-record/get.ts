@@ -11,11 +11,12 @@ export class GetBabyRecordsUsecase {
         userId: string,
         skip: number,
         limit: number,
-    ): Promise<BabyRecord[]> {
+    ): Promise<{ records: BabyRecord[]; count: number; }> {
         try {
             const records = await this.babyRecordRepository
                 .findByUserId(userId, skip, limit);
-            return records;
+            const count = await this.babyRecordRepository.getCount(userId);
+            return { records, count };
         } catch (error) {
             throw new Error("Failed to get records on 'babyRecordRepository.findByUserId'");
         }

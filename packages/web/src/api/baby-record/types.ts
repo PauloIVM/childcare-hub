@@ -6,6 +6,7 @@ export interface IFetchRecordInput {
 export interface IFetchRecordResponse {
     ok: boolean;
     message: string;
+    count: number;
     records: {
         id: string;
         action: string;
