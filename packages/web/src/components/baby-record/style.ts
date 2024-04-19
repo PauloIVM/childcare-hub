@@ -56,7 +56,7 @@ export const IconsWrapper = styled.div`
     margin-right: 6px;
 `;
 
-export const AddRecordWrapper = styled(RecordWrapper)`
+export const AddRecordWrapper = styled(RecordRoot)`
     background: linear-gradient(67deg, #d2e8fc 22%, #b6d9fc 90%);
     &:hover {
         background: linear-gradient(67deg, #b6c9da 22%, #97b4d1 90%);
