@@ -32,6 +32,9 @@ export const RecordsWrapper = styled.div`
     width: -webkit-fill-available;
     gap: 10px;
     min-height: 330px;
+    & svg {
+        cursor: pointer;
+    }
     @media (max-width: 768px) {
         min-height: 310px;
         gap: 6px;

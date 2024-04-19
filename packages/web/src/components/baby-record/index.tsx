@@ -34,12 +34,10 @@ export function BabyRecord() {
                 </Styles.AddRecordWrapper>
                 <Divider />
                 <Styles.RecordsWrapper>
-                    {records?.map((r, i) => <Record key={i} {...r} />)}
+                    {records?.map((r, i) => <Record key={`${page}${i}`} {...r} />)}
                 </Styles.RecordsWrapper>
                 <Pagination count={count} page={page} onChange={(_, p) => setPage(p)} />
             </Styles.Container>
         </Box>
-        // <Styles.Root>
-        // </Styles.Root>
     );
 }
