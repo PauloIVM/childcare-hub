@@ -16,7 +16,7 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         const maxLimit = 100;
         return this.find({
             where: { userId },
-            order: { init: "ASC" },
+            order: { init: "DESC" },
             skip,
             take: limit <= maxLimit ? limit : maxLimit
         });
