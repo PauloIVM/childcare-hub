@@ -10,7 +10,7 @@ export interface IFetchRecordResponse {
     records: {
         id: string;
         action: string;
-        observations?: string;
+        observations: string;
         init: Date;
         end?: Date;
     }[];

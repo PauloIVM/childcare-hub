@@ -2,13 +2,11 @@ import React, { useEffect } from "react";
 import * as Styles from "./style";
 import { Box } from "../box";
 import { Pagination, Divider } from "@mui/material";
-import { Delete, Edit, AddCircle, Info } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material";
 import { fetchRecords } from "../../api/baby-record";
 import { IFetchRecordResponse } from "../../api/baby-record/types";
+import { Record } from "./parts/record";
 
-// TODO: Adicionar skeleton e outros ajustes finos de design...
-// TODO: Criar variação pro componente sem o "end"... os ícones viram
-//       todos um único ícone de check..
 export function BabyRecord() {
     const limit = 5;
     const [page, setPage] = React.useState<number>(1);
@@ -36,26 +34,7 @@ export function BabyRecord() {
                 </Styles.AddRecordWrapper>
                 <Divider />
                 <Styles.RecordsWrapper>
-                    {records?.map((r, i) => {
-                        const init = r.init.toLocaleTimeString().slice(0, 5);
-                        const end = r.end?.toLocaleTimeString().slice(0, 5) || "--:--";
-                        const date = r.init.toLocaleDateString();
-                        return (
-                            <Styles.RecordWrapper key={i}>
-                                <Styles.RecordName><p>{r.action}</p></Styles.RecordName>
-                                <Styles.RecordDateWrapper>
-                                    <Styles.RecordDate>{`${init} a ${end}`}</Styles.RecordDate>
-                                    <Styles.RecordDate>{date}</Styles.RecordDate>
-                                </Styles.RecordDateWrapper>
-                                {/* Esse info pode abrir um tooltip com as observações do evento... */}
-                                <Styles.IconsWrapper>
-                                    <Info />
-                                    <Edit />
-                                    <Delete />
-                                </Styles.IconsWrapper>
-                            </Styles.RecordWrapper>
-                        );
-                    })}
+                    {records?.map((r, i) => <Record key={i} {...r} />)}
                 </Styles.RecordsWrapper>
                 <Pagination count={count} page={page} onChange={(_, p) => setPage(p)} />
             </Styles.Container>

@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-export const Root = styled.div`
-`;
-
 export const Container = styled.div`
     display: flex;
     align-items: center;
@@ -68,6 +65,7 @@ export const RecordName = styled(RecordItem)`
     color: #F7EFDA;
     background-color: #2E3B4F;
     justify-content: center;
+    min-height: unset !important;
     & p {
         margin: 0px;
         padding: 0px 10px;
@@ -92,5 +90,5 @@ export const RecordDateWrapper = styled.div`
 export const RecordDate = styled(RecordItem)`
     font-size: 11px;
     word-spacing: 3px;
-    min-height: unset;
+    min-height: unset !important;
 `;
