@@ -4,6 +4,8 @@ import { Navbar } from "../../../components/navbar";
 import { NavbarBottom } from "../../../components/navbar-bottom";
 import { Container, Divider } from "@mui/material";
 import { AntiFlickLoader } from "../../../components/anti-flick-loader";
+import { Box } from "../../../components/box";
+import { BabyRecord } from "../../../components/baby-record";
 import styled from "styled-components";
 
 // TODO: Esses componentes styled estão sendo usados no index.tsx... reutilizar...
@@ -77,15 +79,6 @@ const RightWrapper = styled.div`
     }
 `;
 
-const Box = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-width: 260px;
-    background-color: #FFFFFF;
-    border-radius: 4px;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-`;
-
 export default function Tools() {
     const router = useRouter();
     return (
@@ -113,7 +106,7 @@ export default function Tools() {
                             </Container>
                         </Box>
                         <Divider sx={{ borderColor: "#2E3B4F", margin: "12px 0px" }} />
-                        <div>{"TODO: Criar componente..."}</div>
+                        <BabyRecord />
                     </MidWrapper>
                     <RightWrapper>{"ADS"}</RightWrapper>
                 </MainWrapper>
