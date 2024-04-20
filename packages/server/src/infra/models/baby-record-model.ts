@@ -41,7 +41,6 @@ export class BabyRecordModel implements BabyRecord {
         type: "varchar",
         name: "observations",
         length: 150,
-        nullable: true,
     })
     public observations!: string;
 

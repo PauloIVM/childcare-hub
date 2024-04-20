@@ -37,9 +37,9 @@ export class InsertBabyRecordController {
             init,
             end
         } = req.body as Record<string, string> || {};
-        const isAllStringFields = [userId, action, observations, init, end].every((e) => {
-            return typeof e === "string";
-        });
+        const isAllStringFields = [userId, action, observations, init, end]
+            .filter((e) => !!e)
+            .every((e) => typeof e === "string");
         if (!userId) {
             throw new Error("User authentication failed");
         }
@@ -51,7 +51,7 @@ export class InsertBabyRecordController {
         const isValidDate = (d: Date): boolean => {
             return d instanceof Date && !isNaN(d.getDate());
         }
-        if (!isValidDate(initAsDate) || !isValidDate(endAsDate)) {
+        if (!isValidDate(initAsDate) || (end && !isValidDate(endAsDate))) {
             throw new Error("Failed to build record init/end fields");
         }
         return new BabyRecord(

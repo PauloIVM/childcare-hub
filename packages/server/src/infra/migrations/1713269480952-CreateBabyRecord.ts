@@ -37,6 +37,7 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
                     {
                         name: "end_at",
                         type: "timestamp",
+                        isNullable: true,
                     },
                     {
                         name: "updated_at",
