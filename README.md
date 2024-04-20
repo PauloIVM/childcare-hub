@@ -2,19 +2,27 @@
 
 ## Quick Start
 
+TODO: Criar um .env, e um script q baseado nesse .env então cria o ormconfig já com as variáveis corretas. Daí o dev pode atualizar o .env antes de dar o build, e tbm funcionaria pra outras dependencias que surgirem, e não apenas o ormconfig.
+
+Instale as dependências:
 ```console
 yarn
 ```
 
-Entrar no my-sql e rodar `create database childcare;`.
-Alterar senha no "ormconfig.json" para sua senha local (NÃO COMITAR A SENHA Q ESTÁ LÁ).
+Entre no my-sql e rode `create database childcare;` (TODO: Tem como eu criar o databese IF NOT EXISTS via migration ??).
 
-No server (TODO: Adicionar isso no pipeline pra rodar automaticamente??):
+Em seguida, rode o comando abaixo. Ele fará o build, e criará um arquivo 'ormconfig.json'; nesse arquivo você precisará passar a senha do seu mysql local e alterar portas ou outras configurações conforme sua máquina.
+
 ```console
-yarn migration:run
+yarn workspace @childcare-hub/server build
 ```
 
-Na raiz:
+Rode as migrations:
+```console
+yarn workspace @childcare-hub/server migration:run
+```
+
+Na raiz, inicie a aplicação:
 ```console
 yarn dev
 ```

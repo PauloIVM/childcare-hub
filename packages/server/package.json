@@ -4,7 +4,7 @@
   "private": true,
   "author": "PauloIVM",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "yarn create:orm:file && tsc -p tsconfig.build.json",
     "start": "node ./build/index.js",
     "dev": "nodemon --watch 'src/' --exec 'yarn build && yarn start' -e .ts",
     "test": "jest --forceExit --coverage --no-cache --verbose",
@@ -12,7 +12,8 @@
     ":typeorm": "npx typeorm --config src/ormconfig.json",
     "migration:run": "yarn build && yarn :typeorm migration:run",
     "migration:create": "yarn :typeorm migration:create",
-    "start:debug": "nodemon --inspect src/index.ts"
+    "start:debug": "nodemon --inspect src/index.ts",
+    "create:orm:file": "test -f src/ormconfig.json || cp src/ormconfig.exemple.json src/ormconfig.json"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.5",
