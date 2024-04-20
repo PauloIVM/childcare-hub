@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Check } from "@mui/icons-material";
+import { iconButtonClasses } from "@mui/material";
+import { Pause } from "@mui/icons-material";
 
 export const Container = styled.div`
     display: flex;
@@ -25,13 +26,16 @@ export const RecordRoot = styled.div`
     padding: 12px;
     justify-content: space-between;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+    .${iconButtonClasses.root} {
+        padding: 0px;
+    }
 `;
 
 export const RecordConfirmRoot = styled(RecordRoot)`
     background-color: #E1E9F0 !important;
 `;
 
-export const CheckIcon = styled(Check)`
+export const CheckIcon = styled(Pause)`
     border: 1px solid #2e7d32;
     border-radius: 4px;
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);

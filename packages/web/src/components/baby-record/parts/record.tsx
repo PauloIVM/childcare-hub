@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Accordion } from "../../accordion";
-import { Tooltip } from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
 import { Fade } from "../../fade";
 import { RecordConfirm } from "./record-confirm";
@@ -16,6 +16,8 @@ import * as Styles from "../style";
 //       página sem nenhum elemento.
 // TODO: Os botões de 'delete', 'info' e 'update' estão com um clique muito próximo
 //       no mobile... gera alguns miss-clicks... entender como melhorar...
+// TODO: Quando n tem nenhum record, ao abrir a pagina da ferramente, o codigo crasha...
+//       semelhantemente, se tentar acessar algumas paginas sem ter feito o login, crasha... tratar isso
 
 interface RecordProps {
     id: string;
@@ -59,7 +61,7 @@ export function Record({ id, action, init, end, observations, forceUpdate, setfo
             <Fade show={mode === "default"} keepMounted>
                 <Styles.RecordRoot>
                 <Accordion
-                    icon={<Edit color={"success"} />}
+                    icon={<IconButton><Edit color={"success"} /></IconButton>}
                     summary={
                         <Styles.RecordWrapper>
                             <Styles.RecordName><p>{action}</p></Styles.RecordName>
@@ -76,7 +78,9 @@ export function Record({ id, action, init, end, observations, forceUpdate, setfo
                                 >
                                     <Info />
                                 </Tooltip>
-                                <Delete color={"error"} onClick={onClickDelete} />
+                                <IconButton onClick={onClickDelete}>
+                                    <Delete color={"error"} />
+                                </IconButton>
                             </Styles.IconsWrapper>
                         </Styles.RecordWrapper>
                     }
