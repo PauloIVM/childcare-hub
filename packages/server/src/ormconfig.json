@@ -6,10 +6,10 @@
     "database": "childcare",
     "port": 3306,
     "logging": true,
-    "migrations": ["build/migrations/*.js"],
+    "migrations": ["build/infra/migrations/*.js"],
     "migrationsRun": true,
     "cli": {
-        "migrationsDir": "src/migrations"
+        "migrationsDir": "src/infra/migrations"
     },
     "entities": ["build/infra/models/**/*.js"]
 }
