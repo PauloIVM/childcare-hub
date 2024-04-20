@@ -25,7 +25,7 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
         action: input.action,
         observations: input.observations,
         init: input.init.toISOString(),
-        end: input.end.toISOString(),
+        end: input.end?.toISOString(),
     }, { withCredentials: true });
     return {
         ok: result.status === 200,

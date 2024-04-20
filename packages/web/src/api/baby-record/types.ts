@@ -20,7 +20,7 @@ export interface IInsertRecordInput {
     action: string;
     observations: string;
     init: Date;
-    end: Date;
+    end?: Date;
 }
 
 export interface IInsertRecordResponse {

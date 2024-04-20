@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Accordion } from "../../accordion";
 import { Tooltip } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
-import { Fade } from "@mui/material";
+import { Fade } from "../../fade";
+import { RecordConfirm } from "./record-confirm";
 import { deleteRecord } from "../../../api/baby-record";
 import * as Styles from "../style";
 
@@ -13,6 +14,8 @@ import * as Styles from "../style";
 //       isso no componente pai desse. Se eu apagar todos os elementos da
 //       penúltima página, e então ir para a última, eu serei jogado em uma
 //       página sem nenhum elemento.
+// TODO: Os botões de 'delete', 'info' e 'update' estão com um clique muito próximo
+//       no mobile... gera alguns miss-clicks... entender como melhorar...
 
 interface RecordProps {
     id: string;
@@ -20,48 +23,67 @@ interface RecordProps {
     init: Date;
     observations: string;
     end?: Date;
+    forceUpdate: boolean;
+    setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Record({ id, action, init, end, observations }: RecordProps) {
-    const [show, setShow] = React.useState(true);
+export function Record({ id, action, init, end, observations, forceUpdate, setforceUpdate }: RecordProps) {
+    const initialMode = end ? "default" : "confirm";
+    const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
     const initParsed = init.toLocaleTimeString().slice(0, 5);
     const endParsed = end?.toLocaleTimeString().slice(0, 5) || "--:--";
     const date = init.toLocaleDateString();
 
+    useEffect(() => {
+        setMode(end ? "default" : "confirm");
+    }, [end]);
+
     function onClickDelete() {
-        setShow(false);
+        setMode("hide");
         deleteRecord({ recordId: id });
         // TODO: Caso falhe em deletar, mostrar isso em um popup ou similar...
     }
 
     return (
-        <Fade in={show} timeout={500}>
-            <Styles.RecordRoot>
-            <Accordion
-                icon={<Edit color={"success"} />}
-                summary={
-                    <Styles.RecordWrapper>
-                        <Styles.RecordName><p>{action}</p></Styles.RecordName>
-                        <Styles.RecordDateWrapper>
-                            <Styles.RecordDate>{`${initParsed} a ${endParsed}`}</Styles.RecordDate>
-                            <Styles.RecordDate>{date}</Styles.RecordDate>
-                        </Styles.RecordDateWrapper>
-                        <Styles.IconsWrapper>
-                            <Tooltip
-                                placement={"top-end"}
-                                title={observations}
-                                leaveTouchDelay={10000}
-                                enterTouchDelay={100}
-                            >
-                                <Info />
-                            </Tooltip>
-                            <Delete color={"error"} onClick={onClickDelete} />
-                        </Styles.IconsWrapper>
-                    </Styles.RecordWrapper>
-                }
-                details={"teste"}
-            />
-            </Styles.RecordRoot>
-        </Fade>
+        <>
+            <Fade show={mode === "confirm"} keepMounted>
+                <RecordConfirm
+                    id={id}
+                    action={action}
+                    init={init}
+                    setMode={setMode}
+                    forceUpdate={forceUpdate}
+                    setforceUpdate={setforceUpdate}
+                />
+            </Fade>
+            <Fade show={mode === "default"} keepMounted>
+                <Styles.RecordRoot>
+                <Accordion
+                    icon={<Edit color={"success"} />}
+                    summary={
+                        <Styles.RecordWrapper>
+                            <Styles.RecordName><p>{action}</p></Styles.RecordName>
+                            <Styles.RecordDateWrapper>
+                                <Styles.RecordDate>{`${initParsed} a ${endParsed}`}</Styles.RecordDate>
+                                <Styles.RecordDate>{date}</Styles.RecordDate>
+                            </Styles.RecordDateWrapper>
+                            <Styles.IconsWrapper>
+                                <Tooltip
+                                    placement={"top-end"}
+                                    title={observations}
+                                    leaveTouchDelay={10000}
+                                    enterTouchDelay={100}
+                                >
+                                    <Info />
+                                </Tooltip>
+                                <Delete color={"error"} onClick={onClickDelete} />
+                            </Styles.IconsWrapper>
+                        </Styles.RecordWrapper>
+                    }
+                    details={"teste"}
+                />
+                </Styles.RecordRoot>
+            </Fade>
+        </>
     );
 }

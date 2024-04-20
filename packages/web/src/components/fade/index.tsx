@@ -9,7 +9,7 @@ interface Props {
 export function Fade({ children, show, keepMounted }: Props) {
     if (keepMounted) {
         return (
-            <UIFade in={show} timeout={1000}>
+            <UIFade in={show} timeout={500}>
                 <div style={{ display: show ? "block" : "none"}}>
                     {children}
                 </div>
@@ -17,7 +17,7 @@ export function Fade({ children, show, keepMounted }: Props) {
         );
     }
     return (
-        <UIFade in={show} timeout={1000}>
+        <UIFade in={show} timeout={500}>
             {show ? children : <div></div>}
         </UIFade>
     );
