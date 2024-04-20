@@ -27,6 +27,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# typeorm config
+ormconfig.json
+
 # vercel
 .vercel
 
