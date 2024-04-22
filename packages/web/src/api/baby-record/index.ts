@@ -24,7 +24,7 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
 
 export async function insertRecord(input: Types.IInsertRecordInput): Promise<Types.IInsertRecordResponse> {
     const result = await babyRecordApi.put("/", {
-        action: input.action,
+        actionName: input.actionName,
         observations: input.observations,
         init: input.init.toISOString(),
         end: input.end?.toISOString(),
@@ -39,7 +39,6 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
     const result = await babyRecordApi.patch("/", {
         id: input.recordId,
         fields: {
-            action: input.fields.action,
             observations: input.fields.observations,
             init: input.fields.init?.toISOString(),
             end: input.fields.end?.toISOString(),

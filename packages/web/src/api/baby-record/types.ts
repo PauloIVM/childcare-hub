@@ -19,8 +19,7 @@ export interface IFetchRecordResponse {
 }
 
 export interface IInsertRecordInput {
-    // TODO: Acho bom padronizar esses names pra "actionName"
-    action: string;
+    actionName: string;
     observations: string;
     init: Date;
     end?: Date;
@@ -34,9 +33,6 @@ export interface IInsertRecordResponse {
 export interface IUpdateRecordInput {
     recordId: string;
     fields: {
-        // TODO: N sei se é uma boa permitir modificar a "action" em si... talvez bloquear isso
-        //       na api.
-        action?: string;
         observations?: string;
         init?: Date;
         end?: Date;

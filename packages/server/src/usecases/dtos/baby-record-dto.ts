@@ -1,5 +1,7 @@
-import { BabyRecord } from "../../domain/baby-record";
-
-export interface IBabyRecordDTO extends Pick<BabyRecord, "observations" | "init" | "end" | "userId"> {
-    action: string;
+export interface IBabyRecordDTO {
+    userId: string;
+    observations: string;
+    init: Date;
+    end?: Date;
+    actionName: string;
 }

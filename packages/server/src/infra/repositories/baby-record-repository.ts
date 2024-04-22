@@ -37,9 +37,9 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return this.count({ where: { userId } });
     }
 
-    public async insertRecord({ action, observations, init, end, userId }: IBabyRecordDTO) {
+    public async insertRecord({ actionName, observations, init, end, userId }: IBabyRecordDTO) {
         const recordModel = BabyRecordModel.build({
-            action,
+            action: actionName,
             observations,
             init,
             end,
@@ -52,7 +52,10 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return recordEntity;
     }
 
-    public async updateRecord(id: string, fields: Partial<IBabyRecordDTO>) {
+    public async updateRecord(
+        id: string,
+        fields: Partial<Pick<IBabyRecordDTO, "init" | "end" | "observations">>
+    ) {
         const result = await this.createQueryBuilder()
             .update(BabyRecordModel)
             .set(fields)

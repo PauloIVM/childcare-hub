@@ -7,7 +7,11 @@ export class UpdateBabyRecordUsecase {
         this.babyRecordRepository = babyRecordRepository.getCustomRepository();
     }
 
-    async exec(id: string, userId: string, recordDTO: Partial<IBabyRecordDTO>) {
+    async exec(
+        id: string,
+        userId: string,
+        recordDTO: Partial<Pick<IBabyRecordDTO, "end" | "init" | "observations">>
+    ) {
         try {
             const recordToChange = await this.babyRecordRepository.findById(id);
             if (userId !== recordToChange.userId) {

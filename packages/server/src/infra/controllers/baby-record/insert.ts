@@ -32,12 +32,12 @@ export class InsertBabyRecordController {
         // teria que implementar esse tratamento que é feito por essa lib.
         const userId = req.session?.user?.id;
         const {
-            action,
+            actionName,
             observations,
             init,
             end
         } = req.body as Record<string, string> || {};
-        const isAllStringFields = [userId, action, observations, init, end]
+        const isAllStringFields = [userId, actionName, observations, init, end]
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
         if (!userId) {
@@ -56,7 +56,7 @@ export class InsertBabyRecordController {
         }
         return {
             userId,
-            action,
+            actionName,
             observations,
             init: initAsDate,
             end: endAsDate
