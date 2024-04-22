@@ -5,10 +5,6 @@ import { RecordDefault } from "./record-default";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
 // TODO: Adicionar skeleton e outros ajustes finos de design...
-// TODO: Preciso incrementar o número de deletados em um estado e considerar
-//       isso no componente pai desse. Se eu apagar todos os elementos da
-//       penúltima página, e então ir para a última, eu serei jogado em uma
-//       página sem nenhum elemento.
 // TODO: Quando n tem nenhum record, ao abrir a pagina da ferramente, o codigo crasha...
 //       semelhantemente, se tentar acessar algumas paginas sem ter feito o login, crasha... tratar isso
 
@@ -52,6 +48,8 @@ export function Record(props: RecordProps) {
                     init={init}
                     end={end}
                     setMode={setMode}
+                    forceUpdate={forceUpdate}
+                    setforceUpdate={setforceUpdate}
                 />
             </Fade>
         </>

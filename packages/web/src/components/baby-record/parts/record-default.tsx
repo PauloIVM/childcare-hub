@@ -12,16 +12,22 @@ interface RecordDefaultProps {
     observations: string;
     end?: Date;
     setMode: React.Dispatch<React.SetStateAction<"default" | "confirm" | "hide">>;
+    forceUpdate: boolean;
+    setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function RecordDefault({ id, action, init, end, observations, setMode }: RecordDefaultProps) {
+export function RecordDefault({ id, action, init, end, observations, setMode, forceUpdate, setforceUpdate }: RecordDefaultProps) {
     const initParsed = init.toLocaleTimeString().slice(0, 5);
     const endParsed = end?.toLocaleTimeString().slice(0, 5) || "--:--";
     const date = init.toLocaleDateString();
 
     function onClickDelete() {
-        setMode("hide");
-        deleteRecord({ recordId: id });
+        deleteRecord({ recordId: id })
+            .then(() => {
+                setMode("hide");
+                setforceUpdate(!forceUpdate);
+            })
+            .catch();
         // TODO: Caso falhe em deletar, mostrar isso em um popup ou similar...
     }
 
