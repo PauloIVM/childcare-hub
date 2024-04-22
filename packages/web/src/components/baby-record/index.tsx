@@ -45,6 +45,7 @@ export function BabyRecord() {
                         summary={
                             <Styles.RecordItem>{"Adicionar um novo evento"}</Styles.RecordItem>
                         }
+                        trigger={"summary"}
                         details={
                             <Styles.InsertWrapper>
                                 <Styles.InsertText>{"Escolha o evento que deseja adicionar:"}</Styles.InsertText>

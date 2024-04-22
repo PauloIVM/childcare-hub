@@ -34,7 +34,7 @@ export function RecordDefault({ id, action, init, end, observations, setMode, fo
     return (
         <Styles.RecordRoot>
             <Accordion
-                icon={<IconButton><Edit color={"success"} /></IconButton>}
+                icon={<Edit color={"success"} />}
                 summary={
                     <Styles.RecordWrapper>
                         <Styles.RecordName><p>{action}</p></Styles.RecordName>
