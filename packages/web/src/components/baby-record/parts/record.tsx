@@ -11,10 +11,13 @@ import { RecordDefault } from "./record-default";
 //       página sem nenhum elemento.
 // TODO: Quando n tem nenhum record, ao abrir a pagina da ferramente, o codigo crasha...
 //       semelhantemente, se tentar acessar algumas paginas sem ter feito o login, crasha... tratar isso
+// TODO: Tratar as actions com 'name' e 'label'. Acho que o server tbm deveria ser
+//       quem define quais actions existem...
 
 interface RecordProps {
     id: string;
-    action: string;
+    actionName: string;
+    actionLabel: string;
     init: Date;
     observations: string;
     end?: Date;
@@ -22,7 +25,8 @@ interface RecordProps {
     setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function Record({ id, action, init, end, observations, forceUpdate, setforceUpdate }: RecordProps) {
+export function Record(props: RecordProps) {
+    const { id, actionName, actionLabel, init, end, observations, forceUpdate, setforceUpdate } = props;
     const initialMode = end ? "default" : "confirm";
     const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
 
@@ -35,7 +39,7 @@ export function Record({ id, action, init, end, observations, forceUpdate, setfo
             <Fade show={mode === "confirm"} keepMounted>
                 <RecordConfirm
                     id={id}
-                    action={action}
+                    action={actionLabel}
                     init={init}
                     setMode={setMode}
                     forceUpdate={forceUpdate}
@@ -45,7 +49,7 @@ export function Record({ id, action, init, end, observations, forceUpdate, setfo
             <Fade show={mode === "default"} keepMounted>
                 <RecordDefault
                     id={id}
-                    action={action}
+                    action={actionLabel}
                     observations={observations}
                     init={init}
                     end={end}

@@ -13,12 +13,14 @@ export function BabyRecord() {
     const [page, setPage] = React.useState<number>(1);
     const [count, setCount] = React.useState<number>();
     const [records, setRecords] = React.useState<IFetchRecordResponse["records"]>();
+    const [validActions, setValidActions] = React.useState<IFetchRecordResponse["validActions"]>();
     const [forceUpdate, setforceUpdate] = React.useState<boolean>(false);
 
     useEffect(() => {
         fetchRecords({ skip: (page - 1) * limit, limit })
             .then((result) => {
                 setRecords(result.records);
+                setValidActions(result.validActions);
                 setCount(Math.ceil(result.count / limit));
             })
             .catch(); // TODO: Handle that...
@@ -47,39 +49,15 @@ export function BabyRecord() {
                             <Styles.InsertWrapper>
                                 <Styles.InsertText>{"Escolha o evento que deseja adicionar:"}</Styles.InsertText>
                                 <Styles.InsertBoxesWrapper>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Dormir", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Dormir"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Mamar", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Mamar"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Trocar fralda", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Trocar fralda"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Micção", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Micção"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Cocô", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Cocô"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Banho", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Banho"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Choro", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Choro"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Vacina", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Vacina"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Médico", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Médico"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Passear", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Passear"}
-                                    </Styles.InsertBox>
-                                    <Styles.InsertBox onClick={() => onInsertClick("Outro", "TODO: Desenvolver uma observation personalizada para cada tipo de action")}>
-                                        {"Outro"}
-                                    </Styles.InsertBox>
+                                    {validActions?.map((a) => {
+                                        return (
+                                            <Styles.InsertBox
+                                                onClick={() => onInsertClick(a.name, "TODO: Desenvolver uma observation personalizada para cada tipo de action")}
+                                            >
+                                                {a.label}
+                                            </Styles.InsertBox>
+                                        );
+                                    })}
                                 </Styles.InsertBoxesWrapper>
                             </Styles.InsertWrapper>
                         }

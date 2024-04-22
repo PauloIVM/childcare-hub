@@ -10,9 +10,11 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
         ok: result.status === 200,
         message: result.data.message,
         count: result.data.count,
+        validActions: result.data.validActions,
         records: result.data.records?.map((r: any) => ({
             id: r.id,
-            action: r.action,
+            actionName: r.actionName,
+            actionLabel: r.actionLabel,
             observations: r.observations,
             init: new Date(r.init),
             end: r.end && new Date(r.end)

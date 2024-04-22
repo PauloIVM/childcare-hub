@@ -21,11 +21,19 @@ export class GetBabyRecordsController {
         }
         try {
             const usecase = new GetBabyRecordsUsecase(new BabyRecordRepository());
-            const { records, count } = await usecase.exec(userId, skip, limit);
+            const { records, count, validActions } = await usecase.exec(userId, skip, limit);
             res.json({
                 message: "ok",
-                records: records.map(({ userId, ...otherFields }) => ({ ...otherFields })),
-                count
+                validActions: validActions.map(({ name, label }) => ({ name, label })),
+                count,
+                records: records.map((r) => ({
+                    id: r.id,
+                    observations: r.observations,
+                    init: r.init,
+                    end: r.end,
+                    actionName: r.action.name,
+                    actionLabel: r.action.label,
+                }))
             });
         } catch (error) {
             return res.status(400).json({ message: error.message });

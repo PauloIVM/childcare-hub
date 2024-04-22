@@ -1,4 +1,4 @@
-import { BabyRecord } from "../../domain/baby-record";
+import { IBabyRecordDTO } from "../../usecases/dtos/baby-record-dto";
 import { IBabyRecordRepository } from "../repositories/baby-record-repository";
 
 export class UpdateBabyRecordUsecase {
@@ -7,13 +7,13 @@ export class UpdateBabyRecordUsecase {
         this.babyRecordRepository = babyRecordRepository.getCustomRepository();
     }
 
-    async exec(id: string, userId: string, record: Partial<BabyRecord>) {
+    async exec(id: string, userId: string, recordDTO: Partial<IBabyRecordDTO>) {
         try {
             const recordToChange = await this.babyRecordRepository.findById(id);
             if (userId !== recordToChange.userId) {
                 throw new Error("You have not permission to change this record");
             }
-            const result = await this.babyRecordRepository.updateRecord(id, record);
+            const result = await this.babyRecordRepository.updateRecord(id, recordDTO);
             if (!result) {
                 throw new Error("Failed to update record on 'babyRecordRepository.update'");
             }
