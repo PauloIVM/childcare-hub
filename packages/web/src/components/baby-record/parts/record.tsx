@@ -4,9 +4,7 @@ import { RecordConfirm } from "./record-confirm";
 import { RecordDefault } from "./record-default";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
-// TODO: Adicionar skeleton e outros ajustes finos de design...
-// TODO: Quando n tem nenhum record, ao abrir a pagina da ferramente, o codigo crasha...
-//       semelhantemente, se tentar acessar algumas paginas sem ter feito o login, crasha... tratar isso
+// TODO: Se tentar acessar algumas paginas sem ter feito o login, crasha
 
 interface RecordProps {
     id: string;
@@ -43,7 +41,8 @@ export function Record(props: RecordProps) {
             <Fade show={mode === "default"} keepMounted>
                 <RecordDefault
                     id={id}
-                    action={actionLabel}
+                    actionName={actionName}
+                    actionLabel={actionLabel}
                     observations={observations}
                     init={init}
                     end={end}

@@ -11,6 +11,9 @@ export class BabyAction {
         | "vaccine"
         | "doctor"
         | "walk"
+        | "weight"
+        | "height"
+        | "temperature"
         | "other";
     static readonly validActions: BabyAction["name"][] = [
         "sleep",
@@ -23,6 +26,9 @@ export class BabyAction {
         "vaccine",
         "doctor",
         "walk",
+        "weight",
+        "height",
+        "temperature",
         "other"
     ];
     constructor(actionName: string) {
@@ -44,6 +50,9 @@ export class BabyAction {
             "vaccine": "Vacina",
             "doctor": "Médico",
             "walk": "Passear",
+            "weight": "Peso",
+            "height": "Altura",
+            "temperature": "Temperatura",
             "other": "Outro",
         };
         return actionsLabelParser[name as BabyAction["name"]];

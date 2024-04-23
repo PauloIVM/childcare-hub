@@ -3,11 +3,13 @@ import { Accordion } from "../../accordion";
 import { Tooltip, IconButton } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
 import { deleteRecord } from "../../../api/baby-record";
+import { Form, FormProps } from "./form";
 import * as Styles from "../style";
 
 interface RecordDefaultProps {
     id: string;
-    action: string;
+    actionName: string;
+    actionLabel: string;
     init: Date;
     observations: string;
     end?: Date;
@@ -16,7 +18,18 @@ interface RecordDefaultProps {
     setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function RecordDefault({ id, action, init, end, observations, setMode, forceUpdate, setforceUpdate }: RecordDefaultProps) {
+export function RecordDefault(props: RecordDefaultProps) {
+    const {
+        id,
+        actionLabel,
+        actionName,
+        init,
+        end,
+        observations,
+        setMode,
+        forceUpdate,
+        setforceUpdate
+    } = props;
     const initParsed = init.toLocaleTimeString().slice(0, 5);
     const endParsed = end?.toLocaleTimeString().slice(0, 5) || "--:--";
     const date = init.toLocaleDateString();
@@ -29,6 +42,8 @@ export function RecordDefault({ id, action, init, end, observations, setMode, fo
             })
             .catch();
         // TODO: Caso falhe em deletar, mostrar isso em um popup ou similar...
+        // INFO: Usar o snackbar do MUI, usar em outros lugares tbm... como quando faz
+        //       um insert, update ou etc... https://mui.com/material-ui/react-snackbar/#use-with-alerts
     }
 
     return (
@@ -37,7 +52,7 @@ export function RecordDefault({ id, action, init, end, observations, setMode, fo
                 icon={<Edit color={"success"} />}
                 summary={
                     <Styles.RecordWrapper>
-                        <Styles.RecordName><p>{action}</p></Styles.RecordName>
+                        <Styles.RecordName><p>{actionLabel}</p></Styles.RecordName>
                         <Styles.RecordDateWrapper>
                             <Styles.RecordDate>{`${initParsed} a ${endParsed}`}</Styles.RecordDate>
                             <Styles.RecordDate>{date}</Styles.RecordDate>
@@ -57,7 +72,7 @@ export function RecordDefault({ id, action, init, end, observations, setMode, fo
                         </Styles.IconsWrapper>
                     </Styles.RecordWrapper>
                 }
-                details={"teste"}
+                details={<Form assembly={actionName as FormProps["assembly"]} />}
             />
         </Styles.RecordRoot>
     );

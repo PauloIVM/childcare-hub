@@ -12,16 +12,20 @@ interface AccordionProps {
     summary: React.ReactNode;
     details: React.ReactNode | string;
     trigger?: "summary" | "icon";
+    defaultExpanded?: boolean;
 }
 
-export function Accordion({ icon, summary, details, trigger = "icon" }: AccordionProps) {
+export function Accordion({ icon, summary, details, trigger = "icon", defaultExpanded }: AccordionProps) {
     const [expanded, setExpanded] = React.useState(false);
     function onClick() {
         setExpanded(!expanded);
     }
     return (
         <Styles.Root $trigger={trigger}>
-            <MuiAccordion expanded={trigger === "icon" ? expanded : undefined}>
+            <MuiAccordion
+                defaultExpanded={defaultExpanded}
+                expanded={trigger === "icon" ? expanded : undefined}
+            >
                 <AccordionSummary
                     expandIcon={<IconButton onClick={onClick}>{icon}</IconButton>}
                 >
