@@ -39,17 +39,16 @@ export function BabyRecord() {
         try {
             setBackdropOpen(true);
             await Api.insertRecord({ actionName, observations: "", init: new Date() });
-            setPage(1);
-            await fetchRecords();
+            page > 1 ? setPage(1) : await fetchRecords();
             setTimeout(() => {
                 setSuccessMessage("Iniciando contagem do evento.");
                 setBackdropOpen(false);
-            }, 500);
+            }, 300);
         } catch (error: any) {
             setTimeout(() => {
                 setErrorMessage("Falha ao iniciar contagem. Tente novamente.");  
                 setBackdropOpen(false);
-            }, 500); 
+            }, 300); 
         }
     }
 
@@ -61,12 +60,12 @@ export function BabyRecord() {
             setTimeout(() => {
                 setSuccessMessage("Evento cadastrado com sucesso.");
                 setBackdropOpen(false);
-            }, 500);
+            }, 300);
         } catch (error: any) {
             setTimeout(() => {
                 setErrorMessage("Falha ao cadastrar evento. Tente novamente.");  
                 setBackdropOpen(false);
-            }, 500); 
+            }, 300); 
         }
     }
 
@@ -81,12 +80,12 @@ export function BabyRecord() {
             setTimeout(() => {
                 setSuccessMessage("Evento atualizado com sucesso.");
                 setBackdropOpen(false);
-            }, 500);
+            }, 300);
         } catch (error: any) {
             setTimeout(() => {
                 setErrorMessage(error?.message);  
                 setBackdropOpen(false);
-            }, 500);
+            }, 300);
         }
     }
 
@@ -94,24 +93,29 @@ export function BabyRecord() {
         try {
             setBackdropOpen(true);
             await Api.deleteRecord({ recordId });
-            await fetchRecords();
+            records?.length === 1 && page > 1 ? setPage(page - 1) : await fetchRecords();
             setTimeout(() => {
                 setSuccessMessage("Evento excuído com sucesso.");
                 setBackdropOpen(false);
-            }, 500);
+            }, 300);
         } catch (error: any) {
             setTimeout(() => {
                 setErrorMessage("Falha ao excluir evento. Tente novamente.");  
                 setBackdropOpen(false);
-            }, 500); 
+            }, 300); 
         }
     }
 
-    // TODO: Em tese eu não preciso desse effect... eu poderia passar o fetch diretamente no
-    //       onChange do <Pagination />. Refatorar depois.
+    async function onChangePagination(page: number) {
+        setPage(page);
+    }
+
     useEffect(() => {
         if (!userData.isLogged) { return; }
-        fetchRecords();
+        setBackdropOpen(true);
+        fetchRecords()
+            .then(() => { setTimeout(() => setBackdropOpen(false), 300); })
+            .catch(() => setTimeout(() => setBackdropOpen(false), 300));
     }, [page, userData.isLogged]);
 
     useEffect(() => {
@@ -204,7 +208,7 @@ export function BabyRecord() {
                         />
                     ))}
                 </Styles.RecordsWrapper>
-                <Pagination count={count} page={page} onChange={(_, p) => setPage(p)} />
+                <Pagination count={count} page={page} onChange={(_, p) => onChangePagination(p)} />
             </Styles.Container>
         </Box>
     );
