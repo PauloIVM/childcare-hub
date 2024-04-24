@@ -5,7 +5,9 @@ import { RecordDefault } from "./record-default";
 import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-record/types";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
-// TODO: Se tentar acessar algumas paginas sem ter feito o login, crasha
+// TODO: Ao fazer o redirect para a página de login, bolar uma forma de mostrar lá
+//       uma mensagem indicando pq o user foi redirecionado para lá... ou tratar isso
+//       no próprio box que abre a página que exige login.
 // TODO: Adicionar snackbar e mostrar errors/success que venham da api...
 // TODO: Usar Button com endIcon no lugar de boxes em "Adicionar um novo evento"
 

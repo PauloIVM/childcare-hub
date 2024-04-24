@@ -6,10 +6,14 @@ import { AddCircle } from "@mui/icons-material";
 import { IFetchRecordResponse } from "../../api/baby-record/types";
 import { Record } from "./parts/record";
 import { IUpdateRecordInput } from "../../api/baby-record/types";
+import { useUserData } from "@/context";
+import { useRouter } from "next/router";
 import * as Api from "../../api/baby-record";
 import * as Styles from "./style";
 
 export function BabyRecord() {
+    const router = useRouter();
+    const { userData } = useUserData();
     const limit = 5;
     const [page, setPage] = React.useState<number>(1);
     const [count, setCount] = React.useState<number>();
@@ -65,7 +69,18 @@ export function BabyRecord() {
         }
     }
 
-    useEffect(() => { fetchRecords(); }, [page]);
+    useEffect(() => {
+        if (!userData.isLogged) { return; }
+        fetchRecords();
+    }, [page, userData.isLogged]);
+
+    useEffect(() => {
+        if (!userData.isLoading && !userData.isLogged) {
+            router.push('/sign-in');
+        }
+    }, [userData.isLogged, userData.isLoading]);
+
+    if (userData.isLoading) return <></>;
 
     return (
         <Box>
