@@ -2,23 +2,20 @@ import React, { useEffect } from "react";
 import { Fade } from "../../fade";
 import { RecordConfirm } from "./record-confirm";
 import { RecordDefault } from "./record-default";
+import { IFetchRecordResponse } from "../../../api/baby-record/types";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
 // TODO: Se tentar acessar algumas paginas sem ter feito o login, crasha
 
 interface RecordProps {
-    id: string;
-    actionName: string;
-    actionLabel: string;
-    init: Date;
-    observations: string;
-    end?: Date;
+    record: IFetchRecordResponse["records"][0];
     forceUpdate: boolean;
     setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function Record(props: RecordProps) {
-    const { id, actionName, actionLabel, init, end, observations, forceUpdate, setforceUpdate } = props;
+    const { record, forceUpdate, setforceUpdate } = props;
+    const { id, actionLabel, init, end } = record;
     const initialMode = end ? "default" : "confirm";
     const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
 
@@ -33,6 +30,8 @@ export function Record(props: RecordProps) {
                     id={id}
                     action={actionLabel}
                     init={init}
+                    // INFO: Se ao invés deu passar o hook eu criar uma cb, melhora
+                    //       a qualidade do código?
                     setMode={setMode}
                     forceUpdate={forceUpdate}
                     setforceUpdate={setforceUpdate}
@@ -40,12 +39,7 @@ export function Record(props: RecordProps) {
             </Fade>
             <Fade show={mode === "default"} keepMounted>
                 <RecordDefault
-                    id={id}
-                    actionName={actionName}
-                    actionLabel={actionLabel}
-                    observations={observations}
-                    init={init}
-                    end={end}
+                    record={record}
                     setMode={setMode}
                     forceUpdate={forceUpdate}
                     setforceUpdate={setforceUpdate}

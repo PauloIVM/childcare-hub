@@ -13,8 +13,10 @@ import { WalkForm } from "./assemblies/walk";
 import { TemperatureForm } from "./assemblies/temperature";
 import { HeightForm } from "./assemblies/height";
 import { WeightForm } from "./assemblies/weight";
+import { IFetchRecordResponse } from "../../../../api/baby-record/types";
 
 export interface FormProps {
+    record: IFetchRecordResponse["records"][0];
     assembly:
         | "sleep"
         | "breastfeed"
@@ -37,7 +39,7 @@ export function Form({ assembly, ...otherProps }: FormProps) {
         return (<BathForm />);
     }
     if (assembly === "breastfeed") {
-        return (<BreastFeedForm />);
+        return (<BreastFeedForm {...otherProps} />);
     }
     if (assembly === "change_diapers") {
         return (<ChangeDiapersForm />);

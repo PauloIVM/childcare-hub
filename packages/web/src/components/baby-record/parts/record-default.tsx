@@ -4,15 +4,11 @@ import { Tooltip, IconButton } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
 import { deleteRecord } from "../../../api/baby-record";
 import { Form, FormProps } from "./form";
+import { IFetchRecordResponse } from "../../../api/baby-record/types";
 import * as Styles from "../style";
 
 interface RecordDefaultProps {
-    id: string;
-    actionName: string;
-    actionLabel: string;
-    init: Date;
-    observations: string;
-    end?: Date;
+    record: IFetchRecordResponse["records"][0];
     setMode: React.Dispatch<React.SetStateAction<"default" | "confirm" | "hide">>;
     forceUpdate: boolean;
     setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,16 +16,19 @@ interface RecordDefaultProps {
 
 export function RecordDefault(props: RecordDefaultProps) {
     const {
+        record,
+        setMode,
+        forceUpdate,
+        setforceUpdate
+    } = props;
+    const {
         id,
         actionLabel,
         actionName,
         init,
         end,
         observations,
-        setMode,
-        forceUpdate,
-        setforceUpdate
-    } = props;
+    } = record;
     const initParsed = init.toLocaleTimeString().slice(0, 5);
     const endParsed = end?.toLocaleTimeString().slice(0, 5) || "--:--";
     const date = init.toLocaleDateString();
@@ -72,7 +71,7 @@ export function RecordDefault(props: RecordDefaultProps) {
                         </Styles.IconsWrapper>
                     </Styles.RecordWrapper>
                 }
-                details={<Form assembly={actionName as FormProps["assembly"]} />}
+                details={<Form record={record} assembly={actionName as FormProps["assembly"]} />}
             />
         </Styles.RecordRoot>
     );

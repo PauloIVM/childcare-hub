@@ -5,7 +5,7 @@ import { pickersLayoutClasses } from "@mui/x-date-pickers/PickersLayout";
 
 interface DateInputProps {
     label: string;
-    value: Date;
+    value?: Date;
     onChange: (value: Date) => void;
 }
 

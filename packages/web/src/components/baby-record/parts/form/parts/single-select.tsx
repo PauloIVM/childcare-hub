@@ -24,8 +24,8 @@ export function SingleSelect({ label, menu, value, onChange }: SingleSelectProps
                 onChange={(e) => onChange(e.target.value)}
                 color={"warning"}
             >
-                {menu.map(({ value, label }) => (
-                    <MenuItem value={value}>{label}</MenuItem>
+                {menu.map(({ value, label }, i) => (
+                    <MenuItem key={i} value={value}>{label}</MenuItem>
                 ))}
             </Select>
         </FormControl>

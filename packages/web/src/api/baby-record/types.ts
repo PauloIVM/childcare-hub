@@ -15,6 +15,12 @@ export interface IFetchRecordResponse {
         observations: string;
         init: Date;
         end?: Date;
+        temperature?: number;
+        height?: number;
+        weight?: number;
+        sleepQuality?: string;
+        breastfeedingType?: string;
+        breastfeedingAmount?: number;
     }[];
 }
 
@@ -36,6 +42,12 @@ export interface IUpdateRecordInput {
         observations?: string;
         init?: Date;
         end?: Date;
+        temperature?: number;
+        height?: number;
+        weight?: number;
+        sleepQuality?: string;
+        breastfeedingType?: string;
+        breastfeedingAmount?: number;
     }
 }
 

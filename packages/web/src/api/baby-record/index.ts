@@ -17,7 +17,13 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
             actionLabel: r.actionLabel,
             observations: r.observations,
             init: new Date(r.init),
-            end: r.end && new Date(r.end)
+            end: r.end && new Date(r.end),
+            temperature: r.temperature,
+            height: r.height,
+            weight: r.weight,
+            sleepQuality: r.sleepQuality,
+            breastfeedingType: r.breastfeedingType,
+            breastfeedingAmount: r.breastfeedingAmount,
         }))
     };
 }
@@ -42,6 +48,12 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
             observations: input.fields.observations,
             init: input.fields.init?.toISOString(),
             end: input.fields.end?.toISOString(),
+            temperature: input.fields.temperature,
+            height: input.fields.height,
+            weight: input.fields.weight,
+            sleepQuality: input.fields.sleepQuality,
+            breastfeedingType: input.fields.breastfeedingType,
+            breastfeedingAmount: input.fields.breastfeedingAmount,
         }
     }, { withCredentials: true });
     return {

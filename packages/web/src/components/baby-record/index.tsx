@@ -69,10 +69,10 @@ export function BabyRecord() {
                 <Styles.RecordsWrapper>
                     {records?.map((r, i) => (
                         <Record
+                            key={`${page}${i}`}
                             forceUpdate={forceUpdate}
                             setforceUpdate={setforceUpdate}
-                            key={`${page}${i}`}
-                            {...r}
+                            record={r}
                         />
                     ))}
                 </Styles.RecordsWrapper>

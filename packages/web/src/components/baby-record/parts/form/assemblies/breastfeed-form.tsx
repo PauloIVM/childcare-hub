@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import * as Parts from "../parts";
+import { IFetchRecordResponse } from "../../../../../api/baby-record/types";
+import { updateRecord } from "../../../../../api/baby-record";
 
-interface BreastFeedProps {}
+interface BreastFeedProps {
+    record: IFetchRecordResponse["records"][0];
+}
 
-export function BreastFeedForm({}: BreastFeedProps) {
+export function BreastFeedForm({ record }: BreastFeedProps) {
     // TODO: Passar os valores iniciais com base no record...
     // TODO: Adicionar snackbar e mostrar errors que venham da api...
     // TODO: Mudar o record-confirm pra ter três botões e ficar com mesmo tamanho...
-    const [init, setInit] = React.useState<Date>(new Date());
-    const [end, setEnd] = React.useState<Date>(new Date());
-    const [textSelect, setTextSelect] = React.useState("");
-    const [observations, setObservations] = React.useState("");
-    const [slider, setSlider] = React.useState(80);
+    const [init, setInit] = React.useState<Date>(record.init);
+    const [end, setEnd] = React.useState<Date | undefined>(record.end);
+    const [textSelect, setTextSelect] = React.useState(record.breastfeedingType || "");
+    const [observations, setObservations] = React.useState(record.observations || "");
+    const [slider, setSlider] = React.useState(record.breastfeedingAmount || 0);
     const [disabled, setDisabled] = React.useState(true);
 
     useEffect(() => {
@@ -19,7 +23,15 @@ export function BreastFeedForm({}: BreastFeedProps) {
     }, [textSelect, observations, slider, init, end]);
 
     function onUpdate() {
-        setDisabled(true);
+        updateRecord({ recordId: record.id, fields: {
+            init,
+            end,
+            breastfeedingType: textSelect,
+            observations,
+            breastfeedingAmount: slider
+        }})
+            .then(() => setDisabled(true))
+            .catch((e) => console.log(e))
         // TODO: Disparar request de update...
     }
 
