@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { CircularProgress } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { IconButton, CircularProgress } from "@mui/material";
 import * as Styles from "../style";
 
 interface RecordConfirmProps {
@@ -7,9 +8,10 @@ interface RecordConfirmProps {
     action: string;
     init: Date;
     onClickConfirm: () => void;
+    onClickDelete: () => void;
 }
 
-export function RecordConfirm({ id, action, init, onClickConfirm }: RecordConfirmProps) {
+export function RecordConfirm({ id, action, init, onClickConfirm, onClickDelete }: RecordConfirmProps) {
     const [count, setCount] = React.useState<string>("0:00:00:00");
     const initParsed = init.toLocaleTimeString().slice(0, 5);
 
@@ -39,6 +41,9 @@ export function RecordConfirm({ id, action, init, onClickConfirm }: RecordConfir
             </Styles.RecordDateWrapper>
             <Styles.IconsConfirmeWrapper>
                 <CircularProgress color={"warning"} size={20} />
+                <IconButton onClick={onClickDelete}>
+                    <Delete color={"error"} />
+                </IconButton>
                 <Styles.CheckIcon color={"success"} onClick={onClickConfirm} />
             </Styles.IconsConfirmeWrapper>
         </Styles.RecordConfirmRoot>

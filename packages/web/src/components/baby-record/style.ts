@@ -72,10 +72,7 @@ export const IconsWrapper = styled.div`
 `;
 
 export const IconsConfirmeWrapper = styled(IconsWrapper)`
-    gap: 20px;
-    @media (max-width: 768px) {
-        gap: 15px;
-    }
+    margin-right: 0px;
 `;
 
 export const AddRecordWrapper = styled(RecordRoot)`
@@ -114,6 +111,9 @@ export const RecordName = styled(RecordItem)`
 
 export const RecordConfirmName = styled(RecordName)`
     width: 29%;
+    @media (max-width: 500px) {
+        width: 28%;
+    }
 `;
 
 export const RecordDateWrapper = styled.div`
