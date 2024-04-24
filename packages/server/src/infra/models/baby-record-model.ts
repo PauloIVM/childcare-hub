@@ -52,21 +52,21 @@ export class BabyRecordModel {
     public temperature!: number;
 
     @Column({
-        type: "bigint",
+        type: "int",
         name: "height",
         nullable: true
     })
     public height!: number;
 
     @Column({
-        type: "bigint",
+        type: "int",
         name: "weight",
         nullable: true
     })
     public weight!: number;
 
     @Column({
-        type: "bigint",
+        type: "int",
         name: "breastfeeding_amount",
         nullable: true
     })

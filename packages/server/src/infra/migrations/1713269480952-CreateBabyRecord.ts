@@ -38,17 +38,17 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
                     },
                     {
                         name: "height",
-                        type: "bigint",
+                        type: "int",
                         isNullable: true,
                     },
                     {
                         name: "weight",
-                        type: "bigint",
+                        type: "int",
                         isNullable: true,
                     },
                     {
                         name: "breastfeeding_amount",
-                        type: "bigint",
+                        type: "int",
                         isNullable: true,
                     },
                     {
