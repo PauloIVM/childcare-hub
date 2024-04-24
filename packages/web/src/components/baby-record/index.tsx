@@ -3,9 +3,10 @@ import { Accordion } from "../accordion";
 import { Box } from "../box";
 import { Pagination, Divider } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
-import { fetchRecords, insertRecord } from "../../api/baby-record";
 import { IFetchRecordResponse } from "../../api/baby-record/types";
 import { Record } from "./parts/record";
+import { IUpdateRecordInput } from "../../api/baby-record/types";
+import * as Api from "../../api/baby-record";
 import * as Styles from "./style";
 
 export function BabyRecord() {
@@ -14,27 +15,57 @@ export function BabyRecord() {
     const [count, setCount] = React.useState<number>();
     const [records, setRecords] = React.useState<IFetchRecordResponse["records"]>();
     const [validActions, setValidActions] = React.useState<IFetchRecordResponse["validActions"]>();
-    const [forceUpdate, setforceUpdate] = React.useState<boolean>(false);
 
-    useEffect(() => {
-        fetchRecords({ skip: (page - 1) * limit, limit })
-            .then((result) => {
-                setRecords(result.records);
-                setValidActions(result.validActions);
-                setCount(Math.ceil(result.count / limit));
-            })
-            .catch(); // TODO: Handle that...
-        return;
-    }, [page, forceUpdate]);
-
-    function onInsertClick(actionName: string, observations: string) {
-        insertRecord({ actionName, observations, init: new Date() })
-            .then(() => {
-                setforceUpdate(!forceUpdate);
-                setPage(1);
-            });
-        // TODO: Adicionar algum tipo de loading...
+    async function fetchRecords() {
+        try {
+            const result = await Api.fetchRecords({ skip: (page - 1) * limit, limit });
+            setRecords(result.records);
+            setValidActions(result.validActions);
+            setCount(Math.ceil(result.count / limit));
+        } catch (error) {
+            // TODO: Handle that with snackbar...   
+        }
     }
+
+    async function onInsertClick(actionName: string) {
+        try {
+            // TODO: Adicionar algum tipo de loading (backdrop no MUI)...
+            await Api.insertRecord({ actionName, observations: "", init: new Date() });
+            setPage(1);
+            fetchRecords();
+        } catch (error) {
+            // TODO: Handle that with snackbar... 
+        }
+    }
+
+    async function onClickConfirm(recordId: string) {
+        try {
+            await Api.updateRecord({ recordId, fields: { end: new Date() }});
+            fetchRecords();
+        } catch (error) {
+            // TODO: Handle that with snackbar...
+        }
+    }
+
+    async function onClickUpdate({ recordId, fields }: IUpdateRecordInput) {
+        try {
+            await Api.updateRecord({ recordId, fields });
+            fetchRecords();
+        } catch (error) {
+            // TODO: Handle that with snackbar...
+        }
+    }
+
+    async function onClickDelete(recordId: string) {
+        try {
+            await Api.deleteRecord({ recordId });
+            fetchRecords();
+        } catch (error) {
+            // TODO: Handle that with snackbar...
+        }
+    }
+
+    useEffect(() => { fetchRecords(); }, [page]);
 
     return (
         <Box>
@@ -54,7 +85,7 @@ export function BabyRecord() {
                                         return (
                                             <Styles.InsertBox
                                                 key={i}
-                                                onClick={() => onInsertClick(a.name, "TODO: Desenvolver uma observation personalizada para cada tipo de action")}
+                                                onClick={() => onInsertClick(a.name)}
                                             >
                                                 {a.label}
                                             </Styles.InsertBox>
@@ -70,8 +101,9 @@ export function BabyRecord() {
                     {records?.map((r, i) => (
                         <Record
                             key={`${page}${i}`}
-                            forceUpdate={forceUpdate}
-                            setforceUpdate={setforceUpdate}
+                            onClickConfirm={onClickConfirm}
+                            onClickDelete={onClickDelete}
+                            onClickUpdate={onClickUpdate}
                             record={r}
                         />
                     ))}

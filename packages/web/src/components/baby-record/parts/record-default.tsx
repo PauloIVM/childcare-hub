@@ -2,27 +2,19 @@ import React from "react";
 import { Accordion } from "../../accordion";
 import { Tooltip, IconButton } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
-import { deleteRecord } from "../../../api/baby-record";
 import { Form, FormProps } from "./form";
-import { IFetchRecordResponse } from "../../../api/baby-record/types";
+import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-record/types";
 import * as Styles from "../style";
 
 interface RecordDefaultProps {
     record: IFetchRecordResponse["records"][0];
-    setMode: React.Dispatch<React.SetStateAction<"default" | "confirm" | "hide">>;
-    forceUpdate: boolean;
-    setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    onClickDelete: () => void;
+    onClickUpdate: (input: IUpdateRecordInput) => Promise<void>;
 }
 
 export function RecordDefault(props: RecordDefaultProps) {
+    const { record, onClickDelete, onClickUpdate } = props;
     const {
-        record,
-        setMode,
-        forceUpdate,
-        setforceUpdate
-    } = props;
-    const {
-        id,
         actionLabel,
         actionName,
         init,
@@ -32,18 +24,6 @@ export function RecordDefault(props: RecordDefaultProps) {
     const initParsed = init.toLocaleTimeString().slice(0, 5);
     const endParsed = end?.toLocaleTimeString().slice(0, 5) || "--:--";
     const date = init.toLocaleDateString();
-
-    function onClickDelete() {
-        deleteRecord({ recordId: id })
-            .then(() => {
-                setMode("hide");
-                setforceUpdate(!forceUpdate);
-            })
-            .catch();
-        // TODO: Caso falhe em deletar, mostrar isso em um popup ou similar...
-        // INFO: Usar o snackbar do MUI, usar em outros lugares tbm... como quando faz
-        //       um insert, update ou etc... https://mui.com/material-ui/react-snackbar/#use-with-alerts
-    }
 
     return (
         <Styles.RecordRoot>
@@ -71,7 +51,13 @@ export function RecordDefault(props: RecordDefaultProps) {
                         </Styles.IconsWrapper>
                     </Styles.RecordWrapper>
                 }
-                details={<Form record={record} assembly={actionName as FormProps["assembly"]} />}
+                details={
+                    <Form
+                        record={record}
+                        onClickUpdate={onClickUpdate}
+                        assembly={actionName as FormProps["assembly"]}
+                    />
+                }
             />
         </Styles.RecordRoot>
     );

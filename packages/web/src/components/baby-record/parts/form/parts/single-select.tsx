@@ -7,13 +7,15 @@ import {
 } from "@mui/material";
 
 interface SingleSelectProps {
+    active: boolean;
     label: string;
     menu: { label: string; value: string; }[];
     value: string;
     onChange: (v: string) => void;
 }
 
-export function SingleSelect({ label, menu, value, onChange }: SingleSelectProps) {
+export function SingleSelect({ active, label, menu, value, onChange }: SingleSelectProps) {
+    if (!active) { return; }
     return (
         <FormControl size={"small"}>
             <InputLabel color={"warning"}>{label}</InputLabel>

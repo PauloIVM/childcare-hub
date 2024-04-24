@@ -5,7 +5,8 @@ import {
 } from "@mui/material";
 import * as Styles from "./style";
 
-interface SliderProps {
+export interface SliderProps {
+    active: boolean;
     value: number;
     onChange: (v: number) => void;
     marks: UISliderProps["marks"];
@@ -18,6 +19,7 @@ interface SliderProps {
 
 export function Slider(props: SliderProps) {
     const {
+        active,
         value,
         onChange,
         marks,
@@ -27,6 +29,7 @@ export function Slider(props: SliderProps) {
         max = 400,
         defaultValue = 80
     } = props;
+    if (!active) { return; }
     return (
         <Styles.SliderRoot>
             <p>{label}</p>

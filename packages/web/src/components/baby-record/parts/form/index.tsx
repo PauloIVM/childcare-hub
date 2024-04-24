@@ -1,22 +1,15 @@
 import React from "react";
-import { BathForm } from "./assemblies/bath";
+import { DefaultForm } from "./assemblies/default";
 import { BreastFeedForm } from "./assemblies/breastfeed-form";
-import { ChangeDiapersForm } from "./assemblies/change_diapers";
-import { CryForm } from "./assemblies/cry";
-import { DoctorForm } from "./assemblies/doctor";
-import { OtherForm } from "./assemblies/other";
-import { PoopForm } from "./assemblies/poop";
 import { SleepForm } from "./assemblies/sleep-form";
-import { UrinationForm } from "./assemblies/urination";
-import { VaccineForm } from "./assemblies/vaccine";
-import { WalkForm } from "./assemblies/walk";
 import { TemperatureForm } from "./assemblies/temperature";
 import { HeightForm } from "./assemblies/height";
 import { WeightForm } from "./assemblies/weight";
-import { IFetchRecordResponse } from "../../../../api/baby-record/types";
+import { IFetchRecordResponse, IUpdateRecordInput } from "../../../../api/baby-record/types";
 
 export interface FormProps {
     record: IFetchRecordResponse["records"][0];
+    onClickUpdate: (input: IUpdateRecordInput) => Promise<void>
     assembly:
         | "sleep"
         | "breastfeed"
@@ -35,46 +28,20 @@ export interface FormProps {
 }
 
 export function Form({ assembly, ...otherProps }: FormProps) {
-    if (assembly === "bath") {
-        return (<BathForm />);
-    }
     if (assembly === "breastfeed") {
         return (<BreastFeedForm {...otherProps} />);
     }
-    if (assembly === "change_diapers") {
-        return (<ChangeDiapersForm />);
-    }
-    if (assembly === "cry") {
-        return (<CryForm />);
-    }
-    if (assembly === "doctor") {
-        return (<DoctorForm />);
-    }
-    if (assembly === "other") {
-        return (<OtherForm />);
-    }
-    if (assembly === "poop") {
-        return (<PoopForm />);
-    }
     if (assembly === "sleep") {
-        return (<SleepForm />);
-    }
-    if (assembly === "urination") {
-        return (<UrinationForm />);
-    }
-    if (assembly === "vaccine") {
-        return (<VaccineForm />);
-    }
-    if (assembly === "walk") {
-        return (<WalkForm />);
+        return (<SleepForm {...otherProps} />);
     }
     if (assembly === "temperature") {
-        return (<TemperatureForm />);
+        return (<TemperatureForm {...otherProps} />);
     }
     if (assembly === "height") {
-        return (<HeightForm />);
+        return (<HeightForm {...otherProps} />);
     }
     if (assembly === "weight") {
-        return (<WeightForm />);
+        return (<WeightForm {...otherProps} />);
     }
+    return (<DefaultForm {...otherProps} />);
 }

@@ -1,13 +1,15 @@
 import React from "react";
 import { TextField } from "@mui/material";
 
-interface TextInputProps {
+export interface TextInputProps {
+    active: boolean;
     label: string;
     value: string;
     onChange: (v: string) => void;
 }
 
-export function TextInput({ label, value, onChange }: TextInputProps) {
+export function TextInput({ active, label, value, onChange }: TextInputProps) {
+    if (!active) { return; }
     return (
         <TextField
             label={label}
