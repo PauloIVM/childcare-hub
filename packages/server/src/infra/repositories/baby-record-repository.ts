@@ -71,14 +71,21 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return recordEntity;
     }
 
-    public async updateRecord(
-        id: string,
-        fields: Partial<Omit<IBabyRecordDTO, "userId" | "actionName">>
-    ) {
+    public async updateRecord(babyRecord: BabyRecord) {
         const result = await this.createQueryBuilder()
             .update(BabyRecordModel)
-            .set(fields)
-            .where({ id })
+            .set({
+                observations: babyRecord.observations,
+                init: babyRecord.init,
+                end: babyRecord.end,
+                temperature: babyRecord.temperature,
+                height: babyRecord.height,
+                weight: babyRecord.weight,
+                sleepQuality: babyRecord.sleepQuality,
+                breastfeedingType: babyRecord.breastfeedingType,
+                breastfeedingAmount: babyRecord.breastfeedingAmount
+            })
+            .where({ id: babyRecord.id })
             .execute();
         return !!result.affected;
     }

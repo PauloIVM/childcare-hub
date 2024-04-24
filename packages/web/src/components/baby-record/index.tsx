@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Alert, Snackbar, Backdrop, CircularProgress } from "@mui/material";
 import { Accordion } from "../accordion";
 import { Box } from "../box";
 import { Pagination, Divider, Button } from "@mui/material";
@@ -15,6 +16,9 @@ export function BabyRecord() {
     const router = useRouter();
     const { userData } = useUserData();
     const limit = 5;
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const [successMessage, setSuccessMessage] = React.useState("");
+    const [backdropOpen, setBackdropOpen] = React.useState(false);
     const [page, setPage] = React.useState<number>(1);
     const [count, setCount] = React.useState<number>();
     const [records, setRecords] = React.useState<IFetchRecordResponse["records"]>();
@@ -26,49 +30,85 @@ export function BabyRecord() {
             setRecords(result.records);
             setValidActions(result.validActions);
             setCount(Math.ceil(result.count / limit));
-        } catch (error) {
-            // TODO: Handle that with snackbar...   
+        } catch (error: any) {
+            setErrorMessage(error?.message);  
         }
     }
 
     async function onInsertClick(actionName: string) {
         try {
-            // TODO: Adicionar algum tipo de loading (backdrop no MUI)...
+            setBackdropOpen(true);
             await Api.insertRecord({ actionName, observations: "", init: new Date() });
             setPage(1);
-            fetchRecords();
-        } catch (error) {
-            // TODO: Handle that with snackbar... 
+            await fetchRecords();
+            setTimeout(() => {
+                setSuccessMessage("Iniciando contagem do evento.");
+                setBackdropOpen(false);
+            }, 500);
+        } catch (error: any) {
+            setTimeout(() => {
+                setErrorMessage("Falha ao iniciar contagem. Tente novamente.");  
+                setBackdropOpen(false);
+            }, 500); 
         }
     }
 
     async function onClickConfirm(recordId: string) {
         try {
+            setBackdropOpen(true);
             await Api.updateRecord({ recordId, fields: { end: new Date() }});
-            fetchRecords();
-        } catch (error) {
-            // TODO: Handle that with snackbar...
+            await fetchRecords();
+            setTimeout(() => {
+                setSuccessMessage("Evento cadastrado com sucesso.");
+                setBackdropOpen(false);
+            }, 500);
+        } catch (error: any) {
+            setTimeout(() => {
+                setErrorMessage("Falha ao cadastrar evento. Tente novamente.");  
+                setBackdropOpen(false);
+            }, 500); 
         }
     }
 
     async function onClickUpdate({ recordId, fields }: IUpdateRecordInput) {
         try {
+            setBackdropOpen(true);
             await Api.updateRecord({ recordId, fields });
-            fetchRecords();
-        } catch (error) {
-            // TODO: Handle that with snackbar...
+            await fetchRecords();
+            // INFO: Esse timeout é só pq eu quero que o backdrop apareça ao menos por um instante,
+            //       acho q o UX fica melhor. Mas em prod provavelmente não responderá tão rápido,
+            //       daí posso só remover isso.
+            setTimeout(() => {
+                setSuccessMessage("Evento atualizado com sucesso.");
+                setBackdropOpen(false);
+            }, 500);
+        } catch (error: any) {
+            setTimeout(() => {
+                setErrorMessage(error?.message);  
+                setBackdropOpen(false);
+            }, 500);
         }
     }
 
     async function onClickDelete(recordId: string) {
         try {
+            setBackdropOpen(true);
             await Api.deleteRecord({ recordId });
-            fetchRecords();
-        } catch (error) {
-            // TODO: Handle that with snackbar...
+            await fetchRecords();
+            setTimeout(() => {
+                setSuccessMessage("Evento excuído com sucesso.");
+                setBackdropOpen(false);
+            }, 500);
+        } catch (error: any) {
+            setTimeout(() => {
+                setErrorMessage("Falha ao excluir evento. Tente novamente.");  
+                setBackdropOpen(false);
+            }, 500); 
         }
     }
 
+    // TODO: Em tese eu não preciso desse effect... eu poderia passar o fetch diretamente no
+    //       onChange do <Pagination />. Refatorar depois.
     useEffect(() => {
         if (!userData.isLogged) { return; }
         fetchRecords();
@@ -76,7 +116,7 @@ export function BabyRecord() {
 
     useEffect(() => {
         if (!userData.isLoading && !userData.isLogged) {
-            router.push('/sign-in');
+            router.push("/sign-in");
         }
     }, [userData.isLogged, userData.isLoading]);
 
@@ -84,6 +124,44 @@ export function BabyRecord() {
 
     return (
         <Box>
+            {/*
+                TODO: Jogar o snackbar para outro componente e deixar aqui apenas os
+                    estados. Aliás, fazer isso com um cado desses componentes pra limpar
+                    um pouco. O snackbar pode receber um atributo chamado apenas "message".
+            */}
+            <Backdrop open={backdropOpen} sx={{ color: "#fff", zIndex: 10000 }}>
+                <CircularProgress color={"warning"} />
+            </Backdrop>
+            <Snackbar
+                open={!!successMessage}
+                autoHideDuration={6000}
+                onClose={() => { setSuccessMessage(""); }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert
+                    onClose={() => setSuccessMessage("")}
+                    severity={"success"}
+                    variant={"filled"}
+                    sx={{ width: "100%" }}
+                >
+                    {successMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={!!errorMessage}
+                autoHideDuration={6000}
+                onClose={() => { setErrorMessage(""); }}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+                <Alert
+                    onClose={() => setErrorMessage("")}
+                    severity={"error"}
+                    variant={"filled"}
+                    sx={{ width: "100%" }}
+                >
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
             <Styles.Container>
                 <Styles.AddRecordWrapper>
                     <Accordion

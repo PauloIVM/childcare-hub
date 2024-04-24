@@ -49,7 +49,7 @@ export class BabyRecord {
     setEnd(end: Date) {
         if (!end) { return this; }
         if (end.getTime() < this._init.getTime()) {
-            throw Error("'end' field must be grater than 'init'");
+            throw Error("O campo 'Fim' deve ser maior que o campo 'Início'.");
         }
         this._end = end;
         return this;
@@ -86,12 +86,12 @@ export class BabyRecord {
         return this._weight;
     }
 
-    setSleepQuality(s: BabyRecord["sleepQuality"]) {
+    setSleepQuality(s: string) {
         if (!s) { return this; }
         if (!["very_bad", "bad", "ok", "good", "very_good"].includes(s)) {
-            throw Error("Invalid sleep quality type");
+            throw Error("Campo 'Qualidade do sono' inválido.");
         }
-        this._sleepQuality = s;
+        this._sleepQuality = s as BabyRecord["sleepQuality"];
         return this;
     }
 
@@ -99,16 +99,16 @@ export class BabyRecord {
         return this._sleepQuality;
     }
 
-    setBreastfeedingType(b: "left" | "right" | "both" | "bottle") {
+    setBreastfeedingType(b: string) {
         if (!b) { return this; }
         if (!["left", "right", "both", "bottle"].includes(b)) {
-            throw Error("Invalid breastfeeding type");
+            throw Error("Campo 'Tipo de mamada' inválido.");
         }
-        this._breastfeedingType = b;
+        this._breastfeedingType = b as BabyRecord["_breastfeedingType"];
         return this;
     }
 
-    get breastfeedingType(): "left" | "right" | "both" | "bottle" {
+    get breastfeedingType(): BabyRecord["_breastfeedingType"] {
         return this._breastfeedingType;
     }
 

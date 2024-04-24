@@ -42,24 +42,28 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
 }
 
 export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Types.IUpdateRecordResponse> {
-    const result = await babyRecordApi.patch("/", {
-        id: input.recordId,
-        fields: {
-            observations: input.fields.observations,
-            init: input.fields.init?.toISOString(),
-            end: input.fields.end?.toISOString(),
-            temperature: input.fields.temperature,
-            height: input.fields.height,
-            weight: input.fields.weight,
-            sleepQuality: input.fields.sleepQuality,
-            breastfeedingType: input.fields.breastfeedingType,
-            breastfeedingAmount: input.fields.breastfeedingAmount,
-        }
-    }, { withCredentials: true });
-    return {
-        ok: result.status === 200,
-        message: result.data.message,
-    };
+    try {
+        const result = await babyRecordApi.patch("/", {
+            id: input.recordId,
+            fields: {
+                observations: input.fields.observations,
+                init: input.fields.init?.toISOString(),
+                end: input.fields.end?.toISOString(),
+                temperature: input.fields.temperature,
+                height: input.fields.height,
+                weight: input.fields.weight,
+                sleepQuality: input.fields.sleepQuality,
+                breastfeedingType: input.fields.breastfeedingType,
+                breastfeedingAmount: input.fields.breastfeedingAmount,
+            }
+        }, { withCredentials: true });
+        return {
+            ok: result.status === 200,
+            message: result.data.message,
+        };
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message)
+    }
 }
 
 export async function deleteRecord(input: Types.IDeleteRecordInput): Promise<Types.IDeleteRecordResponse> {
