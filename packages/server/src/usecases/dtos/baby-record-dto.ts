@@ -1,7 +1,13 @@
 export interface IBabyRecordDTO {
     userId: string;
     observations: string;
+    actionName: string;
     init: Date;
     end?: Date;
-    actionName: string;
+    temperature?: number;
+    height?: number;
+    weight?: number;
+    sleepQuality?: string;
+    breastfeedingType?: string;
+    breastfeedingAmount?: number;
 }

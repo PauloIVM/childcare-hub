@@ -37,13 +37,32 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return this.count({ where: { userId } });
     }
 
-    public async insertRecord({ actionName, observations, init, end, userId }: IBabyRecordDTO) {
+    public async insertRecord(dto: IBabyRecordDTO) {
+        const {
+            actionName,
+            observations,
+            init,
+            end,
+            userId,
+            height,
+            weight,
+            temperature,
+            breastfeedingAmount,
+            breastfeedingType,
+            sleepQuality,
+        } = dto;
         const recordModel = BabyRecordModel.build({
             action: actionName,
             observations,
             init,
             end,
             userId,
+            height,
+            weight,
+            temperature,
+            breastfeedingAmount,
+            breastfeedingType,
+            sleepQuality,
             createdAt: new Date(),
             updatedAt: new Date()
         });
@@ -54,7 +73,7 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
 
     public async updateRecord(
         id: string,
-        fields: Partial<Pick<IBabyRecordDTO, "init" | "end" | "observations">>
+        fields: Partial<Omit<IBabyRecordDTO, "userId" | "actionName">>
     ) {
         const result = await this.createQueryBuilder()
             .update(BabyRecordModel)
@@ -74,14 +93,15 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
     }
 
     private parseModelToEntity(r: BabyRecordModel): BabyRecord {
-        return new BabyRecord(
-            r.id,
-            r.userId,
-            r.action,
-            r.observations,
-            r.init,
-            r.end
-        )
+        return new BabyRecord(r.id, r.userId, r.action, r.init)
+            .setObservations(r.observations)
+            .setEnd(r.end)
+            .setHeight(r.height)
+            .setWeight(r.weight)
+            .setTemperature(r.temperature)
+            .setBreastfeedingAmount(r.breastfeedingAmount)
+            .setBreastfeedingType(r.breastfeedingType as BabyRecord["breastfeedingType"])
+            .setSleepQuality(r.sleepQuality as BabyRecord["sleepQuality"])
     }
 }
 

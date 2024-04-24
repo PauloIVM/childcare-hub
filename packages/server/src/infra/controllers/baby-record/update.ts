@@ -9,7 +9,7 @@ export class UpdateBabyRecordController {
     async exec(req: Request, res: Response) {
         const { fields, id } = req.body || {};
         const userId = req.session?.user?.id;
-        const recordDTO: Partial<Pick<IBabyRecordDTO, "end" | "init" | "observations">> = {};
+        const recordDTO: Partial<Omit<IBabyRecordDTO, "userId" | "actionName">> = {};
         if (!userId) {
             return res.status(401).json({ message: "User authentication failed" });
         }
@@ -23,6 +23,12 @@ export class UpdateBabyRecordController {
             if (fields.end) { recordDTO.end = new Date(fields.end); }
             if (fields.init) { recordDTO.init = new Date(fields.init); }
             if (fields.observations) { recordDTO.observations = fields.observations; }
+            if (fields.temperature) { recordDTO.temperature = fields.temperature; }
+            if (fields.height) { recordDTO.height = fields.height; }
+            if (fields.weight) { recordDTO.weight = fields.weight; }
+            if (fields.sleepQuality) { recordDTO.sleepQuality = fields.sleepQuality; }
+            if (fields.breastfeedingType) { recordDTO.breastfeedingType = fields.breastfeedingType; }
+            if (fields.breastfeedingAmount) { recordDTO.breastfeedingAmount = fields.breastfeedingAmount; }
             const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());
             await usecase.exec(id, userId, recordDTO);
             res.json({ message: "ok" });

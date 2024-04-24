@@ -33,6 +33,12 @@ export class GetBabyRecordsController {
                     end: r.end,
                     actionName: r.action.name,
                     actionLabel: r.action.label,
+                    height: r.height,
+                    weight: r.weight,
+                    temperature: r.temperature,
+                    sleepQuality: r.sleepQuality,
+                    breastfeedingAmount: r.breastfeedingAmount,
+                    breastfeedingType: r.breastfeedingType,
                 }))
             });
         } catch (error) {

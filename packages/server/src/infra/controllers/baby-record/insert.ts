@@ -54,6 +54,8 @@ export class InsertBabyRecordController {
         if (!isValidDate(initAsDate) || (end && !isValidDate(endAsDate))) {
             throw new Error("Failed to build record init/end fields");
         }
+        // TODO: Parsear novos campos... ainda não vou utilizar... mas já deixar no
+        //       jeito
         return {
             userId,
             actionName,

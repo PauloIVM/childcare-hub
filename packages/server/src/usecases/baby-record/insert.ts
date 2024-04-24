@@ -15,7 +15,9 @@ export class InsertBabyRecordUsecase {
             }
         } catch (error) {
             // TODO: Talvez seja interessante concatenar as mensagens de error??
-            throw new Error("Failed to insert record on 'babyRecordRepository.insert'");
+            throw new Error(
+                `Failed to insert record on 'babyRecordRepository.insert'. ${error.message}`
+            );
         }
     }
 }

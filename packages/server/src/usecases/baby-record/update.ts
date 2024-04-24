@@ -10,7 +10,7 @@ export class UpdateBabyRecordUsecase {
     async exec(
         id: string,
         userId: string,
-        recordDTO: Partial<Pick<IBabyRecordDTO, "end" | "init" | "observations">>
+        recordDTO: Partial<Omit<IBabyRecordDTO, "userId" | "actionName">>
     ) {
         try {
             const recordToChange = await this.babyRecordRepository.findById(id);
@@ -22,7 +22,9 @@ export class UpdateBabyRecordUsecase {
                 throw new Error("Failed to update record on 'babyRecordRepository.update'");
             }
         } catch (error) {
-            throw new Error("Failed to update record on 'babyRecordRepository.update'");
+            throw new Error(
+                `Failed to update record on 'babyRecordRepository.update'. ${error.message}`
+            );
         }
     }
 }
