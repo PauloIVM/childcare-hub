@@ -76,7 +76,7 @@ export const IconsConfirmeWrapper = styled(IconsWrapper)`
 `;
 
 export const AddRecordWrapper = styled(RecordRoot)`
-    background: linear-gradient(67deg, #d2e8fc 22%, #b6d9fc 90%);
+    background-color: #E1E9F0;
     &:hover {
         cursor: pointer;
     }
@@ -151,33 +151,4 @@ export const InsertBoxesWrapper = styled.div`
     flex-wrap: wrap;
     gap: 5px;
     justify-content: flex-start;
-`;
-
-export const InsertBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 60px;
-    height: 60px;
-    background-color: #FFFFFF;
-    border-radius: 4px;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    gap: 10px;
-    text-align: center;
-    font-weight: bold;
-    background-color: #F7EFDA;
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
-    font-size: 12px;
-    &:hover {
-        cursor: pointer;
-        background-color: #f0f0f0;
-    }
-    & svg {
-        width: 35px;
-        height: 35px;
-    }
-    & svg path {
-        fill: #2E3B4F;
-    }
 `;

@@ -9,7 +9,6 @@ import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-reco
 //       uma mensagem indicando pq o user foi redirecionado para lá... ou tratar isso
 //       no próprio box que abre a página que exige login.
 // TODO: Adicionar snackbar e mostrar errors/success que venham da api...
-// TODO: Usar Button com endIcon no lugar de boxes em "Adicionar um novo evento"
 
 interface RecordProps {
     record: IFetchRecordResponse["records"][0];

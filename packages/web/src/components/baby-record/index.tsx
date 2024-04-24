@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Accordion } from "../accordion";
 import { Box } from "../box";
-import { Pagination, Divider } from "@mui/material";
+import { Pagination, Divider, Button } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
 import { IFetchRecordResponse } from "../../api/baby-record/types";
 import { Record } from "./parts/record";
@@ -98,12 +98,15 @@ export function BabyRecord() {
                                 <Styles.InsertBoxesWrapper>
                                     {validActions?.map((a, i) => {
                                         return (
-                                            <Styles.InsertBox
+                                            <Button
+                                                variant={"outlined"}
+                                                endIcon={<AddCircle />}
+                                                color={"warning"}
                                                 key={i}
                                                 onClick={() => onInsertClick(a.name)}
                                             >
                                                 {a.label}
-                                            </Styles.InsertBox>
+                                            </Button >
                                         );
                                     })}
                                 </Styles.InsertBoxesWrapper>
