@@ -10,19 +10,27 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
         ok: result.status === 200,
         message: result.data.message,
         count: result.data.count,
+        validActions: result.data.validActions,
         records: result.data.records?.map((r: any) => ({
             id: r.id,
-            action: r.action,
+            actionName: r.actionName,
+            actionLabel: r.actionLabel,
             observations: r.observations,
             init: new Date(r.init),
-            end: r.end && new Date(r.end)
+            end: r.end && new Date(r.end),
+            temperature: r.temperature,
+            height: r.height,
+            weight: r.weight,
+            sleepQuality: r.sleepQuality,
+            breastfeedingType: r.breastfeedingType,
+            breastfeedingAmount: r.breastfeedingAmount,
         }))
     };
 }
 
 export async function insertRecord(input: Types.IInsertRecordInput): Promise<Types.IInsertRecordResponse> {
     const result = await babyRecordApi.put("/", {
-        action: input.action,
+        actionName: input.actionName,
         observations: input.observations,
         init: input.init.toISOString(),
         end: input.end?.toISOString(),
@@ -34,19 +42,28 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
 }
 
 export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Types.IUpdateRecordResponse> {
-    const result = await babyRecordApi.patch("/", {
-        id: input.recordId,
-        fields: {
-            action: input.fields.action,
-            observations: input.fields.observations,
-            init: input.fields.init?.toISOString(),
-            end: input.fields.end?.toISOString(),
-        }
-    }, { withCredentials: true });
-    return {
-        ok: result.status === 200,
-        message: result.data.message,
-    };
+    try {
+        const result = await babyRecordApi.patch("/", {
+            id: input.recordId,
+            fields: {
+                observations: input.fields.observations,
+                init: input.fields.init?.toISOString(),
+                end: input.fields.end?.toISOString(),
+                temperature: input.fields.temperature,
+                height: input.fields.height,
+                weight: input.fields.weight,
+                sleepQuality: input.fields.sleepQuality,
+                breastfeedingType: input.fields.breastfeedingType,
+                breastfeedingAmount: input.fields.breastfeedingAmount,
+            }
+        }, { withCredentials: true });
+        return {
+            ok: result.status === 200,
+            message: result.data.message,
+        };
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message)
+    }
 }
 
 export async function deleteRecord(input: Types.IDeleteRecordInput): Promise<Types.IDeleteRecordResponse> {

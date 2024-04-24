@@ -23,12 +23,45 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
                     {
                         name: "action",
                         type: "varchar",
-                        length: "150",
+                        length: "30",
                     },
                     {
                         name: "observations",
                         type: "varchar",
-                        length: "150",
+                        length: "300",
+                        isNullable: true,
+                    },
+                    {
+                        name: "temperature",
+                        type: "float4",
+                        isNullable: true,
+                    },
+                    {
+                        name: "height",
+                        type: "int",
+                        isNullable: true,
+                    },
+                    {
+                        name: "weight",
+                        type: "int",
+                        isNullable: true,
+                    },
+                    {
+                        name: "breastfeeding_amount",
+                        type: "int",
+                        isNullable: true,
+                    },
+                    {
+                        name: "sleep_quality",
+                        type: "varchar",
+                        length: "30",
+                        isNullable: true,
+                    },
+                    {
+                        name: "breastfeeding_type",
+                        type: "varchar",
+                        length: "30",
+                        isNullable: true,
                     },
                     {
                         name: "init_at",

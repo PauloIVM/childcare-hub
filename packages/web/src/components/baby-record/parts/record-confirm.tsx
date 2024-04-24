@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
-import { CircularProgress } from "@mui/material";
-import { updateRecord } from "../../../api/baby-record";
+import { Delete } from "@mui/icons-material";
+import { IconButton, CircularProgress } from "@mui/material";
 import * as Styles from "../style";
 
 interface RecordConfirmProps {
     id: string;
     action: string;
     init: Date;
-    setMode: React.Dispatch<React.SetStateAction<"default" | "confirm" | "hide">>;
-    forceUpdate: boolean;
-    setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    onClickConfirm: () => void;
+    onClickDelete: () => void;
 }
 
-export function RecordConfirm({ id, action, init, setMode, forceUpdate, setforceUpdate }: RecordConfirmProps) {
-    const [count, setCount] = React.useState<string>();
+export function RecordConfirm({ id, action, init, onClickConfirm, onClickDelete }: RecordConfirmProps) {
+    const [count, setCount] = React.useState<string>("0:00:00:00");
     const initParsed = init.toLocaleTimeString().slice(0, 5);
 
     function formatTimeDiff(s: number) {
@@ -25,21 +24,13 @@ export function RecordConfirm({ id, action, init, setMode, forceUpdate, setforce
     }
 
     useEffect(() => {
+        setCount("0:00:00:00");
         const intervalId = setInterval(() => {
             const seconds = Math.floor(((new Date()).getTime() - init.getTime()) / 1000);
             setCount(formatTimeDiff(seconds));
         }, 1000);
         return () => clearInterval(intervalId);
-    }, []); 
-
-    function onClickConfirm() {
-        updateRecord({ recordId: id, fields: { end: new Date() }})
-            .then(() => {
-                setMode("default");
-                setforceUpdate(!forceUpdate);
-            });
-        // TODO: Tratar errors em cada um desses fetchs q eu estou fazendo no client...
-    }
+    }, [id]); 
 
     return (
         <Styles.RecordConfirmRoot>
@@ -50,6 +41,9 @@ export function RecordConfirm({ id, action, init, setMode, forceUpdate, setforce
             </Styles.RecordDateWrapper>
             <Styles.IconsConfirmeWrapper>
                 <CircularProgress color={"warning"} size={20} />
+                <IconButton onClick={onClickDelete}>
+                    <Delete color={"error"} />
+                </IconButton>
                 <Styles.CheckIcon color={"success"} onClick={onClickConfirm} />
             </Styles.IconsConfirmeWrapper>
         </Styles.RecordConfirmRoot>

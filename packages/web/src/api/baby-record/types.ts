@@ -7,17 +7,25 @@ export interface IFetchRecordResponse {
     ok: boolean;
     message: string;
     count: number;
+    validActions: { name: string; label: string; }[];
     records: {
         id: string;
-        action: string;
+        actionName: string;
+        actionLabel: string;
         observations: string;
         init: Date;
         end?: Date;
+        temperature?: number;
+        height?: number;
+        weight?: number;
+        sleepQuality?: string;
+        breastfeedingType?: string;
+        breastfeedingAmount?: number;
     }[];
 }
 
 export interface IInsertRecordInput {
-    action: string;
+    actionName: string;
     observations: string;
     init: Date;
     end?: Date;
@@ -31,10 +39,15 @@ export interface IInsertRecordResponse {
 export interface IUpdateRecordInput {
     recordId: string;
     fields: {
-        action?: string;
         observations?: string;
         init?: Date;
         end?: Date;
+        temperature?: number;
+        height?: number;
+        weight?: number;
+        sleepQuality?: string;
+        breastfeedingType?: string;
+        breastfeedingAmount?: number;
     }
 }
 

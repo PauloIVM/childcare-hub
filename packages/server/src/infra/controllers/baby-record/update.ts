@@ -12,7 +12,10 @@ export class UpdateBabyRecordController {
             return res.status(401).json({ message: "User authentication failed" });
         }
         if (!id || !fields) {
-            return res.status(400).json({ message: "Nothing to change" });
+            return res.status(400).json({ message: "Missing essential fields." });
+        }
+        if (fields.actionName) {
+            return res.status(400).json({ message: "Not allowed change action-name" });
         }
         try {
             const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());

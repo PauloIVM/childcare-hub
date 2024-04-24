@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
 import { InsertBabyRecordUsecase } from "../../../usecases/baby-record/insert";
-import { BabyRecord } from "../../../domain/baby-record";
+import { IBabyRecordDTO } from "../../../usecases/dtos/baby-record-dto";
 
 export class InsertBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
         // INFO: Interface-adapter - Como isolar isso melhor??
-        let record: BabyRecord;
+        let record: IBabyRecordDTO;
         try {
             record = this.parseReqBody(req);
         } catch (error) {
@@ -26,18 +26,18 @@ export class InsertBabyRecordController {
 
     // TODO: Acho q esse método aqui n ficou muito legal... preciso descobrir como capturar
     // o error e então definir o status-code.
-    private parseReqBody(req: Request): BabyRecord {
+    private parseReqBody(req: Request): IBabyRecordDTO {
         // TODO: Futuramente talvez seja legal eu não puxar esse "session" via middleware,
         // mas via algum service ou usecase. Contudo, pra eu fazer isso, acho q eu mesmo
         // teria que implementar esse tratamento que é feito por essa lib.
         const userId = req.session?.user?.id;
         const {
-            action,
+            actionName,
             observations,
             init,
             end
         } = req.body as Record<string, string> || {};
-        const isAllStringFields = [userId, action, observations, init, end]
+        const isAllStringFields = [userId, actionName, observations, init, end]
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
         if (!userId) {
@@ -54,12 +54,14 @@ export class InsertBabyRecordController {
         if (!isValidDate(initAsDate) || (end && !isValidDate(endAsDate))) {
             throw new Error("Failed to build record init/end fields");
         }
-        return new BabyRecord(
+        // TODO: Parsear novos campos... ainda não vou utilizar... mas já deixar no
+        //       jeito
+        return {
             userId,
-            action,
+            actionName,
             observations,
-            initAsDate,
-            endAsDate
-        );
+            init: initAsDate,
+            end: endAsDate
+        };
     }
 }

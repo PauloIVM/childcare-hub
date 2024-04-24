@@ -2,27 +2,23 @@ import React, { useEffect } from "react";
 import { Fade } from "../../fade";
 import { RecordConfirm } from "./record-confirm";
 import { RecordDefault } from "./record-default";
+import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-record/types";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
-// TODO: Adicionar skeleton e outros ajustes finos de design...
-// TODO: Preciso incrementar o número de deletados em um estado e considerar
-//       isso no componente pai desse. Se eu apagar todos os elementos da
-//       penúltima página, e então ir para a última, eu serei jogado em uma
-//       página sem nenhum elemento.
-// TODO: Quando n tem nenhum record, ao abrir a pagina da ferramente, o codigo crasha...
-//       semelhantemente, se tentar acessar algumas paginas sem ter feito o login, crasha... tratar isso
+// TODO: Ao fazer o redirect para a página de login, bolar uma forma de mostrar lá
+//       uma mensagem indicando pq o user foi redirecionado para lá... ou tratar isso
+//       no próprio box que abre a página que exige login.
 
 interface RecordProps {
-    id: string;
-    action: string;
-    init: Date;
-    observations: string;
-    end?: Date;
-    forceUpdate: boolean;
-    setforceUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+    record: IFetchRecordResponse["records"][0];
+    onClickConfirm: (recordId: string) => void;
+    onClickDelete: (recordId: string) => void;
+    onClickUpdate: (input: IUpdateRecordInput) => Promise<void>;
 }
 
-export function Record({ id, action, init, end, observations, forceUpdate, setforceUpdate }: RecordProps) {
+export function Record(props: RecordProps) {
+    const { record, onClickConfirm, onClickDelete, onClickUpdate } = props;
+    const { id, actionLabel, init, end } = record;
     const initialMode = end ? "default" : "confirm";
     const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
 
@@ -35,21 +31,26 @@ export function Record({ id, action, init, end, observations, forceUpdate, setfo
             <Fade show={mode === "confirm"} keepMounted>
                 <RecordConfirm
                     id={id}
-                    action={action}
+                    action={actionLabel}
                     init={init}
-                    setMode={setMode}
-                    forceUpdate={forceUpdate}
-                    setforceUpdate={setforceUpdate}
+                    onClickConfirm={async () => {
+                        onClickConfirm(id);
+                        setMode("default");
+                    }}
+                    onClickDelete={async () => {
+                        onClickDelete(id);
+                        setMode("hide");
+                    }}
                 />
             </Fade>
             <Fade show={mode === "default"} keepMounted>
                 <RecordDefault
-                    id={id}
-                    action={action}
-                    observations={observations}
-                    init={init}
-                    end={end}
-                    setMode={setMode}
+                    record={record}
+                    onClickUpdate={onClickUpdate}
+                    onClickDelete={async () => {
+                        onClickDelete(id);
+                        setMode("hide");
+                    }}
                 />
             </Fade>
         </>

@@ -56,6 +56,7 @@ yarn workspace @childcare-hub/server migration:create -n ENTITY_NAME
 // #E1E9F0      // azul cinza claro
 // #C0C7CF      // azul cinza escuro
 // #D2E8FC      // azul claro
+// #ED6C02      // laranja
 // #A8DADC
 // #FFFFFF
 // #3B5998
