@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
 import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record/insert";
 import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { VerifyUsecase } from "@/application/usecases/auth";
 
 export class InsertBabyRecordController {
     constructor() {}
@@ -24,22 +25,24 @@ export class InsertBabyRecordController {
         }
     }
 
-    // TODO: Acho q esse método aqui n ficou muito legal... preciso descobrir como capturar
-    // o error e então definir o status-code.
+    // TODO: Esse método não está mais legal... mover a lógica de volta pra cima e pensar
+    //       em outra maneira de fazer esse parse.
     private parseReqBody(req: Request): IBabyRecordDTO {
-        // TODO: Futuramente talvez seja legal eu não puxar esse "session" via middleware,
-        // mas via algum service ou usecase. Contudo, pra eu fazer isso, acho q eu mesmo
-        // teria que implementar esse tratamento que é feito por essa lib.
-        const userId = req.session?.user?.id;
         const {
             actionName,
             observations,
             init,
             end
         } = req.body as Record<string, string> || {};
-        const isAllStringFields = [userId, actionName, observations, init, end]
+        const isAllStringFields = [actionName, observations, init, end]
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
+        if (!req.headers.authorization) {
+            throw new Error("Token de autenticação não fornecido.");
+        }
+        const token = req.headers.authorization.split(' ')[1];
+        const verifyUsecase = new VerifyUsecase();
+        const { userId } = verifyUsecase.exec(token);
         if (!userId) {
             throw new Error("User authentication failed");
         }
