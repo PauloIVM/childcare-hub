@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function HeightForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
+export function HeightForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
     return (
-        <Form withHeight withObservations {...props} />
+        <FormBuilder withHeight withObservations {...props} />
     );
 }

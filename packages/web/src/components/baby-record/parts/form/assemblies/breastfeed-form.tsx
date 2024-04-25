@@ -1,9 +1,9 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function BreastFeedForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
+export function BreastFeedForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
     return (
-        <Form
+        <FormBuilder
             withBreastfeedingType
             withBreastfeedingAmount
             withObservations

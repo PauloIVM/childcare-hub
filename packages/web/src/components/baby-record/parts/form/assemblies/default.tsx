@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function DefaultForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
-    return (<Form withObservations {...props} />);
+export function DefaultForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
+    return (<FormBuilder withObservations {...props} />);
 }

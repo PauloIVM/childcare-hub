@@ -11,7 +11,7 @@ import { Slider } from "./slider";
 import { TextInput } from "./text-input";
 import { Switch } from "./switch";
 
-export interface FormProps {
+export interface FormBuilderProps {
     record: IFetchRecordResponse["records"][0];
     withWeight?: boolean;
     withHeight?: boolean;
@@ -23,7 +23,7 @@ export interface FormProps {
     withBreastfeedingAmount?: boolean;
 }
 
-export function Form(props: FormProps) {
+export function FormBuilder(props: FormBuilderProps) {
     const {
         record,
         withWeight,

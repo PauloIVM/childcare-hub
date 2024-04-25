@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function WeightForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
+export function WeightForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
     return (
-        <Form withWeight withObservations {...props} />
+        <FormBuilder withWeight withObservations {...props} />
     );
 }

@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function SleepForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
+export function SleepForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
     return (
-        <Form withSleepQuality withObservations {...props} />
+        <FormBuilder withSleepQuality withObservations {...props} />
     );
 }

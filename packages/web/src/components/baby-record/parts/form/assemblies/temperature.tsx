@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, FormProps } from "../parts";
+import { FormBuilder, FormBuilderProps } from "../form-builder";
 
-export function TemperatureForm(props: Pick<FormProps, "record" | "onClickUpdate">) {
+export function TemperatureForm(props: Pick<FormBuilderProps, "record" | "onClickUpdate">) {
     return (
-        <Form withTemperature withObservations {...props} />
+        <FormBuilder withTemperature withObservations {...props} />
     );
 }
