@@ -9,7 +9,7 @@ import {
     CreateDateColumn,
     Index
 } from "typeorm";
-import { UserModel } from "./user-model";
+import { UserModel } from "@/infra/models/user-model";
 
 @Entity({ name: "baby_record" })
 export class BabyRecordModel {

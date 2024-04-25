@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ILogin } from "../../../../usecases/auth";
+import { ILogin } from "@/application/usecases/auth";
 
 export class LoginController {
     private loginUsecase: ILogin;

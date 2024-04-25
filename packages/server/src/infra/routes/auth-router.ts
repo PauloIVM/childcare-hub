@@ -1,6 +1,6 @@
-import * as authController from "../controllers/auth";
 import { Router } from "express";
-import { sessionMiddleware } from "../middlewares/auth-session";
+import { sessionMiddleware } from "@/infra/middlewares/auth-session";
+import * as authController from "@/infra/controllers/auth";
 
 const authRouter = Router();
 authRouter.use(sessionMiddleware);

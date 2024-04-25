@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IRegister } from "../../../../usecases/auth";
+import { IRegister } from "@/application/usecases/auth";
 
 export class RegisterController {
     private registerUsecase: IRegister;

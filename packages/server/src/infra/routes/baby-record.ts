@@ -1,6 +1,6 @@
-import * as babyRecordController from "../controllers/baby-record";
 import { Router } from "express";
-import { sessionMiddleware } from "../middlewares/auth-session";
+import { sessionMiddleware } from "infra/middlewares/auth-session";
+import * as babyRecordController from "infra/controllers/baby-record";
 
 const babyRecordRouter = Router();
 babyRecordRouter.use(sessionMiddleware);

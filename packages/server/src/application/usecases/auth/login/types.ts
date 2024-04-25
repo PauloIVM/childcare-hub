@@ -1,5 +1,5 @@
 import { IAuthSessionInput, IAuthUserSession, IAuthError } from "../types";
-import { Result } from "../../../utils";
+import { Result } from "@/utils";
 
 export interface IAuthLoginInput {
     email?: string;

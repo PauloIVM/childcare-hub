@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { accessControlMiddleware } from "../middlewares/access-control";
+import { accessControlMiddleware } from "@/infra/middlewares/access-control";
 import { authRouter } from "./auth-router";
 import { babyRecordRouter } from "./baby-record";
 

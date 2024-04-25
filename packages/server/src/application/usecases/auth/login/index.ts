@@ -1,6 +1,6 @@
 import { IAuthLoginInput, ILogin } from "./types";
-import { UserRepository } from "../../../infra/repositories/user-repository";
-import { ok, error } from "../../../utils";
+import { UserRepository } from "@/infra/repositories/user-repository";
+import { ok, error } from "@/utils";
 
 const MONTH_IN_MILLISECONDS = 30 * 24 * 60 * 60 * 1000;
 

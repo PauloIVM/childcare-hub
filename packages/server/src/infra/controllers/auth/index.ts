@@ -3,8 +3,8 @@ import { LogoutController } from "./logout";
 import { MeController } from "./me";
 import { PasswordRecoverController } from "./password-recover";
 import { RegisterController } from "./register";
-import { InjectorFactory } from "../../../utils";
-import * as authUsecases from "../../../usecases/auth";
+import { InjectorFactory } from "@/utils";
+import * as authUsecases from "@/application/usecases/auth";
 
 export const loginControllerFactory = new InjectorFactory(LoginController, [
     authUsecases.loginFactory,

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IPasswordRecover } from "../../../../usecases/auth";
+import { IPasswordRecover } from "@/application/usecases/auth";
 
 export class PasswordRecoverController {
     private passwordRecover: IPasswordRecover;

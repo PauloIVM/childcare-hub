@@ -1,6 +1,6 @@
-import { BabyRecord } from "../../domain/baby-record";
-import { BabyAction } from "../../domain/baby-action";
-import { IBabyRecordRepository } from "../repositories/baby-record-repository";
+import { BabyRecord } from "@/domain/baby-record";
+import { BabyAction } from "@/domain/baby-action";
+import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
 
 export class GetBabyRecordsUsecase {
     private babyRecordRepository: IBabyRecordRepository;

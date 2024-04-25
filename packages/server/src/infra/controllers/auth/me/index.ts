@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IMe } from "../../../../usecases/auth";
+import { IMe } from "@/application/usecases/auth";
 
 export class MeController {
     private meUsecase: IMe;
