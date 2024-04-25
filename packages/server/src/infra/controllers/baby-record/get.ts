@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "../../../infra/repositories/baby-record-repository";
-import { GetBabyRecordsUsecase } from "../../../usecases/baby-record";
+import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
+import { GetBabyRecordsUsecase } from "@/application/usecases/baby-record";
 
 export class GetBabyRecordsController {
     constructor() {}

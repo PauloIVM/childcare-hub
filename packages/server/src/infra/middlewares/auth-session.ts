@@ -1,8 +1,8 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import session from "express-session";
 import { TypeormStore } from "connect-typeorm";
-import { sessionRepositoryFactory } from "../repositories/session-repository";
-import { User } from "../../domain/user";
+import { sessionRepositoryFactory } from "@/infra/repositories/session-repository";
+import { User } from "@/domain/user";
 
 declare module 'express-session' {
     interface SessionData {

@@ -1,5 +1,5 @@
 import { IAuthError } from "../types";
-import { Result } from "../../../utils";
+import { Result } from "@/utils";
 
 export interface IAuthPassRecoverInput {
     email: string;

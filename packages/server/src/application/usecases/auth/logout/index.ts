@@ -1,6 +1,6 @@
 import { ILogout } from "./types";
 import { IAuthSessionInput } from "../types";
-import { ok } from "../../../utils/result";
+import { ok } from "@/utils/result";
 
 export class Logout implements ILogout {
     async exec(input: IAuthSessionInput) {

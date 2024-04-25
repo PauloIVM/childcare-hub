@@ -1,6 +1,6 @@
-import { Maybe, ok, error } from "../../../utils";
+import { Maybe, ok, error } from "@/utils";
 import { IRegister, IAuthRegisterInput } from "./types";
-import { UserRepository } from "../../../infra/repositories/user-repository";
+import { UserRepository } from "@/infra/repositories/user-repository";
 
 export class Register implements IRegister {
     private userRepository: UserRepository;

@@ -1,5 +1,5 @@
 import { Session } from "express-session";
-import { Maybe } from "../../utils";
+import { Maybe } from "@/utils";
 
 interface IAuthUser {
     id?: string;

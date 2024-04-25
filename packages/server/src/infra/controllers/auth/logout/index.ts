@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ILogout } from "../../../../usecases/auth";
+import { ILogout } from "@/application/usecases/auth";
 
 export class LogoutController {
     private logoutUsecase: ILogout;

@@ -1,6 +1,6 @@
 import { IMe } from "./types";
 import { IAuthSessionInput } from "../types";
-import { ok } from "../../../utils";
+import { ok } from "@/utils";
 
 // TODO: Talvez um nome melhor pra esse usecase seja: get-user-by-session, ou /verify
 export class Me implements IMe {

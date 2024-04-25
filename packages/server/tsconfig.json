@@ -11,7 +11,11 @@
         "outDir": "./build",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["./*"]
+        },
     },
     "include": ["src", "__tests__", "__mocks__"],
     "exclude": ["node_modules"],

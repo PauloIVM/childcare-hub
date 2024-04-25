@@ -1,5 +1,5 @@
 import { IAuthSessionInput, IAuthUserSession, IAuthError } from "../types";
-import { Result, Maybe } from "../../../utils";
+import { Result, Maybe } from "@/utils";
 
 export interface IAuthRegisterInput {
     user: Maybe<{

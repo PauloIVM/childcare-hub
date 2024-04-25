@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { InjectorFactory } from "../../utils";
-import { BabyRecordModel } from "../models/baby-record-model";
-import { BabyRecord } from "../../domain/baby-record";
-import { IBabyRecordRepository } from "../../usecases/repositories/baby-record-repository";
-import { IBabyRecordDTO } from "../../usecases/dtos/baby-record-dto";
+import { BabyRecordModel } from "@/infra/models/baby-record-model";
+import { BabyRecord } from "@/domain/baby-record";
+import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
+import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
 
 @EntityRepository(BabyRecordModel)
 export class BabyRecordRepository extends Repository<BabyRecordModel> implements IBabyRecordRepository {
@@ -111,5 +110,3 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             .setSleepQuality(r.sleepQuality as BabyRecord["sleepQuality"])
     }
 }
-
-export const userRepositoryFactory = new InjectorFactory(BabyRecordRepository);

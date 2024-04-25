@@ -3,8 +3,8 @@ import { Login } from "./login";
 import { Logout } from "./logout";
 import { Register } from "./register";
 import { PasswordRecover } from "./password-recover";
-import { InjectorFactory } from "../../utils";
-import { userRepositoryFactory } from "../../infra/repositories/user-repository";
+import { InjectorFactory } from "@/utils";
+import { userRepositoryFactory } from "@/infra/repositories/user-repository";
 
 export const meFactory = new InjectorFactory(Me);
 export const logoutFactory = new InjectorFactory(Logout);

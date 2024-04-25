@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { InjectorFactory } from "../../utils";
-import { SessionModel } from "../models/session-model";
+import { InjectorFactory } from "@/utils";
+import { SessionModel } from "@/infra/models/session-model";
 
 @EntityRepository(SessionModel)
 export class SessionRepository extends Repository<SessionModel> {
