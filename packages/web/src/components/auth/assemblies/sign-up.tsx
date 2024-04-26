@@ -28,28 +28,28 @@ export function SignUp() {
         }
         setLoading(true);
         try {
-            // TODO: Parece que o "register" me responde com o sessionId... eu preciso pegar esse
-            // valor e usar de alguma forma no client? Conferir no código do MC. Aparentemente n,
-            // acredito que talvez isso não devesse vir na api? Apenas nos cookies? Parece que está
-            // enviando outro id tbm, pode ser uma falha de segurança.
-            const response = await authApi.register({
+            const password = data.get("password") as string;
+            const passwordConfirmation = data.get("passwordConfirmation") as string;
+            if (password !== passwordConfirmation) {
+                setErrorMessage("A senha e a confirmação de senha devem ser iguais.");
+                setLoading(false);
+                return;
+            }
+            const response = await authApi.signUp({
                 userName: data.get("username") as string,
-                email: data.get("email") as string,
-                password: data.get("password") as string,
-                passwordConfirmation: data.get("passwordConfirmation") as string,
+                userEmail: data.get("email") as string,
+                userPassword: data.get("password") as string
             });
             setUserData({
-                userName: response.user.userName,
-                email: response.user.email,
+                userName: response.userName,
+                userEmail: response.userEmail,
                 isLogged: true
             });
             setSuccessMessage("Cadastro realizado com sucesso! Estamos te redirecionando para a página inicial.");
         } catch (error: any) {
             // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um
             // then() e catch()... ou... adicionar o middleware de error na api...
-            const errors: Record<string, string> = error?.response?.data?.errors;
-            const message = Object.values(errors).join(" ");
-            setErrorMessage(message);
+            setErrorMessage(error?.response?.data?.message || "");
             setLoading(false);
         }
     };

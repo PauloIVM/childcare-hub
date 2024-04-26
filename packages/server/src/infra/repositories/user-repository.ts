@@ -13,6 +13,7 @@ export class UserRepository extends Repository<UserModel> implements IUserReposi
 
     public async findById(id: string): Promise<User> {
         const userModel = await this.findOne({ where: { id } });
+        if (!userModel) return;
         return User.restore(
             userModel.id,
             userModel.userName,
@@ -23,6 +24,7 @@ export class UserRepository extends Repository<UserModel> implements IUserReposi
 
     public async findByEmail(email: string): Promise<User> {
         const userModel = await this.findOne({ where: { email } });
+        if (!userModel) return;
         return User.restore(
             userModel.id,
             userModel.userName,

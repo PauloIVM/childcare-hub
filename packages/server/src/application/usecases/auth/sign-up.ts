@@ -10,10 +10,16 @@ export class SignUpUsecase {
 
     async exec(dto: IUserDTO, date: Date = new Date()) {
         try {
+            const previousUser = await this.userRepository.findByEmail(dto.email);
+            if (previousUser) {
+                throw new Error(`Já existe um usuário cadastrado com o email ${dto.email}.`);
+            }
             const user = await this.userRepository.saveUser(dto);
             // TODO: Criar os ENVs em que eu possa definir esse secret...
             const tokenGenerator = new JwtManager("secret");
 			return {
+                userName: user.userName,
+                userEmail: user.email,
 				token: tokenGenerator.sign(user, date)
 			};
         } catch (error) {

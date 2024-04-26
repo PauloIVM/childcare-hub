@@ -1,10 +1,12 @@
 import { babyRecordApi } from "../instances";
+import Cookie from "js-cookie";
 import * as Types from "./types";
 
 export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Types.IFetchRecordResponse> {
+    const token = Cookie.get("np_user") || "";
     const result = await babyRecordApi.get("/", {
         params: { s: input.skip, l: input.limit },
-        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` }
     });
     return {
         ok: result.status === 200,
@@ -29,12 +31,13 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
 }
 
 export async function insertRecord(input: Types.IInsertRecordInput): Promise<Types.IInsertRecordResponse> {
+    const token = Cookie.get("np_user") || "";
     const result = await babyRecordApi.put("/", {
         actionName: input.actionName,
         observations: input.observations,
         init: input.init.toISOString(),
         end: input.end?.toISOString(),
-    }, { withCredentials: true });
+    }, { headers: { Authorization: `Bearer ${token}` } });
     return {
         ok: result.status === 200,
         message: result.data.message,
@@ -42,7 +45,10 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
 }
 
 export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Types.IUpdateRecordResponse> {
+    // TODO: Usar um try-catch similar em todas as outras requests, especialmente as de login,
+    //       para facilitar a obtenção do error na chamada desse método aqui.
     try {
+        const token = Cookie.get("np_user") || "";
         const result = await babyRecordApi.patch("/", {
             id: input.recordId,
             fields: {
@@ -56,7 +62,7 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
                 breastfeedingType: input.fields.breastfeedingType,
                 breastfeedingAmount: input.fields.breastfeedingAmount,
             }
-        }, { withCredentials: true });
+        }, { headers: { Authorization: `Bearer ${token}` } });
         return {
             ok: result.status === 200,
             message: result.data.message,
@@ -67,9 +73,10 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
 }
 
 export async function deleteRecord(input: Types.IDeleteRecordInput): Promise<Types.IDeleteRecordResponse> {
+    const token = Cookie.get("np_user") || "";
     const result = await babyRecordApi.delete("/", {
         params: { id: input.recordId },
-        withCredentials: true
+        headers: { Authorization: `Bearer ${token}` }
     });
     return {
         ok: result.status === 200,

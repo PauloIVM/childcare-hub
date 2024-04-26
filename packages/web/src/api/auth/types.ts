@@ -1,27 +1,16 @@
-export interface IRegisterInput {
+export interface ISignUpInput {
     userName: string;
-    email: string;
-    password: string;
-    passwordConfirmation: string;
+    userEmail: string;
+    userPassword: string;
 }
 
 export interface ILoginInput {
-    email: string;
-    password: string;
+    userEmail: string;
+    userPassword: string;
 }
 
 export interface IAuthResponse {
-    res: {
-        id: string;
-        user: {
-            id: string;
-            userName: string;
-            email: string;
-        }
-    },
-    err: {
-        status: number;
-        message: string;
-        errors: Record<string, string>;
-    }
+    userEmail?: string;
+    userName?: string;
+    message: string;
 }

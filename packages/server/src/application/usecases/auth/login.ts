@@ -16,6 +16,8 @@ export class LoginUsecase {
             // TODO: Criar os ENVs em que eu possa definir esse secret...
             const tokenGenerator = new JwtManager("secret");
 			return {
+                userName: user.userName,
+                userEmail: user.email,
 				token: tokenGenerator.sign(user, date)
 			};
         } catch (error) {

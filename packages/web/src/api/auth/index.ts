@@ -1,41 +1,37 @@
 import { authApi } from "../instances";
-import { AxiosRequestConfig } from "axios";
+import Cookie from "js-cookie";
 import * as Types from "./types";
 
-// TODO: Melhorar nomes e formas de importação/exportação...
+// TODO: Estou fazendo o gerenciamento dos cookies aqui nas requests. Isso força
+//       para que elas só funcionem client-side. Talvez eu deva mudar o nome dessa
+//       pasta que chamei de 'api', ou pensar em uma forma decente de remover isso
+//       daqui.
 
-export async function register(input: Types.IRegisterInput): Promise<Types.IAuthResponse["res"]> {
-    const result = await authApi.post("/register", {
+export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResponse> {
+    const result = await authApi.post("/sign-up", {
         user: {
-            userName: input.userName,
-            email: input.email,
-            password: input.password,
-            passwordConfirmation: input.passwordConfirmation,
+            name: input.userName,
+            email: input.userEmail,
+            password: input.userPassword,
         }
-    }, { withCredentials: true });
-    return result.data;
+    });
+    const { token, userEmail, userName, message } = result.data;
+    Cookie.set("np_user", token); 
+    return { userEmail, userName, message };
 }
 
-export async function login(input: Types.ILoginInput): Promise<Types.IAuthResponse["res"]> {
+export async function login(input: Types.ILoginInput): Promise<Types.IAuthResponse> {
     const result = await authApi.post("/login", {
         user: {
-            email: input.email,
-            password: input.password,
+            email: input.userEmail,
+            password: input.userPassword,
         }
-    }, { withCredentials: true });
-    return result.data;
+    });
+    const { token, userEmail, userName, message } = result.data;
+    Cookie.set("np_user", token); 
+    return { userEmail, userName, message };
 }
 
-export async function logout(): Promise<Types.IAuthResponse["res"]> {
-    const result = await authApi.get("/logout", { withCredentials: true });
-    return result.data;
-}
-
-// INFO: Ainda estou um pouco na dúvida se é melhor usar esse "me" no client ou server
-// do front. Caso eu decida por manter no client, posso remover esse "cookie" dos params
-export async function me(cookie?: string): Promise<Types.IAuthResponse["res"]> {
-    const config: AxiosRequestConfig = { withCredentials: true };
-    if (cookie) config["headers"] = { Cookie: cookie };
-    const result = await authApi.get("/me", config);
-    return result.data;
+export function logout() {
+    Cookie.remove("np_user"); 
 }

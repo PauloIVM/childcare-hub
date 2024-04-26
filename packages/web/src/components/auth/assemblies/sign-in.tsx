@@ -25,16 +25,16 @@ export function SignIn() {
         setLoading(true);
         try {
             const response = await authApi.login({
-                email: data.get("email") as string,
-                password: data.get("password") as string,
+                userEmail: data.get("email") as string,
+                userPassword: data.get("password") as string,
             });
-            if (!response.user?.email) {
+            if (!response.userEmail) {
                 setErrorMessage("Ops, parece que seu email ou senha não conferem.");
                 return;
             }
             setUserData({
-                userName: response.user.userName,
-                email: response.user.email,
+                userName: response.userName,
+                userEmail: response.userEmail,
                 isLogged: true
             });
             setSuccessMessage("Login efetuado com sucesso!");
