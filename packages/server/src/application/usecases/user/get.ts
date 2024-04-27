@@ -8,11 +8,7 @@ export class GetUserUsecase {
     }
 
     async exec(userId: string): Promise<User | undefined> {
-        try {
-            const user = await this.userRepository.findById(userId);
-            return user;
-        } catch (error) {
-            throw new Error("Failed to get user on 'GetUserUsecase'");
-        }
+        const user = await this.userRepository.findById(userId);
+        return user;
     }
 }

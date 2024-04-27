@@ -19,16 +19,12 @@ export class UpdateBabyRecordController {
         if (fields.actionName) {
             return res.status(400).json({ message: "Not allowed change action-name" });
         }
-        try {
-            const { userId } = verifyUsecase.exec(token);
-            if (!userId) {
-                return res.status(401).json({ message: "User authentication failed" });
-            }
-            const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());
-            await usecase.exec(id, userId, fields);
-            res.json({ message: "ok" });
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
+        const { userId } = verifyUsecase.exec(token);
+        if (!userId) {
+            return res.status(401).json({ message: "User authentication failed" });
         }
+        const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());
+        await usecase.exec(id, userId, fields);
+        res.json({ message: "ok" });
     }
 }

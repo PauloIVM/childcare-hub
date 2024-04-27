@@ -9,19 +9,15 @@ export class GetUserController {
         if (!token) {
             return res.json({ message: "Token de autenticação não fornecido." });
         }
-        try {
-            const verifyUsecase = new VerifyUsecase();
-            const { userId } = verifyUsecase.exec(token);
-            if (!userId) { return res.json({}); }
-            const getUserUsecase = new GetUserUsecase(new UserRepository());
-            const user = await getUserUsecase.exec(userId);
-            res.json({
-                userName: user.userName,
-                userEmail: user.email,
-                message: "ok"
-            });
-        } catch(error) {
-            return res.status(400).json({ message: error.message });
-        }
+        const verifyUsecase = new VerifyUsecase();
+        const { userId } = verifyUsecase.exec(token);
+        if (!userId) { return res.json({}); }
+        const getUserUsecase = new GetUserUsecase(new UserRepository());
+        const user = await getUserUsecase.exec(userId);
+        res.json({
+            userName: user.userName,
+            userEmail: user.email,
+            message: "ok"
+        });
     }
 }

@@ -3,26 +3,18 @@ import { BabyRecordRepository } from "@/infra/repositories";
 import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record";
 import { IBabyRecordDTO } from "@/application/dtos";
 import { VerifyUsecase } from "@/application/usecases/auth";
+import { ValidationError } from "@/domain";
 
 export class InsertBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
         // INFO: Interface-adapter - Como isolar isso melhor??
-        let record: IBabyRecordDTO;
-        try {
-            record = this.parseReqBody(req);
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
-        }
+        const record: IBabyRecordDTO = this.parseReqBody(req);
         // INFO: Fim do interface-adapter
-        try {
-            const usecase = new InsertBabyRecordUsecase(new BabyRecordRepository());
-            await usecase.exec(record);
-            res.json({ message: "ok" });
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
-        }
+        const usecase = new InsertBabyRecordUsecase(new BabyRecordRepository());
+        await usecase.exec(record);
+        res.json({ message: "ok" });
     }
 
     // TODO: Esse método não está mais legal... mover a lógica de volta pra cima e pensar
@@ -38,16 +30,28 @@ export class InsertBabyRecordController {
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
         if (!req.headers.authorization) {
-            throw new Error("Token de autenticação não fornecido.");
+            throw new ValidationError({
+                message: "Missing auth token.",
+                clientMessage: "Token de autenticação não fornecido.",
+                status: 401
+            });
         }
         const token = req.headers.authorization.split(' ')[1];
         const verifyUsecase = new VerifyUsecase();
         const { userId } = verifyUsecase.exec(token);
         if (!userId) {
-            throw new Error("User authentication failed");
+            throw new ValidationError({
+                message: "Invalid auth token.",
+                clientMessage: "Token de autenticação inválido ou expirado.",
+                status: 401
+            });
         }
         if (!isAllStringFields) {
-            throw new Error("Invalid some record field type");
+            throw new ValidationError({
+                message: "Invalid some record field type",
+                clientMessage: "Algum campo do registro não é válido (string)",
+                status: 422
+            });
         }
         const initAsDate = new Date(init);
         const endAsDate = new Date(end);
@@ -55,10 +59,12 @@ export class InsertBabyRecordController {
             return d instanceof Date && !isNaN(d.getDate());
         }
         if (!isValidDate(initAsDate) || (end && !isValidDate(endAsDate))) {
-            throw new Error("Failed to build record init/end fields");
+            throw new ValidationError({
+                message: "Failed to build record init/end fields",
+                clientMessage: "As datas nos campos 'início'/'fim' são inválidas.",
+                status: 422
+            });
         }
-        // TODO: Parsear novos campos... ainda não vou utilizar... mas já deixar no
-        //       jeito
         return {
             userId,
             actionName,

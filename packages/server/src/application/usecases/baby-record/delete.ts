@@ -1,4 +1,5 @@
 import { IBabyRecordRepository } from "@/application/repositories";
+import { ValidationError } from "@/domain";
 
 export class DeleteBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -7,17 +8,21 @@ export class DeleteBabyRecordUsecase {
     }
 
     async exec(id: string, userId: string) {
-        try {
-            const recordToChange = await this.babyRecordRepository.findById(id);
-            if (userId !== recordToChange.userId) {
-                throw new Error("You have not permission to delete this record");
-            }
-            const result = await this.babyRecordRepository.deleteRecord(id);
-            if (!result) {
-                throw new Error("Failed to delete record on 'babyRecordRepository.delete'");    
-            }
-        } catch (error) {
-            throw new Error("Failed to delete record on 'babyRecordRepository.delete'");
+        const recordToChange = await this.babyRecordRepository.findById(id);
+        if (userId !== recordToChange.userId) {
+            throw new ValidationError({
+                message: "You have not permission to delete this record",
+                clientMessage: "Você não têm permissão para apagar este registro",
+                status: 403
+            });
+        }
+        const result = await this.babyRecordRepository.deleteRecord(id);
+        if (!result) {
+            throw new ValidationError({
+                message: "Failed to delete record on 'babyRecordRepository.delete'",
+                clientMessage: "Falhou em apagar o registro.",
+                status: 409
+            });
         }
     }
 }

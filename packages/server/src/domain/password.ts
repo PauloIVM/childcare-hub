@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+import { ValidationError } from "@/domain/validation-error";
 
 // INFO: Domain Service
 export class Password {
@@ -26,7 +27,11 @@ export class Password {
     private static checkIfIsValid(password: string) {
         // TODO: Adicionar regra para conferir caracteres especiais.
         if (password.length < 6) {
-            throw new Error("Senha inválida. Escolha uma senha de no mínimo 6 caracteres e com caracteres especiais.")
+            throw new ValidationError({
+                message: "Invalid password.",
+                clientMessage: "Senha inválida. Escolha uma senha de no mínimo 6 caracteres e com caracteres especiais.",
+                status: 400
+            });
         }
     }
 }

@@ -9,24 +9,19 @@ export class DeleteBabyRecordController {
     async exec(req: Request, res: Response) {
         const id = req.query?.id as string;
         if (!req.headers.authorization) {
-            return res.status(401).json({ error: "Token de autenticação não fornecido." });
+            return res.status(401).json({ message: "Token de autenticação não fornecido." });
+        }
+        if (!id || typeof id !== "string") {
+            return res.status(400).json({ message: "Passe um 'id' válido." });
         }
         const token = req.headers.authorization.split(' ')[1];
         const verifyUsecase = new VerifyUsecase();
-        // TODO: Deixar todos esses try-catchs dos controllers em um error-handler middleware.
-        try {
-            const { userId } = verifyUsecase.exec(token);
-            if (!userId) {
-                return res.status(401).json({ message: "Falha na autenticação do usuário." });
-            }
-            if (!id || typeof id !== "string") {
-                return res.status(400).json({ message: "Passe um 'id' válido." });
-            }
-            const usecase = new DeleteBabyRecordUsecase(new BabyRecordRepository());
-            await usecase.exec(id, userId);
-            res.json({ message: "ok" });
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
+        const { userId } = verifyUsecase.exec(token);
+        if (!userId) {
+            return res.status(401).json({ message: "Falha na autenticação do usuário." });
         }
+        const usecase = new DeleteBabyRecordUsecase(new BabyRecordRepository());
+        await usecase.exec(id, userId);
+        res.json({ message: "ok" });
     }
 }

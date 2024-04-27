@@ -1,4 +1,4 @@
-import { Password } from "@/domain";
+import { Password, ValidationError } from "@/domain";
 
 export class User {
     private _id: string;
@@ -33,7 +33,10 @@ export class User {
 
     private setUserName(userName: string) {
         if (!userName || userName.length < 2) {
-            throw new Error("O nome de usuário fornecido é inválido.");
+            throw new ValidationError({
+                message: "Invalid username.",
+                clientMessage: "O nome de usuário fornecido é inválido.",
+            });
         }
         this._userName=userName;
         return this;
@@ -41,7 +44,10 @@ export class User {
 
     private setEmail(email: string) {
         if (!this.isEmailValid(email)) {
-            throw new Error("O email fornecido é inválido.");
+            throw new ValidationError({
+                message: "Invalid email.",
+                clientMessage: "O email fornecido é inválido.",
+            });
         }
         this._email=email;
         return this;
