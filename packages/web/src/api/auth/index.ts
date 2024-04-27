@@ -32,6 +32,16 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
     return { userEmail, userName, message };
 }
 
+export async function requestRecover(input: Types.ILoginInput): Promise<void> {
+    try {
+        await authApi.post("/request-recover", {
+            user: { email: input.userEmail }
+        });   
+    } catch (error) {
+        throw new Error("Um erro ocorreu para solicitar uma nova senha. Tente novamente.");
+    }
+}
+
 export function logout() {
     Cookie.remove("np_user"); 
 }

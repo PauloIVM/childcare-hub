@@ -68,7 +68,7 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
             message: result.data.message,
         };
     } catch (error: any) {
-        throw new Error(error?.response?.data?.message)
+        throw new Error(error?.response?.data?.message);
     }
 }
 
