@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
+import { BabyRecordRepository } from "@/infra/repositories";
 import { GetBabyRecordsUsecase } from "@/application/usecases/baby-record";
 import { VerifyUsecase } from "@/application/usecases/auth";
 

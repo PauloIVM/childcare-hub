@@ -1,6 +1,6 @@
-import { JwtManager } from "@/domain/jwt-manager";
-import { IUserRepository } from "@/application/repositories/user-repository";
-import { IUserDTO } from "@/application/dtos/user-dto";
+import { JwtManager } from "@/domain";
+import { IUserRepository } from "@/application/repositories";
+import { IUserDTO } from "@/application/dtos";
 
 export class SignUpUsecase {
     private userRepository: IUserRepository;

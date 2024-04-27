@@ -1,4 +1,4 @@
-import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
+import { IBabyRecordRepository } from "@/application/repositories";
 
 export class DeleteBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;

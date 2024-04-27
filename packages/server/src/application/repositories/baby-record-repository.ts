@@ -1,5 +1,5 @@
-import { BabyRecord } from "@/domain/baby-record";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { BabyRecord } from "@/domain";
+import { IBabyRecordDTO } from "@/application/dtos";
 
 export interface IBabyRecordRepository {
     findById(id: string): Promise<BabyRecord>;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { LoginUsecase } from "@/application/usecases/auth";
-import { UserRepository } from "@/infra/repositories/user-repository";
+import { UserRepository } from "@/infra/repositories";
 
 // TODO: A forma como eu estou enviando os errors ao client pode facilmente vazar uma
 //       informação sensível de uma exceção não prevista. Preciso de alguma forma identificar

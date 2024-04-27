@@ -1,4 +1,4 @@
-import { Password } from "./password";
+import { Password } from "@/domain";
 
 export class User {
     private _id: string;

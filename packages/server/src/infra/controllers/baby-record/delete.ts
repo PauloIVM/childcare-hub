@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
-import { DeleteBabyRecordUsecase } from "@/application/usecases/baby-record/delete";
+import { BabyRecordRepository } from "@/infra/repositories";
+import { DeleteBabyRecordUsecase } from "@/application/usecases/baby-record";
 import { VerifyUsecase } from "@/application/usecases/auth";
 
 export class DeleteBabyRecordController {

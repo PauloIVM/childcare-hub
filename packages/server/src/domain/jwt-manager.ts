@@ -1,5 +1,5 @@
 import { sign, verify } from "jsonwebtoken";
-import { User } from "./user";
+import { User } from "@/domain";
 
 // INFO: Domain Service
 export class JwtManager {

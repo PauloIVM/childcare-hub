@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { GetUserUsecase } from "@/application/usecases/user/get";
-import { UserRepository } from "@/infra/repositories/user-repository";
+import { UserRepository } from "@/infra/repositories";
+import { GetUserUsecase } from "@/application/usecases/user";
 import { VerifyUsecase } from "@/application/usecases/auth";
 
 export class GetUserController {

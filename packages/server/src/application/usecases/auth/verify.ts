@@ -1,4 +1,4 @@
-import { JwtManager } from "@/domain/jwt-manager";
+import { JwtManager } from "@/domain";
 
 export class VerifyUsecase {
     constructor() {}

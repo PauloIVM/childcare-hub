@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
-import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record/insert";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { BabyRecordRepository } from "@/infra/repositories";
+import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record";
+import { IBabyRecordDTO } from "@/application/dtos";
 import { VerifyUsecase } from "@/application/usecases/auth";
 
 export class InsertBabyRecordController {

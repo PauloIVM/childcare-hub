@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { User } from "@/domain/user";
-import { IUserRepository } from "@/application/repositories/user-repository";
-import { IUserDTO } from "@/application/dtos/user-dto";
-import { UserModel } from "@/infra/models/user-model";
+import { User } from "@/domain";
+import { IUserRepository } from "@/application/repositories";
+import { IUserDTO } from "@/application/dtos";
+import { UserModel } from "@/infra/models";
 
 @EntityRepository(UserModel)
 export class UserRepository extends Repository<UserModel> implements IUserRepository {

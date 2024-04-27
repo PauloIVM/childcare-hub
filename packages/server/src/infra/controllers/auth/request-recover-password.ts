@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RequestRecoverUsecase } from "@/application/usecases/auth";
-import { UserRepository } from "@/infra/repositories/user-repository";
+import { UserRepository } from "@/infra/repositories";
 import { EmailGateway } from "@/infra/gateways";
 
 export class RequestRecoverController {

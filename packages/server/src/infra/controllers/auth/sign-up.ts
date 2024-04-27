@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { IUserDTO } from "@/application/dtos/user-dto";
 import { SignUpUsecase } from "@/application/usecases/auth";
-import { UserRepository } from "@/infra/repositories/user-repository";
+import { UserRepository } from "@/infra/repositories";
 
 export class SignUpController {
     async exec(req: Request, res: Response) {

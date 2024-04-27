@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
-import { UpdateBabyRecordUsecase } from "@/application/usecases/baby-record/update";
+import { BabyRecordRepository } from "@/infra/repositories";
+import { UpdateBabyRecordUsecase } from "@/application/usecases/baby-record";
 import { VerifyUsecase } from "@/application/usecases/auth";
 
 export class UpdateBabyRecordController {

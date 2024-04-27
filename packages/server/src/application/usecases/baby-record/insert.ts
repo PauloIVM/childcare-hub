@@ -1,5 +1,5 @@
-import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { IBabyRecordRepository } from "@/application/repositories";
+import { IBabyRecordDTO } from "@/application/dtos";
 
 export class InsertBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;

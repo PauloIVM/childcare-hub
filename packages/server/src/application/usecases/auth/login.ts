@@ -1,5 +1,5 @@
-import { JwtManager } from "@/domain/jwt-manager";
-import { IUserRepository } from "@/application/repositories/user-repository";
+import { JwtManager } from "@/domain";
+import { IUserRepository } from "@/application/repositories";
 
 export class LoginUsecase {
     private userRepository: IUserRepository;
