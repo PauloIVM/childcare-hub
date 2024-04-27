@@ -16,7 +16,6 @@ export class RequestRecoverController {
         // TODO: Passar todos esses try-catchs dos controllers pra um middleware
         // TODO: Criar no domain um error customizado com payload, daí eu resolvo o problema
         //       de vazar errors.
-        // TODO: Melhorar exports, fazer via index.
         try {
             await usecase.exec(email);
             res.json({ message: "Email sent." });
