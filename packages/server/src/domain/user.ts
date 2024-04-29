@@ -28,6 +28,10 @@ export class User {
         return this.setPassword(Password.create(password));
     }
 
+    public updateEmail(email: string) {
+        return this.setEmail(email);
+    }
+
     get id(): string { return this._id; }
     get userName(): string { return this._userName; }
     get email(): string { return this._email; }
