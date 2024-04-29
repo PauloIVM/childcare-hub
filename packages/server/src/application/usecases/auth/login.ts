@@ -9,7 +9,7 @@ export class LoginUsecase {
 
     async exec(email: string, password: string, date: Date = new Date()) {
         const user = await this.userRepository.findByEmail(email);
-        if (!user.password.equals(password)) {
+        if (!user?.password.equals(password)) {
             throw new ValidationError({
                 message: "Bad email/password.",
                 clientMessage: "Email e/ou senha incorretos."

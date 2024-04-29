@@ -7,7 +7,7 @@ export class RequestRecoverController {
     async exec(req: Request, res: Response) {
         const { email } = req.body?.user || {};
         if (!email) {
-            return res.status(400).json({ message: "Required fields: email." });
+            return res.status(400).json({ message: "O campo 'email' é obrigatório." });
         }
         const usecase = new RequestRecoverUsecase(
             UserRepository.getInstance(),
