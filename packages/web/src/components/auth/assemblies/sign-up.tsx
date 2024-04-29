@@ -71,7 +71,7 @@ export function SignUp() {
                 <Parts.CircularProgress isActive={isLoading} />
                 <Parts.LinksWrapper>
                     <Parts.Link text={"Já possui uma conta? Faça o login aqui."} href={"/sign-in"} />
-                    <Parts.Link text={"Já possui uma conta e esqueceu a senha?"} href={"/recover"} />
+                    <Parts.Link text={"Já possui uma conta e esqueceu a senha?"} href={"/recover-request"} />
                 </Parts.LinksWrapper>
             </Parts.Form>
         </Parts.Container>

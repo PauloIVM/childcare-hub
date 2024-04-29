@@ -9,6 +9,15 @@ export interface ILoginInput {
     userPassword: string;
 }
 
+export interface IRecoverRequestInput {
+    userEmail: string;
+}
+
+export interface IRecoverInput {
+    userPassword: string;
+    token?: string;
+}
+
 export interface IAuthResponse {
     userEmail?: string;
     userName?: string;

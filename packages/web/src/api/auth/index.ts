@@ -1,6 +1,7 @@
 import { authApi } from "../instances";
 import Cookie from "js-cookie";
 import * as Types from "./types";
+import { AxiosRequestConfig } from "axios";
 
 // TODO: Estou fazendo o gerenciamento dos cookies aqui nas requests. Isso força
 //       para que elas só funcionem client-side. Talvez eu deva mudar o nome dessa
@@ -32,13 +33,31 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
     return { userEmail, userName, message };
 }
 
-export async function requestRecover(input: Types.ILoginInput): Promise<void> {
+export async function requestRecover(input: Types.IRecoverRequestInput): Promise<void> {
     try {
         await authApi.post("/request-recover", {
             user: { email: input.userEmail }
         });   
-    } catch (error) {
-        throw new Error("Um erro ocorreu para solicitar uma nova senha. Tente novamente.");
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message);
+    }
+}
+
+// TODO: O recover deve funcionar tanto para o user ja logado quanto para o que vem do email...
+export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthResponse> {
+    const token = input.token || Cookie.get("np_user") || "";
+    const config: AxiosRequestConfig = { headers: {
+        Authorization: `Bearer ${token}`
+    }};
+    try {
+        const result = await authApi.post("/recover", {
+            user: { password: input.userPassword },
+        }, config);
+        const { token: resToken, userEmail, userName, message } = result.data;
+        Cookie.set("np_user", resToken); 
+        return { userEmail, userName, message };
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message);
     }
 }
 
