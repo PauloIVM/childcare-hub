@@ -6,8 +6,5 @@ export interface IUserRepository {
     findByEmail(email: string): Promise<User>;
     saveUser(user: IUserDTO): Promise<User>;
     updateUser(user: User): Promise<boolean>;
-    // TODO: Renomear para "buildRepository" ou algo assim... estudar melhor o que esse
-    //       customRepo traz de benefício, para q eu possa dar um bom nome. Talvez um
-    //       nome melhor seja "setupORM" ou coisa do tipo...
     getCustomRepository(): IUserRepository;
 }

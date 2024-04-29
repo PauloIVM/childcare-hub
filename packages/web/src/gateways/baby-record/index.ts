@@ -45,8 +45,6 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
 }
 
 export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Types.IUpdateRecordResponse> {
-    // TODO: Usar um try-catch similar em todas as outras requests, especialmente as de login,
-    //       para facilitar a obtenção do error na chamada desse método aqui.
     try {
         const token = Cookie.get("np_user") || "";
         const result = await babyRecordApi.patch("/", {

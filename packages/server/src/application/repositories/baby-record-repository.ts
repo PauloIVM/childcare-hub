@@ -8,8 +8,5 @@ export interface IBabyRecordRepository {
     updateRecord(record: BabyRecord): Promise<boolean>;
     deleteRecord(id: string): Promise<boolean>;
     getCount(userId: string): Promise<number>;
-    // TODO: Renomear para "buildRepository" ou algo assim... estudar melhor o que esse
-    //       customRepo traz de benefício, para q eu possa dar um bom nome. Talvez um
-    //       nome melhor seja "setupORM" ou coisa do tipo...
     getCustomRepository(): IBabyRecordRepository;
 }
