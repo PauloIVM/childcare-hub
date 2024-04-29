@@ -9,28 +9,36 @@ import { AxiosRequestConfig } from "axios";
 //       daqui.
 
 export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResponse> {
-    const result = await authApi.post("/sign-up", {
-        user: {
-            name: input.userName,
-            email: input.userEmail,
-            password: input.userPassword,
-        }
-    });
-    const { token, userEmail, userName, message } = result.data;
-    Cookie.set("np_user", token); 
-    return { userEmail, userName, message };
+    try {
+        const result = await authApi.post("/sign-up", {
+            user: {
+                name: input.userName,
+                email: input.userEmail,
+                password: input.userPassword,
+            }
+        });
+        const { token, userEmail, userName, message } = result.data;
+        Cookie.set("np_user", token); 
+        return { userEmail, userName, message };
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message);
+    }
 }
 
 export async function login(input: Types.ILoginInput): Promise<Types.IAuthResponse> {
-    const result = await authApi.post("/login", {
-        user: {
-            email: input.userEmail,
-            password: input.userPassword,
-        }
-    });
-    const { token, userEmail, userName, message } = result.data;
-    Cookie.set("np_user", token); 
-    return { userEmail, userName, message };
+    try {
+        const result = await authApi.post("/login", {
+            user: {
+                email: input.userEmail,
+                password: input.userPassword,
+            }
+        });
+        const { token, userEmail, userName, message } = result.data;
+        Cookie.set("np_user", token); 
+        return { userEmail, userName, message };
+    } catch (error: any) {
+        throw new Error(error?.response?.data?.message);
+    }
 }
 
 export async function requestRecover(input: Types.IRecoverRequestInput): Promise<void> {

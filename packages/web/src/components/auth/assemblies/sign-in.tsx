@@ -30,6 +30,7 @@ export function SignIn() {
             });
             if (!response.userEmail) {
                 setErrorMessage("Ops, parece que seu email ou senha não conferem.");
+                setLoading(false);
                 return;
             }
             setUserData({
@@ -39,9 +40,7 @@ export function SignIn() {
             });
             setSuccessMessage("Login efetuado com sucesso!");
         } catch (error: any) {
-            const errors: Record<string, string> = error?.response?.data?.errors;
-            const message = Object.values(errors).join(" ");
-            setErrorMessage(message);
+            setErrorMessage(error?.message);
             setLoading(false);
         }
     };
@@ -58,7 +57,7 @@ export function SignIn() {
                 <Parts.SubmitButton isActive={!successMessage && !isLoading}>{"Entrar"}</Parts.SubmitButton>
                 <Parts.CircularProgress isActive={isLoading} />
                 <Parts.LinksWrapper>
-                    <Parts.Link text={"Esqueceu sua senha?"} href={"/recover"} />
+                    <Parts.Link text={"Esqueceu sua senha?"} href={"/recover-request"} />
                     <Parts.Link text={"Ou, crie sua conta aqui"} href={"/sign-up"} />
                 </Parts.LinksWrapper>
             </Parts.Form>

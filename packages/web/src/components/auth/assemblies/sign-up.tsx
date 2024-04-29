@@ -47,9 +47,7 @@ export function SignUp() {
             });
             setSuccessMessage("Cadastro realizado com sucesso! Estamos te redirecionando para a página inicial.");
         } catch (error: any) {
-            // TODO: Agora eu já posso tipar um pouco melhor esse error... talvez transformar em um
-            // then() e catch()... ou... adicionar o middleware de error na api...
-            setErrorMessage(error?.response?.data?.message || "");
+            setErrorMessage(error?.message || "");
             setLoading(false);
         }
     };

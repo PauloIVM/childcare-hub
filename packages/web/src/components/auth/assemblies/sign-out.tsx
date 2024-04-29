@@ -13,13 +13,8 @@ export function SignOut() {
     if (!userData.isLogged) return <></>;
 
     const onLogout = async () => {
-        try {
-            await authApi.logout();
-            setUserData({ isLogged: false });
-        } catch (error: any) {
-            setUserData({ isLogged: false });
-            console.error(error);
-        }
+        authApi.logout();
+        setUserData({ isLogged: false });
         router.push("/");
     };
 
