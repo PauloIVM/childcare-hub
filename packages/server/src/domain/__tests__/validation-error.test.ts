@@ -1,7 +1,7 @@
 import { ValidationError } from "../";
 
 describe("ValidationError", () => {
-    test("should", async () => {
+    test("should throw error", async () => {
         try {
             throw new ValidationError({
                 message: "error_message",

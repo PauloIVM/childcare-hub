@@ -9,7 +9,7 @@ describe("JwtManager", () => {
             "user_id",
             "user_name",
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         );
     });
 

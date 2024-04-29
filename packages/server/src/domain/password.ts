@@ -25,11 +25,17 @@ export class Password {
     }
 
     private static checkIfIsValid(password: string) {
-        // TODO: Adicionar regra para conferir caracteres especiais.
+        if (!/\W/.test(password)) {
+            throw new ValidationError({
+                message: "Invalid password.",
+                clientMessage: "Senha inválida. Escolha uma senha com pelo menos 1 caracter especial.",
+                status: 400
+            });
+        }
         if (password.length < 6) {
             throw new ValidationError({
                 message: "Invalid password.",
-                clientMessage: "Senha inválida. Escolha uma senha de no mínimo 6 caracteres e com caracteres especiais.",
+                clientMessage: "Senha inválida. Escolha uma senha de no mínimo 6 caracteres.",
                 status: 400
             });
         }

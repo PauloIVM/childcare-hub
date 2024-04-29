@@ -6,13 +6,13 @@ describe("User", () => {
             "user_id",
             "user_name",
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         );
         expect(user.id).toBe("user_id");
         expect(user.userName).toBe("user_name");
         expect(user.email).toBe("user@gmail.com");
-        expect(user.password.hash).not.toBe("user_password");
-        expect(user.password.equals("user_password")).toBe(true);
+        expect(user.password.hash).not.toBe("user_p@ssword");
+        expect(user.password.equals("user_p@ssword")).toBe(true);
     });
 
     test("should restore user", async () => {
@@ -34,7 +34,7 @@ describe("User", () => {
             "user_id",
             "user_name",
             "user@gmai",
-            "user_password"
+            "user_p@ssword"
         ];
         expect(() => User.create(...args)).toThrow(new Error("Invalid email."));
         expect(() => User.restore(...args)).toThrow(new Error("Invalid email."));
@@ -94,25 +94,25 @@ describe("User", () => {
             "user_id",
             null,
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         ];
         const args2: Parameters<typeof User.create> = [
             "user_id",
             undefined,
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         ];
         const args3: Parameters<typeof User.create> = [
             "user_id",
             "",
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         ];
         const args4: Parameters<typeof User.create> = [
             "user_id",
             "u",
             "user@gmail.com",
-            "user_password"
+            "user_p@ssword"
         ];
         expect(() => User.create(...args1)).toThrow(new Error("Invalid username."));
         expect(() => User.restore(...args1)).toThrow(new Error("Invalid username."));
