@@ -42,4 +42,17 @@ export class UserRepository extends Repository<UserModel> implements IUserReposi
         await this.save(userModel);
         return user;
     }
+
+    public async updateUser(user: User): Promise<boolean> {
+        const result = await this.createQueryBuilder()
+            .update(UserModel)
+            .set({
+                passwordHash: user.password.hash,
+                email: user.email,
+                userName: user.userName,
+            })
+            .where({ id: user.id })
+            .execute();
+        return !!result.affected;
+    }
 }

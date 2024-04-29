@@ -24,6 +24,10 @@ export class User {
             .setPassword(Password.restore(hash));
 	}
 
+    public updatePassword(password: string) {
+        return this.setPassword(Password.create(password));
+    }
+
     get id(): string { return this._id; }
     get userName(): string { return this._userName; }
     get email(): string { return this._email; }
