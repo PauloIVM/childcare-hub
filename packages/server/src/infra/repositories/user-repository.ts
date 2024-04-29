@@ -1,45 +1,60 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { InjectorFactory } from "@/utils";
-import { UserModel } from "@/infra/models/user-model";
-import { User } from "@/domain/user";
-import bcryptjs from "bcryptjs";
+import { User } from "@/domain";
+import { IUserRepository } from "@/application/repositories";
+import { IUserDTO } from "@/application/dtos";
+import { UserModel } from "@/infra/models";
 
 @EntityRepository(UserModel)
-export class UserRepository extends Repository<UserModel> {
-    public getCustomRepository() {
+export class UserRepository extends Repository<UserModel> implements IUserRepository {
+    private constructor() { super(); }
+
+    static getInstance() {
         return getCustomRepository(UserRepository);
     }
 
-    public findUserById(id: string): Promise<User> {
-        return this.findOne({ where: { id } });
+    public async findById(id: string): Promise<User> {
+        const userModel = await this.findOne({ where: { id } });
+        if (!userModel) return;
+        return User.restore(
+            userModel.id,
+            userModel.userName,
+            userModel.email,
+            userModel.passwordHash
+        );
     }
 
-    public findUserByEmail(email: string): Promise<User> {
-        return this.findOne({ where: { email } });
+    public async findByEmail(email: string): Promise<User> {
+        const userModel = await this.findOne({ where: { email } });
+        if (!userModel) return;
+        return User.restore(
+            userModel.id,
+            userModel.userName,
+            userModel.email,
+            userModel.passwordHash
+        );
     }
 
-    public async findUserByEmailAndPassword(email: string, password: string): Promise<User> {
-        const user = await this.findOne({ where: { email } });
-        if (!user) return;
-        if (bcryptjs.compareSync(password, user.passwordHash)) {
-            return user;
-        }
-    }
-
-    public async saveUser(email: string, pass: string, userName: string): Promise<User> {
-        const salt = bcryptjs.genSaltSync();
-        const passwordHash = bcryptjs.hashSync(pass, salt);
-        const user = UserModel.build({
-            email,
-            userName,
-            passwordHash,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        });
-        await this.save(user);
+    public async saveUser({ name, email, password }: IUserDTO): Promise<User> {
+        const userModel = UserModel.build({ createdAt: new Date(), updatedAt: new Date() });
+        const user = User.create(userModel.id, name, email, password);
+        userModel.email = email;
+        userModel.userName = name;
+        userModel.passwordHash = user.password.hash;
+        await this.save(userModel);
         return user;
     }
-}
 
-export const userRepositoryFactory = new InjectorFactory(UserRepository);
+    public async updateUser(user: User): Promise<boolean> {
+        const result = await this.createQueryBuilder()
+            .update(UserModel)
+            .set({
+                passwordHash: user.password.hash,
+                email: user.email,
+                userName: user.userName,
+            })
+            .where({ id: user.id })
+            .execute();
+        return !!result.affected;
+    }
+}

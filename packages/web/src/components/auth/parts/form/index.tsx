@@ -8,7 +8,7 @@ interface Props {
 
 export function Form({ children, onSubmit }: Props) {
     return (
-        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1, width: "100%" }}>
             {children}
         </Box>
     );

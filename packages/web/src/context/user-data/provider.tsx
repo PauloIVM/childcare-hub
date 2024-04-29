@@ -1,4 +1,4 @@
-import * as authApi from "@/api/auth";
+import { getUser } from "@/gateways/user";
 import { useEffect, useState } from "react";
 import { UserData } from "./types";
 import { UserDataCtx } from "./context";
@@ -10,12 +10,15 @@ interface UserDataProps {
 export default function UserDataProvider({ children }: UserDataProps) {
     const [ userData, setUserData ] = useState<UserData>({ isLogged: false, isLoading: true });
     useEffect(() => {
-        authApi.me()
-            .then(({ user }) => {
-                console.log(user);
-                setUserData({ email: user.email, userName: user.userName, isLogged: true });
+        getUser()
+            .then(({ userEmail, userName }) => {
+                if (!userEmail || !userName) {
+                    setUserData({ isLogged: false });
+                    return;
+                }
+                setUserData({ userEmail, userName, isLogged: true });
             })
-            .catch((err) => {
+            .catch(() => {
                 setUserData({ isLogged: false });
             });
     }, []);

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Parts from "../parts";
-import * as authApi from "@/api/auth";
+import * as authApi from "@/gateways/auth";
 import { useUserData } from "@/context";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -13,13 +13,8 @@ export function SignOut() {
     if (!userData.isLogged) return <></>;
 
     const onLogout = async () => {
-        try {
-            await authApi.logout();
-            setUserData({ isLogged: false });
-        } catch (error: any) {
-            setUserData({ isLogged: false });
-            console.error(error);
-        }
+        authApi.logout();
+        setUserData({ isLogged: false });
         router.push("/");
     };
 

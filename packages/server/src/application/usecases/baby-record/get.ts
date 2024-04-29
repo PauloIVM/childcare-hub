@@ -1,11 +1,11 @@
-import { BabyRecord } from "@/domain/baby-record";
-import { BabyAction } from "@/domain/baby-action";
-import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
+import { BabyRecord } from "@/domain";
+import { BabyAction } from "@/domain";
+import { IBabyRecordRepository } from "@/application/repositories";
 
 export class GetBabyRecordsUsecase {
     private babyRecordRepository: IBabyRecordRepository;
     constructor(babyRecordRepository: IBabyRecordRepository) {
-        this.babyRecordRepository = babyRecordRepository.getCustomRepository();
+        this.babyRecordRepository = babyRecordRepository;
     }
 
     async exec(
@@ -13,14 +13,9 @@ export class GetBabyRecordsUsecase {
         skip: number,
         limit: number,
     ): Promise<{ records: BabyRecord[]; count: number; validActions: BabyAction[] }> {
-        try {
-            const records = await this.babyRecordRepository
-                .findByUserId(userId, skip, limit);
-            const count = await this.babyRecordRepository.getCount(userId);
-            const validActions = BabyAction.validActions.map((a: string) => new BabyAction(a));
-            return { records, count, validActions };
-        } catch (error) {
-            throw new Error("Failed to get records on 'babyRecordRepository.findByUserId'");
-        }
+        const records = await this.babyRecordRepository.findByUserId(userId, skip, limit);
+        const count = await this.babyRecordRepository.getCount(userId);
+        const validActions = BabyAction.validActions.map((a: string) => new BabyAction(a));
+        return { records, count, validActions };
     }
 }

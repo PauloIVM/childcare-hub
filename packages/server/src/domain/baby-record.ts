@@ -1,4 +1,4 @@
-import { BabyAction } from "@/domain/baby-action";
+import { BabyAction } from "@/domain";
 
 export class BabyRecord {
     public readonly id: string;

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {
     IFetchRecordResponse,
     IUpdateRecordInput
-} from "../../../../../api/baby-record/types";
+} from "@/gateways/baby-record/types";
 import { DateInput } from "./date-input";
 import { DispatchButton } from "./dispatch-button";
 import { Group } from "./group";

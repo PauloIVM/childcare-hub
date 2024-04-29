@@ -1,8 +1,6 @@
-import { IAuthResponse } from "@/api/auth/types";
-
-type User = IAuthResponse["res"]["user"];
-
-export interface UserData extends Partial<Pick<User, "email" | "userName">> {
+export interface UserData {
     isLogged: boolean;
     isLoading?: boolean;
+    userName?: string;
+    userEmail?: string;
 }

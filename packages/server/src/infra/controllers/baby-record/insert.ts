@@ -1,50 +1,57 @@
 import { Request, Response } from "express";
-import { BabyRecordRepository } from "@/infra/repositories/baby-record-repository";
-import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record/insert";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { BabyRecordRepository } from "@/infra/repositories";
+import { InsertBabyRecordUsecase } from "@/application/usecases/baby-record";
+import { IBabyRecordDTO } from "@/application/dtos";
+import { VerifyUsecase } from "@/application/usecases/auth";
+import { ValidationError } from "@/domain";
 
 export class InsertBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
         // INFO: Interface-adapter - Como isolar isso melhor??
-        let record: IBabyRecordDTO;
-        try {
-            record = this.parseReqBody(req);
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
-        }
+        const record: IBabyRecordDTO = this.parseReqBody(req);
         // INFO: Fim do interface-adapter
-        try {
-            const usecase = new InsertBabyRecordUsecase(new BabyRecordRepository());
-            await usecase.exec(record);
-            res.json({ message: "ok" });
-        } catch (error) {
-            return res.status(400).json({ message: error.message });
-        }
+        const usecase = new InsertBabyRecordUsecase(BabyRecordRepository.getInstance());
+        await usecase.exec(record);
+        res.json({ message: "ok" });
     }
 
-    // TODO: Acho q esse método aqui n ficou muito legal... preciso descobrir como capturar
-    // o error e então definir o status-code.
+    // TODO: Esse método não está mais legal... mover a lógica de volta pra cima e pensar
+    //       em outra maneira de fazer esse parse.
     private parseReqBody(req: Request): IBabyRecordDTO {
-        // TODO: Futuramente talvez seja legal eu não puxar esse "session" via middleware,
-        // mas via algum service ou usecase. Contudo, pra eu fazer isso, acho q eu mesmo
-        // teria que implementar esse tratamento que é feito por essa lib.
-        const userId = req.session?.user?.id;
         const {
             actionName,
             observations,
             init,
             end
         } = req.body as Record<string, string> || {};
-        const isAllStringFields = [userId, actionName, observations, init, end]
+        const isAllStringFields = [actionName, observations, init, end]
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
+        if (!req.headers.authorization) {
+            throw new ValidationError({
+                message: "Missing auth token.",
+                clientMessage: "Token de autenticação não fornecido.",
+                status: 401
+            });
+        }
+        const token = req.headers.authorization.split(' ')[1];
+        const verifyUsecase = new VerifyUsecase();
+        const { userId } = verifyUsecase.exec(token);
         if (!userId) {
-            throw new Error("User authentication failed");
+            throw new ValidationError({
+                message: "Invalid auth token.",
+                clientMessage: "Token de autenticação inválido ou expirado.",
+                status: 401
+            });
         }
         if (!isAllStringFields) {
-            throw new Error("Invalid some record field type");
+            throw new ValidationError({
+                message: "Invalid some record field type",
+                clientMessage: "Algum campo do registro não é válido (string)",
+                status: 422
+            });
         }
         const initAsDate = new Date(init);
         const endAsDate = new Date(end);
@@ -52,10 +59,12 @@ export class InsertBabyRecordController {
             return d instanceof Date && !isNaN(d.getDate());
         }
         if (!isValidDate(initAsDate) || (end && !isValidDate(endAsDate))) {
-            throw new Error("Failed to build record init/end fields");
+            throw new ValidationError({
+                message: "Failed to build record init/end fields",
+                clientMessage: "As datas nos campos 'início'/'fim' são inválidas.",
+                status: 422
+            });
         }
-        // TODO: Parsear novos campos... ainda não vou utilizar... mas já deixar no
-        //       jeito
         return {
             userId,
             actionName,

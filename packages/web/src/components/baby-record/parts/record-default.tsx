@@ -3,7 +3,7 @@ import { Accordion } from "../../accordion";
 import { Tooltip, IconButton } from "@mui/material";
 import { Delete, Edit, Info } from "@mui/icons-material";
 import { Form, FormProps } from "./form";
-import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-record/types";
+import { IFetchRecordResponse, IUpdateRecordInput } from "@/gateways/baby-record/types";
 import * as Styles from "../style";
 
 interface RecordDefaultProps {

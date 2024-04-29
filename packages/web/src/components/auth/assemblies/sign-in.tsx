@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Parts from "../parts";
-import * as authApi from "@/api/auth";
+import * as authApi from "@/gateways/auth";
 import { useUserData } from "@/context";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -25,23 +25,22 @@ export function SignIn() {
         setLoading(true);
         try {
             const response = await authApi.login({
-                email: data.get("email") as string,
-                password: data.get("password") as string,
+                userEmail: data.get("email") as string,
+                userPassword: data.get("password") as string,
             });
-            if (!response.user?.email) {
+            if (!response.userEmail) {
                 setErrorMessage("Ops, parece que seu email ou senha não conferem.");
+                setLoading(false);
                 return;
             }
             setUserData({
-                userName: response.user.userName,
-                email: response.user.email,
+                userName: response.userName,
+                userEmail: response.userEmail,
                 isLogged: true
             });
             setSuccessMessage("Login efetuado com sucesso!");
         } catch (error: any) {
-            const errors: Record<string, string> = error?.response?.data?.errors;
-            const message = Object.values(errors).join(" ");
-            setErrorMessage(message);
+            setErrorMessage(error?.message);
             setLoading(false);
         }
     };
@@ -58,7 +57,7 @@ export function SignIn() {
                 <Parts.SubmitButton isActive={!successMessage && !isLoading}>{"Entrar"}</Parts.SubmitButton>
                 <Parts.CircularProgress isActive={isLoading} />
                 <Parts.LinksWrapper>
-                    <Parts.Link text={"Esqueceu sua senha?"} href={"/recover"} />
+                    <Parts.Link text={"Esqueceu sua senha?"} href={"/recover-request"} />
                     <Parts.Link text={"Ou, crie sua conta aqui"} href={"/sign-up"} />
                 </Parts.LinksWrapper>
             </Parts.Form>

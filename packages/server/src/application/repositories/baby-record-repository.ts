@@ -1,5 +1,5 @@
-import { BabyRecord } from "@/domain/baby-record";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { BabyRecord } from "@/domain";
+import { IBabyRecordDTO } from "@/application/dtos";
 
 export interface IBabyRecordRepository {
     findById(id: string): Promise<BabyRecord>;
@@ -8,5 +8,4 @@ export interface IBabyRecordRepository {
     updateRecord(record: BabyRecord): Promise<boolean>;
     deleteRecord(id: string): Promise<boolean>;
     getCount(userId: string): Promise<number>;
-    getCustomRepository(): IBabyRecordRepository;
 }

@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { BabyRecordModel } from "@/infra/models/baby-record-model";
-import { BabyRecord } from "@/domain/baby-record";
-import { IBabyRecordRepository } from "@/application/repositories/baby-record-repository";
-import { IBabyRecordDTO } from "@/application/dtos/baby-record-dto";
+import { BabyRecordModel } from "@/infra/models";
+import { BabyRecord } from "@/domain";
+import { IBabyRecordRepository } from "@/application/repositories";
+import { IBabyRecordDTO } from "@/application/dtos";
 
 @EntityRepository(BabyRecordModel)
 export class BabyRecordRepository extends Repository<BabyRecordModel> implements IBabyRecordRepository {
-    public getCustomRepository() {
+    private constructor() { super(); }
+
+    static getInstance() {
         return getCustomRepository(BabyRecordRepository);
     }
 

@@ -4,12 +4,12 @@ import { Accordion } from "../accordion";
 import { Box } from "../box";
 import { Pagination, Divider, Button } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
-import { IFetchRecordResponse } from "../../api/baby-record/types";
+import { IFetchRecordResponse } from "@/gateways/baby-record/types";
 import { Record } from "./parts/record";
-import { IUpdateRecordInput } from "../../api/baby-record/types";
+import { IUpdateRecordInput } from "@/gateways/baby-record/types";
 import { useUserData } from "@/context";
 import { useRouter } from "next/router";
-import * as Api from "../../api/baby-record";
+import * as Api from "@/gateways/baby-record";
 import * as Styles from "./style";
 
 export function BabyRecord() {

@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { sessionMiddleware } from "infra/middlewares/auth-session";
-import * as babyRecordController from "infra/controllers/baby-record";
+import * as babyRecordController from "@/infra/controllers/baby-record";
 
 const babyRecordRouter = Router();
-babyRecordRouter.use(sessionMiddleware);
+
 babyRecordRouter.delete("/",
     new babyRecordController.DeleteBabyRecordController().exec
 );
