@@ -6,7 +6,7 @@ module.exports = {
     },
     clearMocks: true,
     coverageDirectory: "coverage",
-    coverageReporters: ["text", "clover"],
+    coverageReporters: ["text", "clover", "html"],
     moduleFileExtensions: ["ts", "js", "json"],
     notify: true,
     notifyMode: "always",
