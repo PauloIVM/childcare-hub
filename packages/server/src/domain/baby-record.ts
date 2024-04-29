@@ -1,4 +1,4 @@
-import { BabyAction } from "@/domain";
+import { BabyAction, ValidationError } from "@/domain";
 
 export class BabyRecord {
     public readonly id: string;
@@ -38,6 +38,12 @@ export class BabyRecord {
     }
 
     setInit(t: Date) {
+        if (!!this._end && this._end.getTime() < t.getTime()) {
+            throw new ValidationError({
+                message: "'end' field should be greater than 'init'.",
+                clientMessage: "O campo 'Fim' deve ser maior que o campo 'Início'."
+            });
+        }
         this._init = t;
         return this;
     }
@@ -49,7 +55,10 @@ export class BabyRecord {
     setEnd(end: Date) {
         if (!end) { return this; }
         if (end.getTime() < this._init.getTime()) {
-            throw Error("O campo 'Fim' deve ser maior que o campo 'Início'.");
+            throw new ValidationError({
+                message: "'end' field should be greater than 'init'.",
+                clientMessage: "O campo 'Fim' deve ser maior que o campo 'Início'."
+            });
         }
         this._end = end;
         return this;
@@ -89,7 +98,10 @@ export class BabyRecord {
     setSleepQuality(s: string) {
         if (!s) { return this; }
         if (!["very_bad", "bad", "ok", "good", "very_good"].includes(s)) {
-            throw Error("Campo 'Qualidade do sono' inválido.");
+            throw new ValidationError({
+                message: "Invalid 'sleep_quality' field.",
+                clientMessage: "Campo 'Qualidade do sono' inválido."
+            });
         }
         this._sleepQuality = s as BabyRecord["sleepQuality"];
         return this;
@@ -102,7 +114,10 @@ export class BabyRecord {
     setBreastfeedingType(b: string) {
         if (!b) { return this; }
         if (!["left", "right", "both", "bottle"].includes(b)) {
-            throw Error("Campo 'Tipo de mamada' inválido.");
+            throw new ValidationError({
+                message: "Invalid 'set_breastfeeding_type' field",
+                clientMessage: "Campo 'Tipo de mamada' inválido."
+            });
         }
         this._breastfeedingType = b as BabyRecord["_breastfeedingType"];
         return this;

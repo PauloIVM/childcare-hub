@@ -3,6 +3,16 @@
     "configurations": [
       {
         "request": "launch",
+        "name": "server:test",
+        "runtimeArgs": ["workspace", "@childcare-hub/server", "test"],
+        "runtimeExecutable": "yarn",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "type": "pwa-node",
+      },
+      {
+        "request": "launch",
         "name": "server:debug",
         "runtimeArgs": ["dev:server"],
         "runtimeExecutable": "yarn",
