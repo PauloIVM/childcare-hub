@@ -1,4 +1,4 @@
-import { getUser } from "@/api/user";
+import { getUser } from "@/gateways/user";
 import { useEffect, useState } from "react";
 import { UserData } from "./types";
 import { UserDataCtx } from "./context";

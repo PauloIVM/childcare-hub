@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Fade } from "../../fade";
 import { RecordConfirm } from "./record-confirm";
 import { RecordDefault } from "./record-default";
-import { IFetchRecordResponse, IUpdateRecordInput } from "../../../api/baby-record/types";
+import { IFetchRecordResponse, IUpdateRecordInput } from "@/gateways/baby-record/types";
 
 // TODO: Refatorar para gerenciamento de estados com reducer...
 // TODO: Ao fazer o redirect para a página de login, bolar uma forma de mostrar lá

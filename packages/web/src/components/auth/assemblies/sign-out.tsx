@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Parts from "../parts";
-import * as authApi from "@/api/auth";
+import * as authApi from "@/gateways/auth";
 import { useUserData } from "@/context";
 import { useRouter } from "next/router";
 import { useState } from "react";

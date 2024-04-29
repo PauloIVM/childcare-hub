@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import { Navbar } from "../components/navbar";
 import { NavbarBottom } from "../components/navbar-bottom";
 import { Container, Divider } from "@mui/material";
-import * as authApi from "@/api/auth";
 
 interface PageProps {
     foo: string;

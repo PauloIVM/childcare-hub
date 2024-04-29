@@ -5,7 +5,7 @@ import { SleepForm } from "./assemblies/sleep-form";
 import { TemperatureForm } from "./assemblies/temperature";
 import { HeightForm } from "./assemblies/height";
 import { WeightForm } from "./assemblies/weight";
-import { IFetchRecordResponse, IUpdateRecordInput } from "../../../../api/baby-record/types";
+import { IFetchRecordResponse, IUpdateRecordInput } from "@/gateways/baby-record/types";
 
 export interface FormProps {
     record: IFetchRecordResponse["records"][0];

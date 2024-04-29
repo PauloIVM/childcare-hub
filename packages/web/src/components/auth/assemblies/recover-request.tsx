@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Parts from "../parts";
-import * as authApi from "@/api/auth";
+import * as authApi from "@/gateways/auth";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 

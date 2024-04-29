@@ -3,11 +3,6 @@ import Cookie from "js-cookie";
 import * as Types from "./types";
 import { AxiosRequestConfig } from "axios";
 
-// TODO: Estou fazendo o gerenciamento dos cookies aqui nas requests. Isso força
-//       para que elas só funcionem client-side. Talvez eu deva mudar o nome dessa
-//       pasta que chamei de 'api', ou pensar em uma forma decente de remover isso
-//       daqui.
-
 export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResponse> {
     try {
         const result = await authApi.post("/sign-up", {

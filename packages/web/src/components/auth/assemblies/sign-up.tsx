@@ -1,5 +1,5 @@
 import * as Parts from "../parts";
-import * as authApi from "@/api/auth";
+import * as authApi from "@/gateways/auth";
 import { Avatar } from "@mui/material";
 import { useUserData } from "@/context";
 import { useState } from "react";
