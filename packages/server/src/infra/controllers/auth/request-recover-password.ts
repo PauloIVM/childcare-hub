@@ -10,7 +10,7 @@ export class RequestRecoverController {
             return res.status(400).json({ message: "Required fields: email." });
         }
         const usecase = new RequestRecoverUsecase(
-            new UserRepository(),
+            UserRepository.getInstance(),
             EmailGateway.getInstance()
         );
         await usecase.exec(email);

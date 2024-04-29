@@ -12,7 +12,7 @@ export class GetUserController {
         const verifyUsecase = new VerifyUsecase();
         const { userId } = verifyUsecase.exec(token);
         if (!userId) { return res.json({}); }
-        const getUserUsecase = new GetUserUsecase(new UserRepository());
+        const getUserUsecase = new GetUserUsecase(UserRepository.getInstance());
         const user = await getUserUsecase.exec(userId);
         res.json({
             userName: user.userName,

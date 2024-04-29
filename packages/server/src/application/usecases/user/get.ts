@@ -4,7 +4,7 @@ import { IUserRepository } from "@/application/repositories";
 export class GetUserUsecase {
     private userRepository: IUserRepository;
     constructor(userRepository: IUserRepository) {
-        this.userRepository = userRepository.getCustomRepository();
+        this.userRepository = userRepository;
     }
 
     async exec(userId: string): Promise<User | undefined> {

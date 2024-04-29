@@ -5,7 +5,7 @@ import { IUserDTO } from "@/application/dtos";
 export class SignUpUsecase {
     private userRepository: IUserRepository;
     constructor(repository: IUserRepository) {
-        this.userRepository = repository.getCustomRepository();
+        this.userRepository = repository;
     }
 
     async exec(dto: IUserDTO, date: Date = new Date()) {

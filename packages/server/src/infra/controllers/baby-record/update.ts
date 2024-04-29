@@ -23,7 +23,7 @@ export class UpdateBabyRecordController {
         if (!userId) {
             return res.status(401).json({ message: "User authentication failed" });
         }
-        const usecase = new UpdateBabyRecordUsecase(new BabyRecordRepository());
+        const usecase = new UpdateBabyRecordUsecase(BabyRecordRepository.getInstance());
         await usecase.exec(id, userId, fields);
         res.json({ message: "ok" });
     }

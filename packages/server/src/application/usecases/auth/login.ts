@@ -4,7 +4,7 @@ import { IUserRepository } from "@/application/repositories";
 export class LoginUsecase {
     private userRepository: IUserRepository;
     constructor(repository: IUserRepository) {
-        this.userRepository = repository.getCustomRepository();
+        this.userRepository = repository;
     }
 
     async exec(email: string, password: string, date: Date = new Date()) {

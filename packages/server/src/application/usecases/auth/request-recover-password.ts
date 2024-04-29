@@ -6,7 +6,7 @@ export class RequestRecoverUsecase {
     private userRepository: IUserRepository;
     private emailGateway: IEmailGateway;
     constructor(repository: IUserRepository, emailGateway: IEmailGateway) {
-        this.userRepository = repository.getCustomRepository();
+        this.userRepository = repository;
         this.emailGateway = emailGateway;
     }
 

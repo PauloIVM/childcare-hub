@@ -11,7 +11,7 @@ export class LoginController {
         if (!email || !password) {
             return res.status(400).json({ message: "Os campos 'email' e 'senha' são obrigatórios." });
         }
-        const usecase = new LoginUsecase(new UserRepository());
+        const usecase = new LoginUsecase(UserRepository.getInstance());
         const { token, userEmail, userName } = await usecase.exec(
             email,
             password,

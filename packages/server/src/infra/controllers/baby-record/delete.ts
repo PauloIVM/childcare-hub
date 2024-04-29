@@ -20,7 +20,7 @@ export class DeleteBabyRecordController {
         if (!userId) {
             return res.status(401).json({ message: "Falha na autenticação do usuário." });
         }
-        const usecase = new DeleteBabyRecordUsecase(new BabyRecordRepository());
+        const usecase = new DeleteBabyRecordUsecase(BabyRecordRepository.getInstance());
         await usecase.exec(id, userId);
         res.json({ message: "ok" });
     }

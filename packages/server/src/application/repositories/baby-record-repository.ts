@@ -8,5 +8,4 @@ export interface IBabyRecordRepository {
     updateRecord(record: BabyRecord): Promise<boolean>;
     deleteRecord(id: string): Promise<boolean>;
     getCount(userId: string): Promise<number>;
-    getCustomRepository(): IBabyRecordRepository;
 }

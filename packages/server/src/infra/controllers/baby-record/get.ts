@@ -25,7 +25,7 @@ export class GetBabyRecordsController {
         if (!userId) {
             return res.status(401).json({ message: "User authentication failed" });
         }
-        const usecase = new GetBabyRecordsUsecase(new BabyRecordRepository());
+        const usecase = new GetBabyRecordsUsecase(BabyRecordRepository.getInstance());
         const { records, count, validActions } = await usecase.exec(userId, skip, limit);
         res.json({
             message: "ok",

@@ -6,5 +6,4 @@ export interface IUserRepository {
     findByEmail(email: string): Promise<User>;
     saveUser(user: IUserDTO): Promise<User>;
     updateUser(user: User): Promise<boolean>;
-    getCustomRepository(): IUserRepository;
 }

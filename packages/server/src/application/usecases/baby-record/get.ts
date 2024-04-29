@@ -5,7 +5,7 @@ import { IBabyRecordRepository } from "@/application/repositories";
 export class GetBabyRecordsUsecase {
     private babyRecordRepository: IBabyRecordRepository;
     constructor(babyRecordRepository: IBabyRecordRepository) {
-        this.babyRecordRepository = babyRecordRepository.getCustomRepository();
+        this.babyRecordRepository = babyRecordRepository;
     }
 
     async exec(

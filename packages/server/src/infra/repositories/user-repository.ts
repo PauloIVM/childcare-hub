@@ -7,7 +7,9 @@ import { UserModel } from "@/infra/models";
 
 @EntityRepository(UserModel)
 export class UserRepository extends Repository<UserModel> implements IUserRepository {
-    public getCustomRepository() {
+    private constructor() { super(); }
+
+    static getInstance() {
         return getCustomRepository(UserRepository);
     }
 

@@ -5,7 +5,7 @@ import { ValidationError } from "@/domain";
 export class InsertBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
     constructor(babyRecordRepository: IBabyRecordRepository) {
-        this.babyRecordRepository = babyRecordRepository.getCustomRepository();
+        this.babyRecordRepository = babyRecordRepository;
     }
 
     async exec(recordFields: IBabyRecordDTO) {

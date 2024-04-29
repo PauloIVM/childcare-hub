@@ -4,7 +4,7 @@ import { IUserRepository } from "@/application/repositories";
 export class RecoverPasswordUsecase {
     private userRepository: IUserRepository;
     constructor(repository: IUserRepository) {
-        this.userRepository = repository.getCustomRepository();
+        this.userRepository = repository;
     }
 
     async exec(password: string, token: string, date: Date = new Date()) {

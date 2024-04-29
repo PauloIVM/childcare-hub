@@ -12,7 +12,7 @@ export class InsertBabyRecordController {
         // INFO: Interface-adapter - Como isolar isso melhor??
         const record: IBabyRecordDTO = this.parseReqBody(req);
         // INFO: Fim do interface-adapter
-        const usecase = new InsertBabyRecordUsecase(new BabyRecordRepository());
+        const usecase = new InsertBabyRecordUsecase(BabyRecordRepository.getInstance());
         await usecase.exec(record);
         res.json({ message: "ok" });
     }

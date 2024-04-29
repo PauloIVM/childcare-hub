@@ -7,7 +7,9 @@ import { IBabyRecordDTO } from "@/application/dtos";
 
 @EntityRepository(BabyRecordModel)
 export class BabyRecordRepository extends Repository<BabyRecordModel> implements IBabyRecordRepository {
-    public getCustomRepository() {
+    private constructor() { super(); }
+
+    static getInstance() {
         return getCustomRepository(BabyRecordRepository);
     }
 

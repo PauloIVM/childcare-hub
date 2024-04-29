@@ -13,7 +13,7 @@ export class RecoverController {
             return res.status(400).json({ message: "O campo 'senha' é obrigatório." });
         }
         const usecase = new RecoverPasswordUsecase(
-            new UserRepository()
+            UserRepository.getInstance()
         );
         const { token: newToken, userEmail, userName } = await usecase.exec(password, token);
         res.json({
