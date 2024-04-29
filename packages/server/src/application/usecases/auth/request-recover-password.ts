@@ -19,9 +19,7 @@ export class RequestRecoverUsecase {
             });
         }
         // TODO: Criar os ENVs em que eu possa definir esse secret...
-        // TODO: Aumentar um pouco esse tempo, deixei baixo assim pra eu conseguir testar com mais
-        //       facilidade
-        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(5);
+        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(20);
         const token = tokenGenerator.sign(user, date);
         await this.emailGateway.send(
             "Pedido de alteração de senha",

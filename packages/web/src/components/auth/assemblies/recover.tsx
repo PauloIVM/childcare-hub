@@ -30,7 +30,7 @@ export function Recover() {
             }
             const response = await authApi.recover({
                 userPassword: password1,
-                token: token as string
+                token: userData.isLogged ? "" : token as string
             });
             if (!response.userEmail) {
                 setErrorMessage("Ocorreu um erro na alteração da senha. Tente novamente.");

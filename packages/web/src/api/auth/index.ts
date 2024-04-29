@@ -43,7 +43,6 @@ export async function requestRecover(input: Types.IRecoverRequestInput): Promise
     }
 }
 
-// TODO: O recover deve funcionar tanto para o user ja logado quanto para o que vem do email...
 export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthResponse> {
     const token = input.token || Cookie.get("np_user") || "";
     const config: AxiosRequestConfig = { headers: {
