@@ -10,8 +10,8 @@ module.exports = {
     moduleFileExtensions: ["ts", "js", "json"],
     notify: true,
     notifyMode: "always",
-    roots: ["<rootDir>__tests__"],
-    testMatch: ["**/*.test.+(ts|js)"],
+    roots: ["<rootDir>build"],
+    testMatch: ["**/*.test.js"],
     testEnvironment: "node",
     transform: {
         "^.+\\.(ts)$": "ts-jest",
