@@ -12,6 +12,7 @@ export class RequestRecoverUsecase {
 
     async exec(email: string, date: Date = new Date()): Promise<void> {
         const user = await this.userRepository.findByEmail(email);
+        const expiresInMinutes = 20;
         if (!user) {
             throw new ValidationError({
                 clientMessage: "Nenhuma conta cadastrada com este email.",
@@ -19,14 +20,14 @@ export class RequestRecoverUsecase {
             });
         }
         // TODO: Criar os ENVs em que eu possa definir esse secret...
-        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(20);
+        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(expiresInMinutes);
         const token = tokenGenerator.sign(user, date);
         await this.emailGateway.send(
             "Pedido de alteração de senha",
             this.emailGateway.createTemplate(
                 `Olá, ${user.userName}. Você solicitou uma alteração de senha.`,
                 // TODO: Adicionar o host a um env pra facilitar substituições posteriormente.
-                `Acesse <a href='http://localhost:3000/recover/${token}' target='_blank'>este link</a> para cadastrar uma nova senha.`
+                `Acesse <a href='http://localhost:3000/recover/${token}' target='_blank'>este link</a> para cadastrar uma nova senha. Este link expira em ${expiresInMinutes} minutos.`
             ),
             user.email
         );
