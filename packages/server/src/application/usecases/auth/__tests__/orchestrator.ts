@@ -1,5 +1,6 @@
 import { User } from "@/domain";
 import { IUserRepository } from "@/application/repositories";
+import { IEmailGateway } from "@/application/gateways";
 import { IUserDTO } from "@/application/dtos";
 
 export const createUserRepository: () => IUserRepository = () => {
@@ -27,5 +28,17 @@ export const createUserRepository: () => IUserRepository = () => {
             users[index] = user;
             return true;
         },
+    }
+}
+
+export const createEmailGateway: (m: string[]) => IEmailGateway = (sentMessages: string[]) => {
+    return {
+        send: async (subject: string, message: string, to: string): Promise<string> => {
+            sentMessages.push(message);
+            return "ok";
+        },
+	    createTemplate: (title: string, text: string): string => {
+            return title;
+        }
     }
 }
