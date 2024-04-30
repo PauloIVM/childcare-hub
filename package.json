@@ -9,7 +9,9 @@
   "scripts": {
     "dev": "concurrently -k -p \"[{name}]\" -n \"server,web\" -c \"cyan.bold,green.bold\" \"yarn dev:server\" \"yarn dev:web\"",
     "dev:web": "yarn workspace @childcare-hub/web dev",
-    "dev:server": "yarn workspace @childcare-hub/server dev"
+    "dev:server": "yarn workspace @childcare-hub/server dev",
+    "test:server": "yarn workspace @childcare-hub/server test",
+    "build:server": "yarn workspace @childcare-hub/server build"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"
