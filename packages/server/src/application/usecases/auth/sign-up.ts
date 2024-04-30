@@ -13,7 +13,7 @@ export class SignUpUsecase {
         if (previousUser) {
             throw new ValidationError({
                 clientMessage: `Já existe um usuário cadastrado com o email ${dto.email}.`,
-                message: "Invalid email"
+                message: "Invalid email."
             });
         }
         const user = await this.userRepository.saveUser(dto);
