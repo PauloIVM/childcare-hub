@@ -5,6 +5,10 @@ interface ValidationErrorInput {
     status?: number;
 }
 
+// TODO: Ao invés desse 'validation-error', olhar o BaseError q o deschamps implementou, pode
+//       dar ideias interessantes. O domain pode ter um 'base-error', e as outras camadas irem
+//       implementando outros errors... ou eu ter uma factory aqui mesmo que cria pra mim diversos
+//       tipos de errors.
 export class ValidationError extends Error {
     private _clientMessage: string;
     private _status: number;
