@@ -41,4 +41,9 @@ export class JwtManager {
 		this.expiresIn = minutes * 60;
 		return this;
 	}
+
+	setExpiresInSeconds(seconds: number) {
+		this.expiresIn = seconds;
+		return this;
+	}
 }

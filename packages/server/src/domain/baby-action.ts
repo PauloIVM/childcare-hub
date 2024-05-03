@@ -1,3 +1,5 @@
+import { ValidationError } from "@/domain";
+
 export class BabyAction {
     public readonly label: string;
     public readonly name:
@@ -37,7 +39,10 @@ export class BabyAction {
     }
     static parseActionLabel(name: string): string {
         if (!BabyAction.validActions.includes(name as BabyAction["name"])) {
-            throw Error("Invalid action name");
+            throw new ValidationError({
+                message: "Invalid action name.",
+                clientMessage: "Ação inválida/inexistente."
+            });
         }
         const actionsLabelParser: Record<BabyAction["name"], string> = {
             "sleep": "Dormir",

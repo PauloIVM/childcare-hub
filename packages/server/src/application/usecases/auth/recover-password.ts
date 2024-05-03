@@ -11,13 +11,6 @@ export class RecoverPasswordUsecase {
         // TODO: Criar os ENVs em que eu possa definir esse secret...
         const tokenGenerator = new JwtManager("secret");
         const { userId } = tokenGenerator.verify(token);
-        if (!userId) {
-            throw new ValidationError({
-                message: "Could not validate token. Possible expired.",
-                clientMessage: "Não foi possível validar o token. Possivelmente expirado.",
-                status: 401
-            });
-        }
         const user = await this.userRepository.findById(userId);
         if (!user) {
             throw new ValidationError({
