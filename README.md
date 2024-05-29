@@ -83,6 +83,7 @@ yarn workspace @childcare-hub/server migration:create -n ENTITY_NAME
 
 ## TODOs
 
+- Lib para criar o sistema de postagens: https://github.com/niuware/mui-rte. A demo dessa lib me fez refletir que talvez eu esteja estilizando as coisas erradas com o MUI. Talvez eu devesse focar em criar um theme e estilizar cada componente via theme. Parece q nesse docs tem um pallete generator e alguns tutoriais interessantes https://mui.com/material-ui/customization/theming/; acho q vai valer um esforço nesse sentido mesmo.
 - No "server", extender do tsconfig do repo. Parece que de alguma forma o yarn espera que o tsconfig esteja na raiz, nao consegui tirar ele dali.
 - Padronizar interfaces (começando com "I"); Melhorar nomes de classes q eu soh copiei do
 MC... ver no curso do branas como ele nomeia as classes com um simples metodo exec, meus
