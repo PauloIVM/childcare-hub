@@ -27,6 +27,8 @@ Caso queira, ao invés de rodar o `yarn docker:services`, você pode instalar os
 
 Caso queira debugar, você pode executar o script desejado do launch.json se estiver usando o vscode. Apenas uma observação, esses scripts não inicializam os services containerizados como o `yarn dev` faz. Portanto, rode em um terminal à parte o comando `yarn docker:services` e depois inicialize o script de depuração desejado.
 
+Caso queira utilizar alguma ferramenta para trabalhar com algum dos serviços containerizados, você pode fazer isso sem problemas. Por exemplo, você pode utilizar o `MySQL Workbench` para conectar com o container MySQL fornecido pela aplicação. Os dados dos serviços serão persistidos na sua máquina host, então não se preocupe pois não perderá nenhuma informação por encerrar os container e startá-los novamente cada vez que iniciar a aplicação.
+
 
 ## Theme (WIP)
 
