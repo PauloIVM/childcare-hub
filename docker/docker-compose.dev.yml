@@ -3,8 +3,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"   # Porta para conexões AMQP
-      - "8080:15672"  # Porta para o console de gerenciamento (MUDAR)
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: user
       RABBITMQ_DEFAULT_PASS: password
