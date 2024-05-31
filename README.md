@@ -77,5 +77,11 @@ Libs podem ser importadas no `domain`, mas use isso com cautela para não condic
 - BUG: Nos records, ao criar apenas records com o tempo em aberto, quando eu vou apagando eles, a contagem fica toda bugada.
 - BUG: Parece que o JWT está expirando com coisa de 1 dia apenas. Conferir o motivo.
 
+- TODO: Acho q o atual "server" pode virar um "baby" e ter tudo relacionado aos dados cadastrados de um neném. Ainda n sei como eu removeria o User... se seria um serviço separado, ou um package. Se for um micro-service, usar gRPC para comunicação.
+
+- IDEIA: Ter um cache que expira não por tempo, mas sim por alguma eventual mudança de estado. Exemplo: Hoje cada `user` tem vários `records`... toda vez que eu quero puxar os records de um user, eu preciso fazer uma consulta que busca os records de todos os users, da base inteira, e filtra os referentes à apenas aquele user. O difícil de cachear é justamente que é o tipo de coisa que pode mudar muito rápido, e pode parecer bug... mas e se eu fizer assim: eu cacheio... e na inserção ou remoção de qualquer `record` eu limpo o cache??? 
+
 - Lib para criar o sistema de postagens: https://github.com/niuware/mui-rte. A demo dessa lib me fez refletir que talvez eu esteja estilizando as coisas erradas com o MUI. Talvez eu devesse focar em criar um theme e estilizar cada componente via theme. Parece q nesse docs tem um pallete generator e alguns tutoriais interessantes https://mui.com/material-ui/customization/theming/; acho q vai valer um esforço nesse sentido mesmo.
 - Implementar cache do ioredis no mysql. Parece que é bem dizer uma config no orm e o setup do banco... eu apaguei a config pq não tinha feito o setup do banco.
+
+- INFO: Parece que um cache-manager pode ser classificado como um "gateway"... estudar um pouco mais.
