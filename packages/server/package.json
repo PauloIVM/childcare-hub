@@ -4,9 +4,9 @@
   "private": true,
   "author": "PauloIVM",
   "scripts": {
-    "prod": "dotenvx run --env-file .env.prod -- yarn build && yarn start",
-    "dev": "dotenvx run --env-file .env.dev -- nodemon --watch 'src/' --exec 'yarn build && yarn start' -e .ts",
-    "test": "dotenvx run --env-file .env.test -- yarn build && jest --forceExit --coverage --no-cache --verbose",
+    "prod": "yarn prod:env yarn build && yarn start",
+    "dev": "yarn dev:env nodemon --watch 'src/' --exec 'yarn build && yarn start' -e .ts",
+    "test": "yarn test:env yarn build && yarn test:env jest --forceExit --coverage --no-cache --verbose",
     "lint": "eslint src -c .eslintrc.json --no-eslintrc",
     "start": "node ./build/index.js",
     "build": "rm -rf build/ || echo 'first build' && yarn create:orm:file && tsc && tsc-alias -p tsconfig.build.json",
@@ -14,7 +14,10 @@
     "migration:run": "yarn build && yarn :typeorm migration:run",
     "migration:create": "yarn :typeorm migration:create",
     "start:debug": "nodemon --inspect src/index.ts",
-    "create:orm:file": "node scripts/create-orm-file.js"
+    "create:orm:file": "node scripts/create-orm-file.js",
+    "dev:env": "dotenvx run --env-file .env.dev --",
+    "prod:env": "dotenvx run --env-file .env.prod --",
+    "test:env": "dotenvx run --env-file .env.test --"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.5",
