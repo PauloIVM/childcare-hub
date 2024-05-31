@@ -19,8 +19,7 @@ export class RequestRecoverUsecase {
                 message: "No user with this email."
             });
         }
-        // TODO: Criar os ENVs em que eu possa definir esse secret...
-        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(expiresInMinutes);
+        const tokenGenerator = new JwtManager().setExpiresInMinutes(expiresInMinutes);
         const token = tokenGenerator.sign(user, date);
         await this.emailGateway.send(
             "Pedido de alteração de senha",

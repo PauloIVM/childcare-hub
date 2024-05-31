@@ -4,8 +4,10 @@ import { User, ValidationError } from "@/domain";
 // INFO: Domain Service
 export class JwtManager {
 	private expiresIn: number;
+	private readonly secret: string
 
-	constructor (readonly secret: string) {
+	constructor () {
+		this.secret = process.env.USER_AUTH_SECRET;
 		this.setExpiresInDays(30);
 	}
 

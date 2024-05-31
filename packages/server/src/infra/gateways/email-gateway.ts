@@ -10,15 +10,11 @@ export class EmailGateway implements IEmailGateway {
 
     static getInstance() {
         if (!EmailGateway.instance) {
-            // TODO: Criar variáveis de ambiente... criar um email para o nana-papais... futuramente
-            //       comprar um domínio ou rodar um servidor no domínio do site.
-            // TODO: Depois de criar os envs, criar uma nova senha pro gmail-app... pra não ficar
-            //       rastreável nos commits.
             EmailGateway.transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
-                    user: "noreply.nanapapais@gmail.com",
-                    pass: "vtwl mcvc xtyl cwdf"
+                    user: process.env.EMAIL_GATEWAY_USERNAME,
+                    pass: process.env.EMAIL_GATEWAY_PASSWORD
                 }
             });
             EmailGateway.instance = new EmailGateway();

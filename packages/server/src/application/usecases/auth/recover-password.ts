@@ -8,8 +8,7 @@ export class RecoverPasswordUsecase {
     }
 
     async exec(password: string, token: string, date: Date = new Date()) {
-        // TODO: Criar os ENVs em que eu possa definir esse secret...
-        const tokenGenerator = new JwtManager("secret");
+        const tokenGenerator = new JwtManager();
         const { userId } = tokenGenerator.verify(token);
         const user = await this.userRepository.findById(userId);
         if (!user) {

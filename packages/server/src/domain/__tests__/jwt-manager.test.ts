@@ -14,13 +14,13 @@ describe("JwtManager", () => {
     });
 
     test("should sign and verify token", async () => {
-        const tokenManager = new JwtManager("secret"); 
+        const tokenManager = new JwtManager(); 
         const token = tokenManager.sign(user, new Date());
         expect(tokenManager.verify(token).userId).toBe("user_id");
     });
 
     test("should not verify expired token", async () => {
-        const tokenManager = new JwtManager("secret").setExpiresInSeconds(1); 
+        const tokenManager = new JwtManager().setExpiresInSeconds(1); 
         const token = tokenManager.sign(user, new Date());
         expect(tokenManager.verify(token).userId).toBe("user_id");
         await sleep(1000);
@@ -30,7 +30,7 @@ describe("JwtManager", () => {
     });
 
     test("should handle bad inputs", async () => {
-        const tokenManager = new JwtManager("secret"); 
+        const tokenManager = new JwtManager(); 
         expect(() => tokenManager.verify(null)).toThrow(new Error(
             "Expired or invalid token"
         ));
@@ -52,7 +52,7 @@ describe("JwtManager", () => {
     });
 
     test("should parse expires in minutes", async () => {
-        const tokenManager = new JwtManager("secret").setExpiresInMinutes(1 / 60); 
+        const tokenManager = new JwtManager().setExpiresInMinutes(1 / 60); 
         const token = tokenManager.sign(user, new Date());
         expect(tokenManager.verify(token).userId).toBe("user_id");
         await sleep(1000);
@@ -62,7 +62,7 @@ describe("JwtManager", () => {
     });
 
     test("should parse expires in hours", async () => {
-        const tokenManager = new JwtManager("secret").setExpiresInHours(1 / (60 * 60)); 
+        const tokenManager = new JwtManager().setExpiresInHours(1 / (60 * 60)); 
         const token = tokenManager.sign(user, new Date());
         expect(tokenManager.verify(token).userId).toBe("user_id");
         await sleep(1000);
@@ -72,7 +72,7 @@ describe("JwtManager", () => {
     });
 
     test("should parse expires in days", async () => {
-        const tokenManager = new JwtManager("secret").setExpiresInDays(1 / (24 * 60 * 60)); 
+        const tokenManager = new JwtManager().setExpiresInDays(1 / (24 * 60 * 60)); 
         const token = tokenManager.sign(user, new Date());
         expect(tokenManager.verify(token).userId).toBe("user_id");
         await sleep(1000);

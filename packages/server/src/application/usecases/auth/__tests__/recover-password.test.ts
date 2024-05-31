@@ -6,7 +6,7 @@ describe("RecoverPasswordUsecase", () => {
     let token: string;
     beforeEach(async () => {
         jest.spyOn(Date, "now").mockImplementation(() => new Date("01/05/2024, 01:17:11").getTime());
-        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(2);
+        const tokenGenerator = new JwtManager().setExpiresInMinutes(2);
         token = tokenGenerator.sign(
             await createUserRepository().findByEmail("user_1@gmail.com"),
             new Date("01/05/2024, 01:16:11")
@@ -55,7 +55,7 @@ describe("RecoverPasswordUsecase", () => {
     });
 
     test("should not crash with user deleted", async () => {
-        const tokenGenerator = new JwtManager("secret").setExpiresInMinutes(2);
+        const tokenGenerator = new JwtManager().setExpiresInMinutes(2);
         const token = tokenGenerator.sign(
             User.create("id_foo", "user_foo", "user_foo@gmail.com", "user_foo_p@ssword"),
             new Date("01/05/2024, 01:16:11")

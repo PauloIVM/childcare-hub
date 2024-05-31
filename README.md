@@ -76,10 +76,4 @@ Libs podem ser importadas no `domain`, mas use isso com cautela para não condic
 - BUG: Parece que o JWT está expirando com coisa de 1 dia apenas. Conferir o motivo.
 
 - Lib para criar o sistema de postagens: https://github.com/niuware/mui-rte. A demo dessa lib me fez refletir que talvez eu esteja estilizando as coisas erradas com o MUI. Talvez eu devesse focar em criar um theme e estilizar cada componente via theme. Parece q nesse docs tem um pallete generator e alguns tutoriais interessantes https://mui.com/material-ui/customization/theming/; acho q vai valer um esforço nesse sentido mesmo.
-- No "server", extender do tsconfig do repo. Parece que de alguma forma o yarn espera que o tsconfig esteja na raiz, nao consegui tirar ele dali.
-- Padronizar interfaces (começando com "I"); Melhorar nomes de classes q eu soh copiei do
-MC... ver no curso do branas como ele nomeia as classes com um simples metodo exec, meus
-nomes estao muito "funcionais"; remover tantos 'exports default' por 'export'.
-- Criar um ENV para senha do banco, nao soh de prod, mas pra dev tbm, pra nao correr risco
-deu comitar minha senha local. Pra isso vou precisar de usar algo como o "extendConnectionOptions" q foi feito no MC.
 - Implementar cache do ioredis no mysql. Parece que é bem dizer uma config no orm e o setup do banco... eu apaguei a config pq não tinha feito o setup do banco.

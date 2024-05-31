@@ -15,8 +15,7 @@ export class LoginUsecase {
                 clientMessage: "Email e/ou senha incorretos."
             });
         }
-        // TODO: Criar os ENVs em que eu possa definir esse secret...
-        const tokenGenerator = new JwtManager("secret");
+        const tokenGenerator = new JwtManager();
         return {
             userName: user.userName,
             userEmail: user.email,
