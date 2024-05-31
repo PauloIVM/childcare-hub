@@ -7,12 +7,12 @@
     "packages": ["packages/*"]
   },
   "scripts": {
-    "dev": "concurrently -p \"[{name}]\" -n \"server,web,docker\" -c \"green.bold,cyan.bold,red.bold\" \"yarn dev:server\" \"yarn dev:web\" \"yarn start:docker:services\"",
+    "dev": "concurrently -p \"[{name}]\" -n \"server,web,docker\" -c \"green.bold,cyan.bold,red.bold\" \"yarn dev:server\" \"yarn dev:web\" \"yarn docker:services\"",
     "dev:web": "yarn workspace @childcare-hub/web dev",
     "dev:server": "yarn workspace @childcare-hub/server dev",
     "test:server": "yarn workspace @childcare-hub/server test",
     "build:server": "yarn workspace @childcare-hub/server build",
-    "start:docker:services": "docker-compose -f docker/docker-compose.dev.yml up mysql rabbitmq"
+    "docker:services": "docker-compose -f docker/docker-compose.dev.yml up mysql rabbitmq"
   },
   "devDependencies": {
     "concurrently": "^6.4.0"
