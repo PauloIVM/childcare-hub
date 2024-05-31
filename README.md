@@ -85,3 +85,9 @@ Libs podem ser importadas no `domain`, mas use isso com cautela para não condic
 - Implementar cache do ioredis no mysql. Parece que é bem dizer uma config no orm e o setup do banco... eu apaguei a config pq não tinha feito o setup do banco.
 
 - INFO: Parece que um cache-manager pode ser classificado como um "gateway"... estudar um pouco mais.
+
+- TODO: Refactor grande vai ser necessário. O atual "server" vai virar "babies". O "baby-record" vai passar a estar associado a um "baby". Cada "baby" vai poder estar associado a um ou mais "user"... talvez uma tabela "baby-owners", que seria uma referência à atual "users", mas a "users" mesmo seria removida daqui. Então, o mysql vai passar a ter as tabelas "babies", "baby-record", "baby-owners" (user-id *-* baby-id, relação muito pra muitos, pra que a conta de dois pais possa "ver" e "editar" o mesmo bebê). Removido o user, remover tbm tudo de auth, e criar um repô chamado "user" que encapsula a autenticação do usuário... comunicar via gRPC com os microserviços... mas tbm precisa ter a comunicação http para o client do "web", talvez deixar o gRPC pro final.
+
+- TODO: Sempre que um "user" for apagado, deve enviar uma mensagem para que cada microservice que usa o user-id possa fazer as modificações necessárias, e talvez apagar informações e etc.
+
+- TODO: O código do "posts" vai depender de já existir o service "users". 
