@@ -10,7 +10,4 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/api", router);
 
-// TODO: Criar middlewares pra errors em geral:
-// app.use(errorHandler);
-
 export default app;
