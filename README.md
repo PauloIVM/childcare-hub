@@ -2,7 +2,7 @@
 
 ## Quick Start
 
-TODO: Criar um .env, e um script q baseado nesse .env então cria o ormconfig já com as variáveis corretas. Daí o dev pode atualizar o .env antes de dar o build, e tbm funcionaria pra outras dependencias que surgirem, e não apenas o ormconfig.
+Requirements: OS linux, NodeJS, docker.
 
 Instale as dependências:
 ```console
