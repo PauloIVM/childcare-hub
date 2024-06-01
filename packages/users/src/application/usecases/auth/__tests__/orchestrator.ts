@@ -1,7 +1,7 @@
 import { User } from "@/domain";
 import { IUserRepository } from "@/application/repositories";
 import { IEmailGateway } from "@/application/gateways";
-import { IUserDTO } from "@/application/dtos";
+import { IUserDTO } from "@/application/dependencies/dtos";
 
 export const createUserRepository: () => IUserRepository = () => {
     const users: User[] = [

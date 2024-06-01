@@ -90,4 +90,6 @@ Libs podem ser importadas no `domain`, mas use isso com cautela para não condic
 
 - TODO: Sempre que um "user" for apagado, deve enviar uma mensagem para que cada microservice que usa o user-id possa fazer as modificações necessárias, e talvez apagar informações e etc.
 
-- TODO: O código do "posts" vai depender de já existir o service "users". 
+- TODO: O código do "posts" vai depender de já existir o service "users".
+
+- TODO: O branas parece centralizar a validação do corpo da request nos usecases, e não nos controllers igual eu estou fazendo. Isso parece fazer mais sentido mesmo, pois aí o que está em "infra" realmente não vai ter nenhum papel na validação dos dados e etc. Portanto, acho que eu preciso mover isso para os usecases. Conferir como exemplo o `HttpController` do cccat11_7.
