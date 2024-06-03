@@ -8,6 +8,19 @@ export class RecoverPasswordUsecase {
     }
 
     async exec(password: string, token: string, date: Date = new Date()) {
+        if (!token) {
+            throw new BaseError({
+                message: "Missing auth token.",
+                clientMessage: "Token de autenticação não fornecido.",
+                status: 401
+            });
+        }
+        if (!password) {
+            throw new BaseError({
+                message: "Missing password.",
+                clientMessage: "O campo 'senha' é obrigatório."
+            });
+        }
         const tokenManager = new TokenManager();
         const { userId } = tokenManager.verify(token);
         const user = await this.userRepository.findById(userId);

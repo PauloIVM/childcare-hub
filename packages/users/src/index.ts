@@ -1,5 +1,7 @@
-import * as http from "http";
-import app from "./app";
+import { MongoDbClient } from "@/infra/databases";
+import { ExpressAdapter } from "@/infra/adapters/http-server/express-adapter";
+import { UsersDataMapper } from "@/infra/adapters/data-mappers";
+import { HttpController } from "@/interface-adapters/controllers";
 
 function logFatal(err: Error) {
     // TODO: Implementar loggers...
@@ -8,14 +10,12 @@ function logFatal(err: Error) {
 }
 
 async function run() {
-    const server = http.createServer(app);
-    server.listen(3003, "::", () => {
-        if (process.env.NODE_ENV !== "production") {
-            console.log(`API http server running on port ${3003}`);
-        }
-    });
-    server.keepAliveTimeout = 61 * 1000;
-    server.headersTimeout = 62 * 1000;
+    const mongoDbClient = new MongoDbClient();
+    await mongoDbClient.connect();
+    const httpServer = new ExpressAdapter();
+    const usersDataMapper = new UsersDataMapper();
+    new HttpController(httpServer, usersDataMapper);
+    httpServer.listen(3003);
 }
 
 run().catch(logFatal);

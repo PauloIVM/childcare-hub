@@ -8,6 +8,12 @@ export class LoginUsecase {
     }
 
     async exec(email: string, password: string, date: Date = new Date()) {
+        if (!email || !password) {
+            throw new BaseError({
+                message: "Missing required fields",
+                clientMessage: "Os campos 'email' e 'senha' são obrigatórios."
+            });
+        }
         const user = await this.userRepository.findByEmail(email);
         if (!user?.password.equals(password)) {
             throw new BaseError({

@@ -11,6 +11,12 @@ export class RequestRecoverUsecase {
     }
 
     async exec(email: string, date: Date = new Date()): Promise<void> {
+        if (!email) {
+            throw new BaseError({
+                clientMessage: "O campo 'email' é obrigatório.",
+                message: "Missing email field."
+            });
+        }
         const user = await this.userRepository.findByEmail(email);
         const expiresInMinutes = 20;
         if (!user) {

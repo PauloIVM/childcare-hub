@@ -9,6 +9,12 @@ export class SignUpUsecase {
     }
 
     async exec(dto: IUserDTO, date: Date = new Date()) {
+        if (!dto.email || !dto.password || !dto.name) {
+            throw new BaseError({
+                clientMessage: "Os campos 'nome', 'email' e 'senha' são obrigatórios.",
+                message: "Missing required fields."
+            });
+        }
         const previousUser = await this.userRepository.findByEmail(dto.email);
         if (previousUser) {
             throw new BaseError({

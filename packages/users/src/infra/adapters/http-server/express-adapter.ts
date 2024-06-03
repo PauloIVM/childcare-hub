@@ -30,7 +30,11 @@ export class ExpressAdapter implements IHttpServer {
 	}
 
 	listen(port: number): void {
-		this.app.listen(port);
+		this.app.listen(port, "::", () => {
+            if (process.env.NODE_ENV !== "production") {
+                console.log(`API http server running on PORT :: ${port}`);
+            }
+        });
 	}
 
     accessControl(req: Request, res: Response, next: NextFunction) {

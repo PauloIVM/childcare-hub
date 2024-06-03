@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-class MongoDbClient {
+export class MongoDbClient {
     public url: string;
 
     constructor() {
@@ -39,5 +39,3 @@ class MongoDbClient {
         }
     }
 }
-
-export const mongoDbClient = new MongoDbClient();
