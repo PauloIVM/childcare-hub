@@ -1,5 +1,5 @@
 import { User } from "@/domain";
-import { IUserRepository } from "@/application/dependencies/repositories";
+import { IUserRepository } from "@/application/ports/repositories";
 
 export class GetUserUsecase {
     private userRepository: IUserRepository;

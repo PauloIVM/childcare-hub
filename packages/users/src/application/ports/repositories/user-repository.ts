@@ -1,5 +1,5 @@
 import { User } from "@/domain";
-import { IUserDTO } from "@/application/dependencies/dtos";
+import { IUserDTO } from "@/application/ports/dtos";
 
 export interface IUserRepository {
     findById(id: string): Promise<User>;

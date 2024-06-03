@@ -1,5 +1,5 @@
 import { TokenManager, BaseError } from "@/domain";
-import { IUserRepository } from "@/application/dependencies/repositories";
+import { IUserRepository } from "@/application/ports/repositories";
 
 export class RecoverPasswordUsecase {
     private userRepository: IUserRepository;

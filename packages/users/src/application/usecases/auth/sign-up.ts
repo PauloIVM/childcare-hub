@@ -1,6 +1,6 @@
 import { TokenManager, BaseError } from "@/domain";
-import { IUserRepository } from "@/application/dependencies/repositories";
-import { IUserDTO } from "@/application/dependencies/dtos";
+import { IUserRepository } from "@/application/ports/repositories";
+import { IUserDTO } from "@/application/ports/dtos";
 
 export class SignUpUsecase {
     private userRepository: IUserRepository;

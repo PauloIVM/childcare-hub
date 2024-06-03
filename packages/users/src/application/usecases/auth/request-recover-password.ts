@@ -1,6 +1,6 @@
 import { TokenManager, BaseError } from "@/domain";
-import { IUserRepository } from "@/application/dependencies/repositories";
-import { IEmailGateway } from "@/application/dependencies/gateways";
+import { IUserRepository } from "@/application/ports/repositories";
+import { IEmailGateway } from "@/application/ports/gateways";
 
 export class RequestRecoverUsecase {
     private userRepository: IUserRepository;
