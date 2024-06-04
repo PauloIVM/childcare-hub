@@ -1,5 +1,6 @@
 export interface IBabyRecordDTO {
-    userId: string;
+    recordId: string;
+    babyId: string;
     observations: string;
     actionName: string;
     init: Date;

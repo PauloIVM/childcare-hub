@@ -50,6 +50,7 @@ export class HttpController {
             return { token: newToken, userEmail, userName, message: "Password updated." };
 		});
 
+        // TODO: Mudar o nome para /auth/user.. ou /auth.. ou algo assim...
         httpServer.on("get", "/user/me", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Auth.VerifyUsecase();

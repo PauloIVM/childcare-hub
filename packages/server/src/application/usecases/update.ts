@@ -1,20 +1,32 @@
-import { IBabyRecordDTO } from "@/application/dtos";
+import { IBabyRecordDTO, IUserDTO } from "@/application/dtos";
+import { IUsersGateway } from "@/application/gateways";
 import { IBabyRecordRepository } from "@/application/repositories";
 import { ValidationError } from "@/domain";
 
 export class UpdateBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
-    constructor(babyRecordRepository: IBabyRecordRepository) {
+    private usersGateway: IUsersGateway;
+
+    constructor(babyRecordRepository: IBabyRecordRepository, usersGateway: IUsersGateway) {
         this.babyRecordRepository = babyRecordRepository;
+        this.usersGateway = usersGateway;
     }
 
     async exec(
-        id: string,
-        userId: string,
-        recordDTO: Partial<Omit<IBabyRecordDTO, "userId" | "actionName">>
+        recordDTO: Partial<Omit<IBabyRecordDTO, "actionName">>,
+        userDTO: IUserDTO
     ) {
-        const babyRecord = await this.babyRecordRepository.findById(id);
-        if (userId !== babyRecord.userId) {
+        const { userId, token } = userDTO;
+        const isValidUser = await this.usersGateway.auth(userId, token);
+        if (!isValidUser) {
+            throw new ValidationError({
+                message: "Unauthorized user.",
+                clientMessage: "Falha na autenticação do usuário.",
+                status: 401
+            });
+        }
+        const babyRecord = await this.babyRecordRepository.findById(recordDTO.recordId);
+        if (!babyRecord.baby.parentIds.includes(userId)) {
             throw new ValidationError({
                 message: "You have not permission to change this record",
                 clientMessage: "Você não tem permissão para alterar este registro.",

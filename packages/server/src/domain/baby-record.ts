@@ -1,8 +1,8 @@
-import { BabyAction, ValidationError } from "@/domain";
+import { Baby, BabyAction, ValidationError } from "@/domain";
 
 export class BabyRecord {
     public readonly id: string;
-    public readonly userId: string;
+    public readonly baby: Baby;
     public readonly action: BabyAction;
     private _observations: string;
     private _init: Date;
@@ -18,13 +18,13 @@ export class BabyRecord {
 
     constructor(
         id: string,
-        userId: string,
-        actionName: string,
+        baby: Baby,
+        action: BabyAction,
         init: Date,
     ) {
         this.id = id;
-        this.userId = userId;
-        this.action = new BabyAction(actionName);
+        this.baby = baby;
+        this.action = action;
         this._init = init;
     }
 
