@@ -21,6 +21,7 @@ export class ExpressAdapter implements IHttpServer {
 				const output = await callback(req.params, req.body, req.headers);
 				res.json(output);
 			} catch (error: any) {
+                console.error(error);
                 if (!(error instanceof BaseError)) {
                     return res.status(500).json({ message: "Internal Server Error" });
                 }
@@ -31,7 +32,7 @@ export class ExpressAdapter implements IHttpServer {
 
 	listen(port: number): void {
 		this.app.listen(port, "::", () => {
-            if (process.env.NODE_ENV !== "production") {
+            if (process.env.NODE_ENV !== "prod") {
                 console.log(`API http server running on PORT :: ${port}`);
             }
         });

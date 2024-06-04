@@ -3,13 +3,13 @@ import { IUsersModel } from "@/interface-adapters/ports/models";
 import * as Mongoose from "mongoose";
 
 const Schema = new Mongoose.Schema<IUsersModel>({
-    id: String,
-    name: String,
-    email: String,
-    password_hash: String,
-    updated_at: Date,
-    created_at: Date,
-}, { collection: "users" });
+    id: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password_hash: { type: String, required: true },
+    updated_at: { type: Date, required: true },
+    created_at: { type: Date, required: true },
+}, { collection: "users", _id: false });
 
 const UsersModel = Mongoose.model<IUsersModel>("users", Schema);
 

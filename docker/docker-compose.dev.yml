@@ -22,6 +22,18 @@ services:
       - 3307:3306
     command: ["--init-file", "/docker-entrypoint-initdb.d/init.sql"]
 
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: nanapapais
+    volumes:
+      - mongo_data:/data/db
+
 volumes:
   rabbitmq_data:
   mysql_data:
+  mongo_data:
