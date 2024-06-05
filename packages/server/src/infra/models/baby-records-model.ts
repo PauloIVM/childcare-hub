@@ -9,7 +9,7 @@ import {
     CreateDateColumn,
     Index
 } from "typeorm";
-import { UserModel } from "@/infra/models";
+import { BabiesModel } from "@/infra/models";
 
 @Entity({ name: "baby_record" })
 export class BabyRecordModel {
@@ -19,14 +19,14 @@ export class BabyRecordModel {
     @Index()
     @Column({
         type: "varchar",
-        name: "user_id",
+        name: "baby_id",
         length: 36,
     })
     public userId!: string;
 
-    @ManyToOne(() => UserModel, (user) => user.id)
-    @JoinColumn({ name: "user_id" })
-    user!: UserModel;
+    @ManyToOne(() => BabiesModel, (baby) => baby.id)
+    @JoinColumn({ name: "baby_id" })
+    baby!: BabiesModel;
 
     @Column({
         type: "varchar",

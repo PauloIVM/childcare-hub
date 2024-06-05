@@ -1,2 +1,2 @@
-export { BabyRecordModel } from "./baby-record-model";
-export { UserModel } from "./user-model";
+export { BabyRecordModel } from "./baby-records-model";
+export { BabiesModel } from "./babies-model";

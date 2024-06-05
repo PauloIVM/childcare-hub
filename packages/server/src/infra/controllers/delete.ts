@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { BabyRecordRepository } from "@/infra/repositories";
 import { UsersGateway } from "@/infra/gateways";
-import { UpdateBabyRecordUsecase } from "@/application/usecases";
+import { DeleteBabyRecordUsecase } from "@/application/usecases";
 
-export class UpdateBabyRecordController {
+export class DeleteBabyRecordController {
     constructor() {}
 
     async exec(req: Request, res: Response) {
-        const { fields, id } = req.body || {};
-        const token = req.headers.authorization?.split(' ')?.[1];
-        const usecase = new UpdateBabyRecordUsecase(
+        const id = req.query?.id as string;
+        const token = req.headers.authorization?.split(' ')?.[1];    
+        const usecase = new DeleteBabyRecordUsecase(
             BabyRecordRepository.getInstance(),
             new UsersGateway()
         );
-        await usecase.exec(token, { ...fields, recordId: id });
+        await usecase.exec(id, token);
         res.json({ message: "ok" });
     }
 }

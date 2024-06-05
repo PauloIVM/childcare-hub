@@ -1,5 +1,5 @@
 import { IBabyRecordRepository, IBabiesRepository } from "@/application/repositories";
-import { IBabyRecordDTO, IUserDTO } from "@/application/dtos";
+import { IBabyRecordDTO } from "@/application/dtos";
 import { IUsersGateway } from "@/application/gateways";
 import { ValidationError } from "@/domain";
 
@@ -18,17 +18,33 @@ export class InsertBabyRecordUsecase {
         this.usersGateway = usersGateway;
     }
 
-    async exec(recordDTO: IBabyRecordDTO, userDTO: IUserDTO) {
-        const { userId, token } = userDTO;
-        const isValidUser = await this.usersGateway.auth(userId, token);
-        const baby = await this.babiesRepository.findById(recordDTO.babyId);
-        if (!isValidUser) {
+    async exec(token: string, dto: IBabyRecordDTO) {
+        // TODO: Create HttpRouter and HttpReqValidators
+        const isAllStringFields = [dto.actionName, dto.observations, dto.babyId]
+            .filter((e) => !!e)
+            .every((e) => typeof e === "string");
+        if (!isAllStringFields) {
             throw new ValidationError({
-                message: "Unauthorized user.",
-                clientMessage: "Falha na autenticação do usuário.",
-                status: 401
+                message: "Invalid some record field type",
+                clientMessage: "Algum campo do registro não é válido (string)",
+                status: 422
             });
         }
+        const isValidDate = (d: Date): boolean => {
+            return d instanceof Date && !isNaN(d.getDate());
+        }
+        if (!isValidDate(dto.init) || (dto.end && !isValidDate(dto.end))) {
+            throw new ValidationError({
+                message: "Failed to build record init/end fields",
+                clientMessage: "As datas nos campos 'início'/'fim' são inválidas.",
+                status: 422
+            });
+        }
+        // ----------------------------------------------
+        const [userId, baby] = await Promise.all([
+            this.usersGateway.getUserId(token),
+            this.babiesRepository.findById(dto.babyId)
+        ]);
         if (!baby.parentIds.includes(userId)) {
             throw new ValidationError({
                 message: "You have not permission to change this record",
@@ -36,7 +52,7 @@ export class InsertBabyRecordUsecase {
                 status: 403
             });
         }
-        const result = await this.babyRecordRepository.insertRecord(recordDTO);
+        const result = await this.babyRecordRepository.insertRecord(dto);
         if (!result) {
             throw new ValidationError({
                 message: "Failed to insert record on 'babyRecordRepository.insert'",

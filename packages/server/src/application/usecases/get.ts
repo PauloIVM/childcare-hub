@@ -1,7 +1,6 @@
 import { BabyRecord, BabyAction, ValidationError } from "@/domain";
 import { IUsersGateway } from "@/application/gateways";
 import { IBabyRecordRepository } from "@/application/repositories";
-import { IUserDTO } from "../dtos";
 
 export class GetBabyRecordsUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -17,20 +16,29 @@ export class GetBabyRecordsUsecase {
 
     async exec(
         babyId: string,
+        token: string,
         skip: number,
-        limit: number,
-        userDTO: IUserDTO,
+        limit: number
     ): Promise<{ records: BabyRecord[]; count: number; validActions: BabyAction[] }> {
-        const isValidUser = await this.usersGateway.auth(userDTO.userId, userDTO.token);
-        if (!isValidUser) {
+        // TODO: Create HttpRouter and HttpReqValidators
+        if (isNaN(skip) || isNaN(limit)) {
             throw new ValidationError({
-                message: "Unauthorized user.",
-                clientMessage: "Falha na autenticação do usuário.",
-                status: 401
+                message: "Bad skip/limit param",
+                clientMessage: "Parâmetros 'skip'/'limit' inválidos."
             });
         }
-        const records = await this.babyRecordRepository.findByBabyId(babyId, skip, limit);
-        if (!records.every((r) => r.baby.parentIds.includes(userDTO.userId))) {
+        if (limit > 100) {
+            throw new ValidationError({
+                message: "Records are limited by 100 elements per request.",
+                clientMessage: "Você não pode puxar mais de 100 records de uma vez."
+            });
+        }
+        // ---------------------------------------------
+        const [userId, records] = await Promise.all([
+            this.usersGateway.getUserId(token),
+            this.babyRecordRepository.findByBabyId(babyId, skip, limit)
+        ]);
+        if (!records.every((r) => r.baby.parentIds.includes(userId))) {
             throw new ValidationError({
                 message: "You have not permission to get those records",
                 clientMessage: "Você não têm permissão para obter estes registro",

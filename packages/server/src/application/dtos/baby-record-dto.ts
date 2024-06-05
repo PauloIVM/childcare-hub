@@ -1,5 +1,5 @@
 export interface IBabyRecordDTO {
-    recordId: string;
+    recordId?: string;
     babyId: string;
     observations: string;
     actionName: string;

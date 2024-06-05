@@ -1,7 +1,6 @@
 import { IBabyRecordRepository } from "@/application/repositories";
 import { IUsersGateway } from "@/application/gateways";
 import { ValidationError } from "@/domain";
-import { IUserDTO } from "../dtos";
 
 export class DeleteBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -15,17 +14,26 @@ export class DeleteBabyRecordUsecase {
         this.babyRecordRepository = babyRecordRepository;
     }
 
-    async exec(recordId: string, userDTO: IUserDTO) {
-        const { userId, token } = userDTO;
-        const isValidUser = await this.usersGateway.auth(userId, token);
-        if (!isValidUser) {
+    async exec(recordId: string, token: string) {
+        // TODO: Create HttpRouter and HttpReqValidators
+        if (!token) {
             throw new ValidationError({
-                message: "Unauthorized user.",
-                clientMessage: "Falha na autenticação do usuário.",
+                message: "Token required.",
+                clientMessage: "Token de autenticação não fornecido.",
                 status: 401
             });
         }
-        const record = await this.babyRecordRepository.findById(recordId);
+        if (!recordId) {
+            throw new ValidationError({
+                message: "'id' required.",
+                clientMessage: "Passe um 'id' válido.",
+            });
+        }
+        // ---------------------------------------------
+        const [userId, record] = await Promise.all([
+            this.usersGateway.getUserId(token),
+            this.babyRecordRepository.findById(recordId)
+        ]);
         const baby = record.baby;
         if (!baby || !baby.parentIds.includes(userId)) {
             throw new ValidationError({

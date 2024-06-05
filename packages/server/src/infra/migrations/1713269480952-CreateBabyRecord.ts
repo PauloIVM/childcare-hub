@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from "typeorm";
 
-export class CreateBabyRecord1713269480952 implements MigrationInterface {
+export class CreateBabyRecords1713269480952 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "baby_record",
+                name: "baby_records",
                 columns: [
                     {
                         name: "id",
@@ -14,7 +14,7 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: "user_id",
+                        name: "baby_id",
                         type: "varchar",
                         length: "36",
                         isNullable: true,
@@ -86,18 +86,18 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
         );
 
         await queryRunner.createIndex(
-            "baby_record",
+            "baby_records",
             new TableIndex({
-                name: "baby_record_user_index",
-                columnNames: ["user_id"],
+                name: "baby_records_index",
+                columnNames: ["baby_id"],
             }),
         );
 
         await queryRunner.createForeignKey(
-            "baby_record",
+            "baby_records",
             new TableForeignKey({
-                name: "user_id_fk",
-                columnNames: ["user_id"],
+                name: "baby_id_fk",
+                columnNames: ["baby_id"],
                 referencedColumnNames: ["id"],
                 referencedTableName: "users",
                 onDelete: "SET NULL",
@@ -108,10 +108,10 @@ export class CreateBabyRecord1713269480952 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropIndex(
-            "baby_record",
-            "baby_record_user_index",
+            "baby_records",
+            "baby_records_index",
         );
-        await queryRunner.dropTable("baby_record");
+        await queryRunner.dropTable("baby_records");
     }
 
 }

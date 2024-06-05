@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { BabyRecordModel } from "@/infra/models";
-import { BabyRecord } from "@/domain";
+import { BabyRecord, Baby, BabyAction } from "@/domain";
 import { IBabyRecordRepository } from "@/application/repositories";
 import { IBabyRecordDTO } from "@/application/dtos";
 
@@ -13,10 +13,10 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return getCustomRepository(BabyRecordRepository);
     }
 
-    public async findByUserId(userId: string, skip: number = 0, limit: number): Promise<BabyRecord[]> {
+    public async findByBabyId(babyId: string, skip: number = 0, limit: number): Promise<BabyRecord[]> {
         const maxLimit = 100;
         const modelRecords = await this.find({
-            where: { userId },
+            where: { babyId },
             order: { init: "DESC" },
             skip,
             take: limit <= maxLimit ? limit : maxLimit
@@ -44,7 +44,7 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             observations,
             init,
             end,
-            userId,
+            babyId,
             height,
             weight,
             temperature,
@@ -57,7 +57,8 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             observations,
             init,
             end,
-            userId,
+            // TODO: Como fica isso no ORM??
+            // babyId,
             height,
             weight,
             temperature,
@@ -101,7 +102,13 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
     }
 
     private parseModelToEntity(r: BabyRecordModel): BabyRecord {
-        return new BabyRecord(r.id, r.userId, r.action, r.init)
+        return new BabyRecord(
+            r.id,
+            // TODO: Parsear gender... entender como fica os parend-ids..
+            new Baby(r.baby.id, r.baby.name, r.baby.gender, new Date(r.baby.birthday), []),
+            new BabyAction(r.action),
+            r.init
+        )
             .setObservations(r.observations)
             .setEnd(r.end)
             .setHeight(r.height)

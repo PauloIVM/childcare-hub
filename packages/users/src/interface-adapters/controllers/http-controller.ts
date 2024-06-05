@@ -10,7 +10,7 @@ export class HttpController {
         httpServer: IHttpServer,
         usersMapper: IUsersDataMapper
     ) {
-		httpServer.on("post", "/auth/login", async function (params, body, headers) {
+		httpServer.on("post", "/user/login", async function (params, body, headers) {
 			const { email, password } = body?.user || {};
             const usecase = new Auth.LoginUsecase(new UserRepository(usersMapper));
             const { token, userEmail, userName } = await usecase.exec(
@@ -21,7 +21,7 @@ export class HttpController {
             return { token, userEmail, userName, message: "ok"  };
 		});
 
-        httpServer.on("post", "/auth/sign-up", async function (params, body, headers) {
+        httpServer.on("post", "/user/sign-up", async function (params, body, headers) {
             const { email, name, password } = body?.user || {};
             const usecase = new Auth.SignUpUsecase(new UserRepository(usersMapper));
             const { token, userEmail, userName } = await usecase.exec({
@@ -32,7 +32,7 @@ export class HttpController {
             return { token, userEmail, userName, message: "ok" };
 		});
 
-        httpServer.on("post", "/auth/request-recover", async function (params, body, headers) {
+        httpServer.on("post", "/user/request-recover", async function (params, body, headers) {
 			const { email } = body?.user || {};
             const usecase = new Auth.RequestRecoverUsecase(
                 new UserRepository(usersMapper),
@@ -42,7 +42,7 @@ export class HttpController {
             return { message: "Email sent." };
 		});
 
-        httpServer.on("post", "/auth/recover", async function (params, body, headers) {
+        httpServer.on("post", "/user/recover", async function (params, body, headers) {
 			const { password } = body?.user || {};
             const token = headers?.authorization?.split(' ')[1] || "";
             const usecase = new Auth.RecoverPasswordUsecase(new UserRepository(usersMapper));
@@ -50,8 +50,16 @@ export class HttpController {
             return { token: newToken, userEmail, userName, message: "Password updated." };
 		});
 
-        // TODO: Mudar o nome para /auth/user.. ou /auth.. ou algo assim...
-        httpServer.on("get", "/user/me", async function (params, body, headers) {
+        // TODO: Reorganizar as pastas dos usecases...
+        httpServer.on("get", "/user/auth", async function (params, body, headers) {
+			const token = headers?.authorization?.split(' ')[1] || "";
+            const verifyUsecase = new Auth.VerifyUsecase();
+            const { userId } = verifyUsecase.exec(token);
+            if (!userId) { return {}; }
+            return { userId: userId, message: "ok" };
+		});
+
+        httpServer.on("get", "/user", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Auth.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);
