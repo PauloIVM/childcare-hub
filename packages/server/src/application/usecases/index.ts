@@ -1,4 +1,4 @@
-export { DeleteBabyRecordUsecase } from "./delete";
-export { InsertBabyRecordUsecase } from "./insert";
-export { UpdateBabyRecordUsecase } from "./update";
-export { GetBabyRecordsUsecase } from "./get";
+export { DeleteBabyRecordUsecase } from "./baby-records";
+export { InsertBabyRecordUsecase } from "./baby-records";
+export { UpdateBabyRecordUsecase } from "./baby-records";
+export { GetBabyRecordsUsecase } from "./baby-records";
