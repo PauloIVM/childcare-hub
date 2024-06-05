@@ -1,4 +1,5 @@
-export { DeleteBabyRecordController } from "./delete";
-export { InsertBabyRecordController } from "./insert";
-export { UpdateBabyRecordController } from "./update";
-export { GetBabyRecordsController } from "./get";
+export { DeleteBabyRecordController } from "./baby-records";
+export { InsertBabyRecordController } from "./baby-records";
+export { UpdateBabyRecordController } from "./baby-records";
+export { GetBabyRecordsController } from "./baby-records";
+export { InsertBabyController } from "./baby";

@@ -3,6 +3,6 @@ import { IBabyDTO } from "@/application/dtos";
 
 export interface IBabiesRepository {
     findById(id: string): Promise<Baby>;
-    saveBaby(user: IBabyDTO): Promise<Baby>;
-    updateBaby(user: Baby): Promise<boolean>;
+    saveBaby(baby: IBabyDTO): Promise<Baby>;
+    updateBaby(baby: Baby): Promise<boolean>;
 }

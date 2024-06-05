@@ -1,0 +1,1 @@
+export { InsertBabyUsecase } from "./insert";

@@ -1,0 +1,1 @@
+export { InsertBabyController } from "./insert";

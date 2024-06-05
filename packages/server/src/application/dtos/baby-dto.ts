@@ -1,6 +1,6 @@
 export interface IBabyDTO {
     name: string;
     gender: string;
-    birthday: string;
+    birthday: Date;
     parentIds: string[];
 }
