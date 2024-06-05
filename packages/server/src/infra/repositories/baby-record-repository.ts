@@ -29,13 +29,8 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
         return this.parseModelToEntity(modelRecord);
     }
 
-    public async findByUserEmail(email: string): Promise<BabyRecord[]> {
-        const modelRecords = await this.find({ where: { user: { email } } });
-        return modelRecords.map(this.parseModelToEntity);
-    }
-
-    public async getCount(userId: string): Promise<number> {
-        return this.count({ where: { userId } });
+    public async getCount(babyId: string): Promise<number> {
+        return this.count({ where: { baby: { id: babyId } } });
     }
 
     public async insertRecord(dto: IBabyRecordDTO) {
@@ -52,25 +47,29 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             breastfeedingType,
             sleepQuality,
         } = dto;
-        const recordModel = BabyRecordModel.build({
-            action: actionName,
-            observations,
-            init,
-            end,
-            // TODO: Como fica isso no ORM??
-            // babyId,
-            height,
-            weight,
-            temperature,
-            breastfeedingAmount,
-            breastfeedingType,
-            sleepQuality,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        });
-        const recordEntity = this.parseModelToEntity(recordModel);
-        await this.save(recordModel);
-        return recordEntity;
+
+        const result = await this.createQueryBuilder()
+            .insert()
+            .into(BabyRecordModel)
+            .values({
+                action: actionName,
+                observations,
+                init,
+                end,
+                height,
+                weight,
+                temperature,
+                breastfeedingAmount,
+                breastfeedingType,
+                sleepQuality,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                baby: { id: babyId } 
+            })
+            .execute();
+        
+        const recordId = result.identifiers[0].id as string;
+        return this.findById(recordId);
     }
 
     public async updateRecord(babyRecord: BabyRecord) {
@@ -104,8 +103,13 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
     private parseModelToEntity(r: BabyRecordModel): BabyRecord {
         return new BabyRecord(
             r.id,
-            // TODO: Parsear gender... entender como fica os parend-ids..
-            new Baby(r.baby.id, r.baby.name, r.baby.gender, new Date(r.baby.birthday), []),
+            new Baby(
+                r.baby.id,
+                r.baby.name,
+                r.baby.gender === "M" ? "male" : "female",
+                new Date(r.baby.birthday),
+                r.baby.parenthoods.map((p) => p.parent_id)
+            ),
             new BabyAction(r.action),
             r.init
         )

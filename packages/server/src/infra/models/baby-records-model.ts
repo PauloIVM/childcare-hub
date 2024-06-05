@@ -17,16 +17,12 @@ export class BabyRecordModel {
     id: string;
 
     @Index()
-    @Column({
-        type: "varchar",
-        name: "baby_id",
-        length: 36,
-    })
-    public userId!: string;
+    @Column({ type: "varchar", name: "baby_id", length: 36 })
+    public babyId!: string;
 
     @ManyToOne(() => BabiesModel, (baby) => baby.id)
     @JoinColumn({ name: "baby_id" })
-    baby!: BabiesModel;
+    public baby!: BabiesModel;
 
     @Column({
         type: "varchar",

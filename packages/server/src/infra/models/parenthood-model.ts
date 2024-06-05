@@ -2,18 +2,20 @@
 import {
     Column,
     Entity,
-    Index,
+    JoinColumn,
+    ManyToOne,
     PrimaryColumn,
 } from "typeorm";
+import { BabiesModel } from "./babies-model";
 
 @Entity({ name: "parenthood" })
-export class UserModel {
+export class ParenthoodModel {
     @PrimaryColumn({
         type: "varchar",
         name: "id",
         length: 72,
     })
-    id: string;
+    id!: string;
 
     @Column({
         type: "varchar",
@@ -29,7 +31,11 @@ export class UserModel {
     })
     public baby_id!: string;
 
-    public static build(this: new () => UserModel, params: Partial<UserModel>): UserModel {
-        return Object.assign(new this(), params);
+    @ManyToOne(() => BabiesModel, (baby) => baby.parenthoods)
+    @JoinColumn({ referencedColumnName: "id", name: "baby_id" })
+    baby: BabiesModel;
+
+    public static build(this: new () => ParenthoodModel, p: Omit<ParenthoodModel, "id">): ParenthoodModel {
+        return Object.assign(new this(), { ...p, id: `${p.parent_id}${p.baby_id}` });
     }
 }

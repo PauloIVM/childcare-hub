@@ -56,14 +56,6 @@ export class CreateBabies1697803284295 implements MigrationInterface {
             }),
             true,
         );
-
-        await queryRunner.createIndex(
-            "babies",
-            new TableIndex({
-                name: "users_index",
-                columnNames: ["email"],
-            }),
-        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

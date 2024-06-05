@@ -2,19 +2,22 @@
 import {
     Column,
     Entity,
-    Index,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     CreateDateColumn,
+    JoinColumn,
+    OneToMany,
 } from "typeorm";
+import { ParenthoodModel } from "./parenthood-model";
 
 @Entity({ name: "babies" })
 export class BabiesModel {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;
 
-    @Column({ type: "varchar", name: "name", length: 60, nullable: true })
-    public userName!: string;
+    @OneToMany(() => ParenthoodModel, (parenthood) => parenthood.baby)
+    @JoinColumn({ name: "baby_id" })
+    parenthoods: ParenthoodModel[];
 
     @Column({
         type: "varchar",

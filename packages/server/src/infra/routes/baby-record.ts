@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as babyRecordController from "@/infra/controllers/baby-record";
+import * as babyRecordController from "@/infra/controllers";
 
 const babyRecordRouter = Router();
 

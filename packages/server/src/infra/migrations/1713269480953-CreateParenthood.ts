@@ -38,7 +38,7 @@ export class CreateParenthood1713269480953 implements MigrationInterface {
                 name: "parenthood_baby_id_fk",
                 columnNames: ["baby_id"],
                 referencedColumnNames: ["id"],
-                referencedTableName: "users",
+                referencedTableName: "babies",
                 onDelete: "SET NULL",
                 onUpdate: "CASCADE",
             }),

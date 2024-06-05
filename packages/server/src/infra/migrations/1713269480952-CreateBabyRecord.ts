@@ -99,7 +99,7 @@ export class CreateBabyRecords1713269480952 implements MigrationInterface {
                 name: "baby_id_fk",
                 columnNames: ["baby_id"],
                 referencedColumnNames: ["id"],
-                referencedTableName: "users",
+                referencedTableName: "babies",
                 onDelete: "SET NULL",
                 onUpdate: "CASCADE",
             }),
