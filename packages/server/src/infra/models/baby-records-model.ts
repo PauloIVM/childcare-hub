@@ -11,7 +11,7 @@ import {
 } from "typeorm";
 import { BabiesModel } from "@/infra/models";
 
-@Entity({ name: "baby_record" })
+@Entity({ name: "baby_records" })
 export class BabyRecordModel {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;

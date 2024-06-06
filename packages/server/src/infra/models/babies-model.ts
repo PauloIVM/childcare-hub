@@ -15,9 +15,9 @@ export class BabiesModel {
     @PrimaryGeneratedColumn("uuid", { name: "id" })
     id: string;
 
-    @OneToMany(() => ParenthoodModel, (parenthood) => parenthood.baby)
+    @OneToMany(() => ParenthoodModel, (parenthood) => parenthood.baby, { eager: true })
     @JoinColumn({ name: "baby_id" })
-    parenthoods: ParenthoodModel[];
+    public parenthoods!: ParenthoodModel[];
 
     @Column({
         type: "varchar",

@@ -3,6 +3,6 @@ import * as babyRecordController from "@/infra/controllers";
 
 const babyRouter = Router();
 
-babyRouter.put("/", new babyRecordController.InsertBabyController().exec);
+babyRouter.post("/", new babyRecordController.InsertBabyController().exec);
 
 export { babyRouter };

@@ -22,20 +22,20 @@ export class ParenthoodModel {
         name: "parent_id",
         length: 36,
     })
-    public parent_id!: string;
+    public parentId!: string;
 
     @Column({
         type: "varchar",
         name: "baby_id",
         length: 36,
     })
-    public baby_id!: string;
+    public babyId!: string;
 
     @ManyToOne(() => BabiesModel, (baby) => baby.parenthoods)
     @JoinColumn({ referencedColumnName: "id", name: "baby_id" })
     baby: BabiesModel;
 
     public static build(this: new () => ParenthoodModel, p: Omit<ParenthoodModel, "id">): ParenthoodModel {
-        return Object.assign(new this(), { ...p, id: `${p.parent_id}${p.baby_id}` });
+        return Object.assign(new this(), p);
     }
 }

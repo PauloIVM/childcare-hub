@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
+import { EntityRepository, Repository, getCustomRepository, getConnection } from "typeorm";
 import { Baby } from "@/domain";
 import { IBabiesRepository } from "@/application/repositories";
 import { IBabyDTO } from "@/application/dtos";
-import { BabiesModel } from "@/infra/models";
+import { BabiesModel, ParenthoodModel } from "@/infra/models";
 
 @EntityRepository(BabiesModel)
 export class BabiesRepository extends Repository<BabiesModel> implements IBabiesRepository {
@@ -21,39 +21,74 @@ export class BabiesRepository extends Repository<BabiesModel> implements IBabies
             modelEl.name,
             modelEl.gender === "M" ? "male" : "female",
             new Date(modelEl.birthday),
-            // TODO: Puxar os ids dos parents...
-            []
+            modelEl.parenthoods.map((p) => p.parentId)
         );
     }
 
-    public async saveBaby({ name, gender, birthday }: IBabyDTO): Promise<Baby> {
-        const modelEl = BabiesModel.build({ createdAt: new Date(), updatedAt: new Date() });
-        const baby = new Baby(
-            modelEl.id,
-            name,
-            gender,
-            new Date(birthday),
-            // TODO: Gerar dinamicamente os parentIds...
-            []
-        );
-        // const user = User.create(modelEl.id, name, email, password);
-        // modelEl.email = email;
-        // modelEl.userName = name;
-        // modelEl.passwordHash = user.password.hash;
-        await this.save(modelEl);
-        return baby;
+    public async saveBaby({ name, gender, birthday, parentIds }: IBabyDTO): Promise<Baby> {
+        const queryRunner = getConnection().createQueryRunner();
+        queryRunner.startTransaction();
+        try {
+            const result = await queryRunner.manager.createQueryBuilder()
+                .insert()
+                .into(BabiesModel)
+                .values({
+                    name,
+                    gender: gender === "male" ? "M" : "F",
+                    birthday
+                })
+                .execute();
+            const babyId = result.identifiers[0].id as string;
+            await queryRunner.manager.createQueryBuilder()
+                .insert()
+                .into(ParenthoodModel)
+                .values(parentIds.map((pid) => ({ id: `${pid}${babyId}`, parentId: pid, babyId })))
+                .execute();
+            await queryRunner.commitTransaction();
+            await queryRunner.release();
+            return new Baby(babyId, name, gender, birthday, parentIds);
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+        }
     }
 
     public async updateBaby(baby: Baby): Promise<boolean> {
-        const result = await this.createQueryBuilder()
-            .update(BabiesModel)
-            .set({
-                name: baby.name,
-                gender: baby.gender,
-                birthday: baby.birthday,
-            })
-            .where({ id: baby.id })
-            .execute();
-        return !!result.affected;
+        const currentBaby = await this.findById(baby.id);
+        const parentIdsToAdd = baby.parentIds.filter((pid) => !currentBaby.parentIds.includes(pid));
+        const parentIdsToRemove = currentBaby.parentIds.filter((pid) => !baby.parentIds.includes(pid));
+        const queryRunner = getConnection().createQueryRunner();
+        queryRunner.startTransaction();
+        try {
+            for (const parentId of parentIdsToAdd) {
+                await queryRunner.manager.createQueryBuilder()
+                    .insert()
+                    .into(ParenthoodModel)
+                    .values({ id: `${parentId}${baby.id}`, parentId, babyId: baby.id })
+                    .execute();
+            }
+            for (const parentId of parentIdsToRemove) {
+                await queryRunner.manager.createQueryBuilder()
+                    .delete()
+                    .from(ParenthoodModel)
+                    .where({ id: `${parentId}${baby.id}`, parentId, babyId: baby.id })
+                    .execute();
+            }
+            const result = await queryRunner.manager.createQueryBuilder()
+                .update(BabiesModel)
+                .set({
+                    name: baby.name,
+                    gender: baby.gender,
+                    birthday: baby.birthday,
+                })
+                .where({ id: baby.id })
+                .execute();
+            await queryRunner.commitTransaction();
+            await queryRunner.release();
+            return !!result.affected;
+        } catch (error) {
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+        }
     }
 }

@@ -23,6 +23,16 @@
       },
       {
         "request": "launch",
+        "name": "users:debug",
+        "runtimeArgs": ["dev:users"],
+        "runtimeExecutable": "yarn",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "type": "pwa-node",
+      },
+      {
+        "request": "launch",
         "name": "web:debug",
         "runtimeArgs": ["dev:web"],
         "runtimeExecutable": "yarn",

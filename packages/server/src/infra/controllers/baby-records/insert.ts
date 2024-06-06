@@ -25,7 +25,7 @@ export class InsertBabyRecordController {
             actionName,
             observations,
             init: new Date(init),
-            end: new Date(end)
+            end: end && new Date(end)
         });
         res.json({ message: "ok" });
     }

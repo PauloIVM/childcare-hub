@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { BabyRecordModel } from "@/infra/models";
+import { BabiesModel, BabyRecordModel } from "@/infra/models";
 import { BabyRecord, Baby, BabyAction } from "@/domain";
 import { IBabyRecordRepository } from "@/application/repositories";
 import { IBabyRecordDTO } from "@/application/dtos";
@@ -19,13 +19,14 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
             where: { babyId },
             order: { init: "DESC" },
             skip,
-            take: limit <= maxLimit ? limit : maxLimit
+            take: limit <= maxLimit ? limit : maxLimit,
+            relations: ["baby"]
         });
         return modelRecords.map(this.parseModelToEntity);
     }
 
     public async findById(id: string): Promise<BabyRecord> {
-        const modelRecord = await this.findOne({ where: { id } });
+        const modelRecord = await this.findOne({ where: { id }, relations: ["baby"] });
         return this.parseModelToEntity(modelRecord);
     }
 
@@ -108,7 +109,7 @@ export class BabyRecordRepository extends Repository<BabyRecordModel> implements
                 r.baby.name,
                 r.baby.gender === "M" ? "male" : "female",
                 new Date(r.baby.birthday),
-                r.baby.parenthoods.map((p) => p.parent_id)
+                r.baby.parenthoods.map((p) => p.parentId)
             ),
             new BabyAction(r.action),
             r.init

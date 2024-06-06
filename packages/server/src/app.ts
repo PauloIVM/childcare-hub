@@ -8,6 +8,6 @@ app.disable("x-powered-by");
 app.enable("trust proxy");
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api", router);
+app.use(router);
 
 export default app;
