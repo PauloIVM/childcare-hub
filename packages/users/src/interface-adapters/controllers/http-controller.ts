@@ -49,7 +49,7 @@ export class HttpController {
             return { token: newToken, userEmail, userName, message: "Password updated." };
 		});
 
-        httpServer.on("get", "/user/auth", async function (params, body, headers) {
+        httpServer.on("get", "/user/user-id", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Usecases.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);

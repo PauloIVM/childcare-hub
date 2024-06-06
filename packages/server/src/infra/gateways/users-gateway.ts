@@ -16,7 +16,7 @@ export class UsersGateway implements IUsersGateway {
             const config: AxiosRequestConfig = {
                 headers: { Authorization: `Bearer ${token}` }
             };
-            const result = await axios.get("http://localhost:3003/user/auth", config);
+            const result = await axios.get("http://localhost:3003/user/user-id", config);
             const userId = result.data.userId;
             if (!userId) throw new Error();
             return result.data.userId;
