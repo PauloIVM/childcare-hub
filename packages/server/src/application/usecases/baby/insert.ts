@@ -15,6 +15,13 @@ export class InsertBabyUsecase {
         this.usersGateway = usersGateway;
     }
 
+    // TODO: Primeiro serviço interessante para eu usar com fila... ao criar
+    //       um user, deve criar tbm um baby aqui automaticamente... pro user
+    //       poder usar as funcionalidades sem necessariamente ter que cadastrar
+    //       seu filho... daí tbm eu não vou precisar mexer muito no front por
+    //       agora. E aí estruturar bem esses usecases q precisam ser executados
+    //       quando um user é criado e quando um user é excluído.
+
     async exec(token: string, dto: IBabyDTO) {
         // TODO: Create HttpRouter and HttpReqValidators
         const isAllStringFields = [dto.gender, dto.name]
