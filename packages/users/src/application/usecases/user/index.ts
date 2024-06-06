@@ -1,1 +1,0 @@
-export { GetUserUsecase } from "./get";

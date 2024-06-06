@@ -1,5 +1,4 @@
-import * as Auth from "@/application/usecases/auth";
-import * as User from "@/application/usecases/user";
+import * as Usecases from "@/application/usecases";
 import { IHttpServer } from "@/interface-adapters/ports/http-server";
 import { UserRepository } from "@/interface-adapters/adapters/repositories";
 import { IUsersDataMapper } from "@/interface-adapters/ports/data-mappers";
@@ -12,7 +11,7 @@ export class HttpController {
     ) {
 		httpServer.on("post", "/user/login", async function (params, body, headers) {
 			const { email, password } = body?.user || {};
-            const usecase = new Auth.LoginUsecase(new UserRepository(usersMapper));
+            const usecase = new Usecases.LoginUsecase(new UserRepository(usersMapper));
             const { token, userEmail, userName } = await usecase.exec(
                 email,
                 password,
@@ -21,9 +20,9 @@ export class HttpController {
             return { token, userEmail, userName, message: "ok"  };
 		});
 
-        httpServer.on("post", "/user/sign-up", async function (params, body, headers) {
+        httpServer.on("post", "/user", async function (params, body, headers) {
             const { email, name, password } = body?.user || {};
-            const usecase = new Auth.SignUpUsecase(new UserRepository(usersMapper));
+            const usecase = new Usecases.SignUpUsecase(new UserRepository(usersMapper));
             const { token, userEmail, userName } = await usecase.exec({
                 email,
                 name,
@@ -34,7 +33,7 @@ export class HttpController {
 
         httpServer.on("post", "/user/request-recover", async function (params, body, headers) {
 			const { email } = body?.user || {};
-            const usecase = new Auth.RequestRecoverUsecase(
+            const usecase = new Usecases.RequestRecoverUsecase(
                 new UserRepository(usersMapper),
                 EmailGateway.getInstance()
             );
@@ -42,18 +41,17 @@ export class HttpController {
             return { message: "Email sent." };
 		});
 
-        httpServer.on("post", "/user/recover", async function (params, body, headers) {
+        httpServer.on("patch", "/user/recover", async function (params, body, headers) {
 			const { password } = body?.user || {};
             const token = headers?.authorization?.split(' ')[1] || "";
-            const usecase = new Auth.RecoverPasswordUsecase(new UserRepository(usersMapper));
+            const usecase = new Usecases.RecoverPasswordUsecase(new UserRepository(usersMapper));
             const { token: newToken, userEmail, userName } = await usecase.exec(password, token);
             return { token: newToken, userEmail, userName, message: "Password updated." };
 		});
 
-        // TODO: Reorganizar as pastas dos usecases...
         httpServer.on("get", "/user/auth", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
-            const verifyUsecase = new Auth.VerifyUsecase();
+            const verifyUsecase = new Usecases.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);
             if (!userId) { return {}; }
             return { userId: userId, message: "ok" };
@@ -61,10 +59,10 @@ export class HttpController {
 
         httpServer.on("get", "/user", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
-            const verifyUsecase = new Auth.VerifyUsecase();
+            const verifyUsecase = new Usecases.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);
             if (!userId) { return {}; }
-            const getUserUsecase = new User.GetUserUsecase(new UserRepository(usersMapper));
+            const getUserUsecase = new Usecases.GetUserUsecase(new UserRepository(usersMapper));
             const user = await getUserUsecase.exec(userId);
             return {
                 userName: user.userName,
