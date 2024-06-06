@@ -5,7 +5,7 @@ export class Baby {
     private _name: string;
     private _gender: "male" | "female";
     private _birthday: Date;
-    private _parentIds: string[];
+    private _parentIds: string[] = [];
 
     constructor(id: string, name: string, gender: string, birthday: Date, parentIds: string[]) {
         this.setId(id)

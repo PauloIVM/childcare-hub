@@ -1,8 +1,13 @@
-import { BabyRecord } from "../";
+import { BabyAction, BabyRecord, Baby } from "../";
 
 describe("BabyRecord", () => {
     test("should create record", async () => {
-        const record = new BabyRecord("record_id", "user_id", "sleep", new Date("02/02/2024"))
+        const record = new BabyRecord(
+            "record_id",
+            new Baby("baby_id", "baby_name", "male", new Date("02/01/2024"), ["user_id"]),
+            new BabyAction("sleep"),
+            new Date("02/02/2024")
+        )
             .setObservations("obs")
             .setBreastfeedingAmount(10)
             .setBreastfeedingType(null)
@@ -18,7 +23,7 @@ describe("BabyRecord", () => {
         expect(record.action.name).toBe("sleep");
         expect(record.action.label).toBe("Dormir");
         expect(record.id).toBe("record_id");
-        expect(record.userId).toBe("user_id");
+        expect(record.baby.parentIds).toStrictEqual(["user_id"]);
         expect(record.observations).toBe("obs");
         expect(record.breastfeedingAmount).toBe(10);
         expect(record.breastfeedingType).toBe("right");
@@ -33,8 +38,8 @@ describe("BabyRecord", () => {
     test("should not accept bad 'end' Date", async () => {
         const record = new BabyRecord(
             "record_id",
-            "user_id",
-            "sleep",
+            new Baby("baby_id", "baby_name", "male", new Date("02/01/2024"), ["user_id"]),
+            new BabyAction("sleep"),
             new Date("02/02/2024")
         );
         expect(() => record.setEnd(new Date("01/01/2024"))).toThrow(new Error(
@@ -45,8 +50,8 @@ describe("BabyRecord", () => {
     test("should not accept bad 'init' Date", async () => {
         const record = new BabyRecord(
             "record_id",
-            "user_id",
-            "sleep",
+            new Baby("baby_id", "baby_name", "male", new Date("02/01/2024"), ["user_id"]),
+            new BabyAction("sleep"),
             new Date("02/02/2024")
         );
         record.setEnd(new Date("03/03/2024"));
@@ -56,25 +61,26 @@ describe("BabyRecord", () => {
     });
 
     test("should not accept bad 'sleepQuality' field", async () => {
-        const record = new BabyRecord("id", "user_id", "sleep", new Date());
+        const record = new BabyRecord(
+            "record_id",
+            new Baby("baby_id", "baby_name", "male", new Date("02/01/2024"), ["user_id"]),
+            new BabyAction("sleep"),
+            new Date("02/02/2024")
+        );
         expect(() => record.setSleepQuality("foo")).toThrow(new Error(
             "Invalid 'sleep_quality' field."
         ));
     });
 
     test("should not accept bad 'breastfeedingType' field", async () => {
-        const record = new BabyRecord("id", "user_id", "sleep", new Date());
+        const record = new BabyRecord(
+            "record_id",
+            new Baby("baby_id", "baby_name", "male", new Date("02/01/2024"), ["user_id"]),
+            new BabyAction("sleep"),
+            new Date("02/02/2024")
+        );
         expect(() => record.setBreastfeedingType("foo")).toThrow(new Error(
             "Invalid 'set_breastfeeding_type' field"
-        ));
-    });
-
-    test("should not accept bad 'action' field", async () => {
-        expect(() => new BabyRecord("id", "user_id", "foo", new Date())).toThrow(new Error(
-            "Invalid action name."
-        ));
-        expect(() => new BabyRecord("id", "user_id", null, new Date())).toThrow(new Error(
-            "Invalid action name."
         ));
     });
 });
