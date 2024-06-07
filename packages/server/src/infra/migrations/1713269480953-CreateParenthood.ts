@@ -32,6 +32,14 @@ export class CreateParenthood1713269480953 implements MigrationInterface {
             true,
         );
 
+        await queryRunner.createIndex(
+            "parenthood",
+            new TableIndex({
+                name: "parenthood_index",
+                columnNames: ["baby_id"],
+            }),
+        );
+
         await queryRunner.createForeignKey(
             "parenthood",
             new TableForeignKey({

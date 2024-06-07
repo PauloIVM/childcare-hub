@@ -2,6 +2,7 @@
 import {
     Column,
     Entity,
+    Index,
     JoinColumn,
     ManyToOne,
     PrimaryColumn,
@@ -10,25 +11,14 @@ import { BabiesModel } from "./babies-model";
 
 @Entity({ name: "parenthood" })
 export class ParenthoodModel {
-    @PrimaryColumn({
-        type: "varchar",
-        name: "id",
-        length: 72,
-    })
+    @PrimaryColumn({ type: "varchar", name: "id", length: 72 })
     id!: string;
 
-    @Column({
-        type: "varchar",
-        name: "parent_id",
-        length: 36,
-    })
+    @Column({ type: "varchar", name: "parent_id", length: 36 })
     public parentId!: string;
 
-    @Column({
-        type: "varchar",
-        name: "baby_id",
-        length: 36,
-    })
+    @Index()
+    @Column({ type: "varchar", name: "baby_id", length: 36 })
     public babyId!: string;
 
     @ManyToOne(() => BabiesModel, (baby) => baby.parenthoods)

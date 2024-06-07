@@ -17,13 +17,13 @@ export class CreateBabyRecords1713269480952 implements MigrationInterface {
                         name: "baby_id",
                         type: "varchar",
                         length: "36",
-                        isNullable: true,
-                        default: null
+                        isNullable: false,
                     },
                     {
                         name: "action",
                         type: "varchar",
                         length: "30",
+                        isNullable: false,
                     },
                     {
                         name: "observations",
@@ -100,7 +100,7 @@ export class CreateBabyRecords1713269480952 implements MigrationInterface {
                 columnNames: ["baby_id"],
                 referencedColumnNames: ["id"],
                 referencedTableName: "babies",
-                onDelete: "SET NULL",
+                onDelete: "CASCADE",
                 onUpdate: "CASCADE",
             }),
         );
