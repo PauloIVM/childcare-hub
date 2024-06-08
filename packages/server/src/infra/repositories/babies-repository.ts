@@ -28,6 +28,9 @@ export class BabiesRepository extends Repository<BabiesModel> implements IBabies
     public async saveBaby({ name, gender, birthday, parentIds }: IBabyDTO): Promise<Baby> {
         const queryRunner = getConnection().createQueryRunner();
         queryRunner.startTransaction();
+        // TODO: Conferir se o auto-commit nao está propagando pra outros lugares e avacalhando
+        //       outras inserções.
+        await queryRunner.manager.query('SET autocommit = 0');
         try {
             const result = await queryRunner.manager.createQueryBuilder()
                 .insert()
@@ -39,16 +42,18 @@ export class BabiesRepository extends Repository<BabiesModel> implements IBabies
                 })
                 .execute();
             const babyId = result.identifiers[0].id as string;
+            const baby = new Baby(babyId, name, gender, birthday, parentIds);
             await queryRunner.manager.createQueryBuilder()
                 .insert()
                 .into(ParenthoodModel)
                 .values(parentIds.map((pid) => ({ id: `${pid}${babyId}`, parentId: pid, babyId })))
                 .execute();
             await queryRunner.commitTransaction();
-            await queryRunner.release();
-            return new Baby(babyId, name, gender, birthday, parentIds);
+            return baby;
         } catch (error) {
             await queryRunner.rollbackTransaction();
+            throw error;
+        } finally {
             await queryRunner.release();
         }
     }
