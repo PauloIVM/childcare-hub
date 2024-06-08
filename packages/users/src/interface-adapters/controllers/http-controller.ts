@@ -49,6 +49,9 @@ export class HttpController {
             return { token: newToken, userEmail, userName, message: "Password updated." };
 		});
 
+        // TODO: Essa rota precisa ser 'internal', para n expor o user-id para o client. Trafegar
+        //       o user-id no rabbitmq n vai ser tao problematico, mas nos endpoints http precisa
+        //       ter mais cuidado.
         httpServer.on("get", "/user/user-id", async function (params, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Usecases.VerifyUsecase();
