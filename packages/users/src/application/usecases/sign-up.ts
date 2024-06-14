@@ -1,11 +1,15 @@
 import { TokenManager, BaseError } from "@/domain";
 import { IUserRepository } from "@/application/ports/repositories";
+import { IServicesNotifierGateway } from "@/application/ports/gateways";
 import { IUserDTO } from "@/application/ports/dtos";
 
 export class SignUpUsecase {
     private userRepository: IUserRepository;
-    constructor(repository: IUserRepository) {
+    private servicesNotifierGateway: IServicesNotifierGateway;
+
+    constructor(repository: IUserRepository, servicesNotifierGateway: IServicesNotifierGateway) {
         this.userRepository = repository;
+        this.servicesNotifierGateway = servicesNotifierGateway;
     }
 
     async exec(dto: IUserDTO, date: Date = new Date()) {
@@ -23,6 +27,7 @@ export class SignUpUsecase {
             });
         }
         const user = await this.userRepository.saveUser(dto);
+        await this.servicesNotifierGateway.notifyUserCreated(user.id);
         const tokenManager = new TokenManager();
         return {
             userName: user.userName,

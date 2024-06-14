@@ -2,6 +2,9 @@ import { IEmailGateway } from "@/application/ports/gateways";
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
+// TODO: Os adapters são, em geral, implementações mais específicas do que o port. Acho
+//       q seria interessante melhorar os nomes. Talvez aqui poderia ser:
+//       NodemailerAdapter.
 export class EmailGateway implements IEmailGateway {
     private static instance: EmailGateway;
     private static transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;

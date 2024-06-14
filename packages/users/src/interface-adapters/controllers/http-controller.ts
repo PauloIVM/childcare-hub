@@ -1,13 +1,15 @@
 import * as Usecases from "@/application/usecases";
+import { IServicesNotifierGateway } from "@/application/ports/gateways";
 import { IHttpServer } from "@/interface-adapters/ports/http-server";
-import { UserRepository } from "@/interface-adapters/adapters/repositories";
 import { IUsersDataMapper } from "@/interface-adapters/ports/data-mappers";
 import { EmailGateway } from "@/interface-adapters/adapters/gateways";
+import { UserRepository } from "@/interface-adapters/adapters/repositories";
 
 export class HttpController {
 	constructor (
         httpServer: IHttpServer,
-        usersMapper: IUsersDataMapper
+        usersMapper: IUsersDataMapper,
+        servicesNotifier: IServicesNotifierGateway
     ) {
 		httpServer.on("post", "/user/login", async function (params, body, headers) {
 			const { email, password } = body?.user || {};
@@ -22,7 +24,10 @@ export class HttpController {
 
         httpServer.on("post", "/user", async function (params, body, headers) {
             const { email, name, password } = body?.user || {};
-            const usecase = new Usecases.SignUpUsecase(new UserRepository(usersMapper));
+            const usecase = new Usecases.SignUpUsecase(
+                new UserRepository(usersMapper),
+                servicesNotifier
+            );
             const { token, userEmail, userName } = await usecase.exec({
                 email,
                 name,

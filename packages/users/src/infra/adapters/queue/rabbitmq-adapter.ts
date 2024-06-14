@@ -1,7 +1,7 @@
-import { Channel, Connection, connect } from "amqplib";
-import { Queue } from "@/interface-adapters/ports/queue";
+import { Channel, Connection, connect, credentials } from "amqplib";
+import { IQueue } from "@/interface-adapters/ports/queue";
 
-export default class RabbitMQAdapter implements Queue {
+export class RabbitMQAdapter implements IQueue {
 	private conn: Connection;
     private channel: Channel;
 
@@ -9,7 +9,8 @@ export default class RabbitMQAdapter implements Queue {
 
 	async connect(): Promise<void> {
         // TODO: Puxar uri dos ENVs..
-        this.conn = await connect("amqp://localhost");
+		const options = { credentials: credentials.plain("user", "password") };
+        this.conn = await connect("amqp://localhost", options);
         this.channel = await this.conn.createChannel();
 	}
 

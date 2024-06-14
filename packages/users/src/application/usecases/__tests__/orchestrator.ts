@@ -1,6 +1,6 @@
 import { User } from "@/domain";
 import { IUserRepository } from "@/application/ports/repositories";
-import { IEmailGateway } from "@/application/ports/gateways";
+import { IEmailGateway, IServicesNotifierGateway } from "@/application/ports/gateways";
 import { IUserDTO } from "@/application/ports/dtos";
 
 export const createUserRepository: () => IUserRepository = () => {
@@ -40,5 +40,13 @@ export const createEmailGateway: (m: string[]) => IEmailGateway = (sentMessages:
 	    createTemplate: (title: string, text: string): string => {
             return title;
         }
+    }
+}
+
+// TODO: Melhorar testes para conferir se o notifier realmente está disparando a notificação.
+export const createServicesNotifierGateway: () => IServicesNotifierGateway = () => {
+    return {
+        notifyUserCreated: async (id: string): Promise<void> => {},
+        notifyUserDeleted: async (id: string): Promise<void> => {},
     }
 }

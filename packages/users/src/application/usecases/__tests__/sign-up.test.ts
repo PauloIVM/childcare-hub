@@ -1,10 +1,10 @@
 import { SignUpUsecase } from "../";
-import { createUserRepository } from "./orchestrator";
+import { createUserRepository, createServicesNotifierGateway } from "./orchestrator";
 
 describe("SignUpUsecase", () => {
     test("should sign-up", async () => {
         const repository = createUserRepository();
-        const usecase = new SignUpUsecase(repository);
+        const usecase = new SignUpUsecase(repository, createServicesNotifierGateway());
         const result = await usecase.exec({
             name: "user_5",
             email: "user_5@gmail.com",
@@ -19,7 +19,7 @@ describe("SignUpUsecase", () => {
 
     test("should not sign-up existing email", async () => {
         const repository = createUserRepository();
-        const usecase = new SignUpUsecase(repository);
+        const usecase = new SignUpUsecase(repository, createServicesNotifierGateway());
         await expect(async () => usecase.exec({
             name: "user_5",
             email: "user_4@gmail.com",
@@ -29,7 +29,7 @@ describe("SignUpUsecase", () => {
 
     test("should not sign-up with bad password", async () => {
         const repository = createUserRepository();
-        const usecase = new SignUpUsecase(repository);
+        const usecase = new SignUpUsecase(repository, createServicesNotifierGateway());
         await expect(async () => usecase.exec({
             name: "user_5",
             email: "user_5@gmail.com",
@@ -39,7 +39,7 @@ describe("SignUpUsecase", () => {
 
     test("should not crash", async () => {
         const repository = createUserRepository();
-        const usecase = new SignUpUsecase(repository);
+        const usecase = new SignUpUsecase(repository, createServicesNotifierGateway());
         await expect(async () => usecase.exec({
             name: null,
             email: "user_5@gmail.com",
