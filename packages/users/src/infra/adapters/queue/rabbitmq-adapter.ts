@@ -28,6 +28,11 @@ export class RabbitMQAdapter implements IQueue {
 		});
 	}
 
+	// TODO: Documentar no archtectural_decisions a minha convenção de nomes pra mensageria:
+	// 		 - https://medium.com/@miralizoda.komron/naming-conventions-in-rabbitmq-84cc583e84f5
+
+	// TODO: Talvez eu possa esconder a exchange se todas as notificações desse service forem
+	//		 usar a exchange 'users.notifications'.
 	async publish(exchange: string, routingKey: string, message: string): Promise<boolean> {
         return this.channel.publish(exchange, routingKey, Buffer.from(message));
 	}
