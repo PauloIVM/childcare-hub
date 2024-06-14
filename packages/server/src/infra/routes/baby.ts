@@ -1,8 +1,9 @@
 import { Router } from "express";
-import * as babyRecordController from "@/infra/controllers";
+import * as babyController from "@/infra/controllers";
 
 const babyRouter = Router();
 
-babyRouter.post("/", new babyRecordController.InsertBabyController().exec);
+babyRouter.post("/", new babyController.InsertBabyController().exec);
+babyRouter.get("/", new babyController.GetBabiesController().exec);
 
 export { babyRouter };

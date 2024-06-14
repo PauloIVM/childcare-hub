@@ -3,4 +3,5 @@ export interface UserData {
     isLoading?: boolean;
     userName?: string;
     userEmail?: string;
+    currBabyId?: string;
 }

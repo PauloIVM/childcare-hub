@@ -1,4 +1,5 @@
 export interface IFetchRecordInput {
+    babyId: string;
     skip: number;
     limit: number;
 }
@@ -25,6 +26,7 @@ export interface IFetchRecordResponse {
 }
 
 export interface IInsertRecordInput {
+    babyId: string;
     actionName: string;
     observations: string;
     init: Date;

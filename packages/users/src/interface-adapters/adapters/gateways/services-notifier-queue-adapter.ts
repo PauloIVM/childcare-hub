@@ -8,7 +8,11 @@ export class ServicesNotifierQueueAdapter implements IServicesNotifierGateway {
     }
 
 	async notifyUserCreated(userId: string): Promise<void> {
-        await this.queue.publish("users.notifications", "user.created", userId);
+        await this.queue.publish(
+            "users.notifications",
+            "user.created",
+            JSON.stringify({ userId })
+        );
     }
 
 	async notifyUserDeleted(userId: string): Promise<void> {}

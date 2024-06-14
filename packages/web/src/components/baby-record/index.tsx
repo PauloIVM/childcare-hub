@@ -26,7 +26,8 @@ export function BabyRecord() {
 
     async function fetchRecords() {
         try {
-            const result = await Api.fetchRecords({ skip: (page - 1) * limit, limit });
+            const babyId = userData.currBabyId as string;
+            const result = await Api.fetchRecords({ skip: (page - 1) * limit, limit, babyId });
             setRecords(result.records);
             setValidActions(result.validActions);
             setCount(Math.ceil(result.count / limit));
@@ -37,8 +38,9 @@ export function BabyRecord() {
 
     async function onInsertClick(actionName: string) {
         try {
+            const babyId = userData.currBabyId as string;
             setBackdropOpen(true);
-            await Api.insertRecord({ actionName, observations: "", init: new Date() });
+            await Api.insertRecord({ babyId, actionName, observations: "", init: new Date() });
             page > 1 ? setPage(1) : await fetchRecords();
             setTimeout(() => {
                 setSuccessMessage("Iniciando contagem do evento.");

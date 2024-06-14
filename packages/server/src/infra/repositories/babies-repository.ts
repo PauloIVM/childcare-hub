@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { EntityRepository, Repository, getCustomRepository, getConnection } from "typeorm";
+import { EntityRepository, Repository, getCustomRepository, getConnection, FindOperator } from "typeorm";
 import { Baby } from "@/domain";
 import { IBabiesRepository } from "@/application/repositories";
 import { IBabyDTO } from "@/application/dtos";
@@ -9,6 +9,8 @@ import { BabiesModel, ParenthoodModel } from "@/infra/models";
 export class BabiesRepository extends Repository<BabiesModel> implements IBabiesRepository {
     private constructor() { super(); }
 
+    // TODO: get-instance faz parecer q é um singleton... mas acho q não é o caso aqui...
+    //       renomear para "build" ou "create".
     static getInstance() {
         return getCustomRepository(BabiesRepository);
     }
@@ -25,12 +27,26 @@ export class BabiesRepository extends Repository<BabiesModel> implements IBabies
         );
     }
 
+    public async findByUserId(userId: string): Promise<Baby[]> {
+        const result = await this.createQueryBuilder("babies")
+            .innerJoinAndSelect("babies.parenthoods", "parenthood")
+            .where("parenthood.parentId = :parentId", { parentId: userId })
+            .getMany();
+        return result.map((m) => new Baby(
+            m.id,
+            m.name,
+            m.gender === "M" ? "male" : "female",
+            new Date(m.birthday),
+            m.parenthoods.map((p) => p.parentId)
+        ));
+    }
+
     public async saveBaby({ name, gender, birthday, parentIds }: IBabyDTO): Promise<Baby> {
         const queryRunner = getConnection().createQueryRunner();
         queryRunner.startTransaction();
         // TODO: Conferir se o auto-commit nao está propagando pra outros lugares e avacalhando
         //       outras inserções.
-        await queryRunner.manager.query('SET autocommit = 0');
+        await queryRunner.manager.query("SET autocommit = 0");
         try {
             const result = await queryRunner.manager.createQueryBuilder()
                 .insert()

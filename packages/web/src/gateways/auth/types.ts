@@ -23,3 +23,9 @@ export interface IAuthResponse {
     userName?: string;
     message: string;
 }
+
+export interface IGetUserResponse {
+    userEmail: string;
+    userName: string;
+    message: string;
+}

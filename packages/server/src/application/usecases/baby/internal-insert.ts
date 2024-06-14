@@ -1,21 +1,19 @@
 import { IBabiesRepository } from "@/application/repositories";
 import { IBabyDTO } from "@/application/dtos";
-import { IUsersGateway } from "@/application/gateways";
 import { ValidationError } from "@/domain";
 
-export class InsertBabyUsecase {
+export class InternalInsertBabyUsecase {
     private babiesRepository: IBabiesRepository;
-    private usersGateway: IUsersGateway;
 
-    constructor(
-        usersGateway: IUsersGateway,
-        babiesRepository: IBabiesRepository,
-    ) {
+    constructor(babiesRepository: IBabiesRepository) {
         this.babiesRepository = babiesRepository;
-        this.usersGateway = usersGateway;
     }
 
-    async exec(token: string, dto: IBabyDTO) {
+    // TODO: Ainda n sei bem como deixar evidente nos usecases q o uso é interno... n
+    //       sei se estou fazendo da melhor maneira.
+    async exec(dto: IBabyDTO) {
+        // TODO: Talvez vários desses validadores estejam desatualizados, não estão
+        //       conferindo o baby-id por exemplo.
         // TODO: Create HttpRouter and HttpReqValidators
         const isAllStringFields = [dto.gender, dto.name]
             .filter((e) => !!e)
@@ -38,12 +36,11 @@ export class InsertBabyUsecase {
             });
         }
         // ----------------------------------------------
-        const userId = await this.usersGateway.getUserId(token);
-        const result = await this.babiesRepository.saveBaby({ ...dto, parentIds: [userId] });
+        const result = await this.babiesRepository.saveBaby(dto);
         if (!result) {
             throw new ValidationError({
-                message: "Failed to insert baby on 'babiesRepository.insert'",
-                clientMessage: "Falhou em inserir um bebê."
+                message: "Failed to insert baby on 'babiesRepository.internalInsert'",
+                clientMessage: "Failed to insert baby on 'babiesRepository.internalInsert'"
             });   
         }
     }

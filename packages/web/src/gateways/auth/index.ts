@@ -1,11 +1,17 @@
-import { authApi } from "../instances";
+import { userApi } from "../instances";
 import Cookie from "js-cookie";
 import * as Types from "./types";
 import { AxiosRequestConfig } from "axios";
 
+// TODO: Parece q o RabbitMQ não está persistindo as mensagens.
+// TODO: Ajustar nomes para últimas alterações feitas nos endpoitns.
+// TODO: Em tese, essas funcs deveria implementar a interface de uma camada mais interna,
+//       e não elas mesmas definirem qual é o seu retorno, pra então seguir a regra da
+//       dependência.
+
 export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResponse> {
     try {
-        const result = await authApi.post("/sign-up", {
+        const result = await userApi.post("/", {
             user: {
                 name: input.userName,
                 email: input.userEmail,
@@ -22,7 +28,7 @@ export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResp
 
 export async function login(input: Types.ILoginInput): Promise<Types.IAuthResponse> {
     try {
-        const result = await authApi.post("/login", {
+        const result = await userApi.post("/login", {
             user: {
                 email: input.userEmail,
                 password: input.userPassword,
@@ -38,7 +44,7 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
 
 export async function requestRecover(input: Types.IRecoverRequestInput): Promise<void> {
     try {
-        await authApi.post("/request-recover", {
+        await userApi.post("/request-recover", {
             user: { email: input.userEmail }
         });   
     } catch (error: any) {
@@ -52,7 +58,7 @@ export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthRe
         Authorization: `Bearer ${token}`
     }};
     try {
-        const result = await authApi.post("/recover", {
+        const result = await userApi.patch("/recover", {
             user: { password: input.userPassword },
         }, config);
         const { token: resToken, userEmail, userName, message } = result.data;
@@ -61,6 +67,15 @@ export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthRe
     } catch (error: any) {
         throw new Error(error?.response?.data?.message);
     }
+}
+
+export async function getUser(): Promise<Types.IGetUserResponse> {
+    const token = Cookie.get("np_user") || "";
+    const config: AxiosRequestConfig = { headers: {
+        Authorization: `Bearer ${token}`
+    }};
+    const result = await userApi.get("/", config);
+    return result.data;
 }
 
 export function logout() {
