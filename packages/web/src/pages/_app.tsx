@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
-import { UserDataProvider } from "@/context";
+import { UserDataProvider, BabyDataProvider } from "@/context";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
@@ -11,7 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <main className={roboto.className}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <UserDataProvider>
-                    <Component {...pageProps} />
+                    <BabyDataProvider>
+                        <Component {...pageProps} />
+                    </BabyDataProvider>
                 </UserDataProvider>
             </LocalizationProvider>
         </main>
