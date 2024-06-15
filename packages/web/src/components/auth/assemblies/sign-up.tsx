@@ -40,8 +40,6 @@ export function SignUp() {
                 userEmail: data.get("email") as string,
                 userPassword: data.get("password") as string
             });
-            // TODO: Precisa passar o baby-id. Talvez criar no gateway já uma request que
-            //       retorne tbm o baby-id??
             setUserData({
                 userName: response.userName,
                 userEmail: response.userEmail,

@@ -14,22 +14,6 @@ export class RabbitMQAdapter implements IQueue {
         this.channel = await this.conn.createChannel();
 	}
 
-	// TODO: Por hora eu n vou precisar de um consume aqui... o user vai apenas disparar
-	//		 mensagens. Então eu posso apagar isso na interface e aqui no adapter.
-	async on(queueName: string, callback: Function): Promise<void> {
-		const channel = await this.conn.createChannel();
-		await channel.assertQueue(queueName, { durable: true });
-		channel.consume(queueName, async function (msg: any) {
-			const input = JSON.parse(msg.content.toString());
-			try {
-				await callback(input);
-				channel.ack(msg);
-			} catch (e: any) {
-				console.log(e);
-			}
-		});
-	}
-
 	// TODO: Documentar no archtectural_decisions a minha convenção de nomes pra mensageria:
 	// 		 - https://medium.com/@miralizoda.komron/naming-conventions-in-rabbitmq-84cc583e84f5
 

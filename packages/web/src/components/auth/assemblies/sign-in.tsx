@@ -33,7 +33,6 @@ export function SignIn() {
                 setLoading(false);
                 return;
             }
-            // TODO: Precisa passar o baby-id
             setUserData({
                 userName: response.userName,
                 userEmail: response.userEmail,
