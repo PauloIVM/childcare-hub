@@ -1,5 +1,4 @@
 import { getUser } from "@/gateways/auth";
-import { fetchBabies } from "@/gateways/baby";
 import { useEffect, useState } from "react";
 import { UserData } from "./types";
 import { UserDataCtx } from "./context";
