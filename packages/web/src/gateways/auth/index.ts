@@ -19,7 +19,7 @@ export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResp
             }
         });
         const { token, userEmail, userName, message } = result.data;
-        Cookie.set("np_user", token); 
+        Cookie.set("np_user", token, { expires: 30 }); 
         return { userEmail, userName, message };
     } catch (error: any) {
         throw new Error(error?.response?.data?.message);
@@ -35,7 +35,7 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
             }
         });
         const { token, userEmail, userName, message } = result.data;
-        Cookie.set("np_user", token); 
+        Cookie.set("np_user", token, { expires: 30 }); 
         return { userEmail, userName, message };
     } catch (error: any) {
         throw new Error(error?.response?.data?.message);
@@ -62,7 +62,7 @@ export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthRe
             user: { password: input.userPassword },
         }, config);
         const { token: resToken, userEmail, userName, message } = result.data;
-        Cookie.set("np_user", resToken); 
+        Cookie.set("np_user", resToken, { expires: 30 }); 
         return { userEmail, userName, message };
     } catch (error: any) {
         throw new Error(error?.response?.data?.message);
