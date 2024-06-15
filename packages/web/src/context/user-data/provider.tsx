@@ -13,6 +13,10 @@ export default function UserDataProvider({ children }: UserDataProps) {
     useEffect(() => {
         (async () => {
             try {
+                // TODO: Isso aqui pode virar um problema... o fato deu ter q fazer várias
+                //       requests para obter os dados do user... talvez carregar o baby-id
+                //       apenas nas páginas que precisem dele? Se for fazer isso, talvez
+                //       começar a usar reducers.
                 const { userEmail, userName } = await getUser();
                 if (!userEmail || !userName) {
                     setUserData({ isLogged: false });
