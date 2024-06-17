@@ -8,9 +8,10 @@ export class RabbitMQAdapter implements IQueue {
 	constructor () {}
 
 	async connect(): Promise<void> {
-        // TODO: Puxar uri dos ENVs..
-		const options = { credentials: credentials.plain("user", "password") };
-        this.conn = await connect("amqp://localhost", options);
+		const options = {
+			credentials: credentials.plain(process.env.RABBITMQ_USER, process.env.RABBITMQ_PASSWORD)
+		};
+        this.conn = await connect(process.env.RABBITMQ_URL, options);
         this.channel = await this.conn.createChannel();
 	}
 
