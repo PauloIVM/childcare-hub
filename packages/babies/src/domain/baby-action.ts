@@ -1,4 +1,4 @@
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class BabyAction {
     public readonly label: string;
@@ -39,7 +39,7 @@ export class BabyAction {
     }
     static parseActionLabel(name: string): string {
         if (!BabyAction.validActions.includes(name as BabyAction["name"])) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid action name.",
                 clientMessage: "Ação inválida/inexistente."
             });

@@ -1,19 +1,18 @@
-interface ValidationErrorInput {
+interface BaseErrorInput {
     message: string;
     clientMessage: string;
     name?: string;
     status?: number;
 }
 
-// TODO: Ao invés desse 'validation-error', olhar o BaseError q o deschamps implementou, pode
-//       dar ideias interessantes. O domain pode ter um 'base-error', e as outras camadas irem
-//       implementando outros errors... ou eu ter uma factory aqui mesmo que cria pra mim diversos
-//       tipos de errors.
-export class ValidationError extends Error {
+// TODO: Esse status como um number tem uma associação indireta com o status http.
+//       O mais correto seria o status ser um array de strings, e no http-server
+//       eu converter para o número equivalente.
+export class BaseError extends Error {
     private _clientMessage: string;
     private _status: number;
 
-    constructor({ message, clientMessage, status, name }: ValidationErrorInput) {
+    constructor({ message, clientMessage, status, name }: BaseErrorInput) {
         super(message);
         this.name = name || this.constructor.name;
         this._clientMessage = clientMessage;

@@ -1,4 +1,4 @@
-import { Baby, BabyAction, ValidationError } from "@/domain";
+import { Baby, BabyAction, BaseError } from "@/domain";
 
 export class BabyRecord {
     public readonly id: string;
@@ -39,7 +39,7 @@ export class BabyRecord {
 
     setInit(t: Date) {
         if (!!this._end && this._end.getTime() < t.getTime()) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "'end' field should be greater than 'init'.",
                 clientMessage: "O campo 'Fim' deve ser maior que o campo 'Início'."
             });
@@ -55,7 +55,7 @@ export class BabyRecord {
     setEnd(end: Date) {
         if (!end) { return this; }
         if (end.getTime() < this._init.getTime()) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "'end' field should be greater than 'init'.",
                 clientMessage: "O campo 'Fim' deve ser maior que o campo 'Início'."
             });
@@ -98,7 +98,7 @@ export class BabyRecord {
     setSleepQuality(s: string) {
         if (!s) { return this; }
         if (!["very_bad", "bad", "ok", "good", "very_good"].includes(s)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid 'sleep_quality' field.",
                 clientMessage: "Campo 'Qualidade do sono' inválido."
             });
@@ -114,7 +114,7 @@ export class BabyRecord {
     setBreastfeedingType(b: string) {
         if (!b) { return this; }
         if (!["left", "right", "both", "bottle"].includes(b)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid 'set_breastfeeding_type' field",
                 clientMessage: "Campo 'Tipo de mamada' inválido."
             });

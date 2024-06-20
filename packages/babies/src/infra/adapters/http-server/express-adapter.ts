@@ -1,4 +1,4 @@
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 import { IHttpServer, IHttpMethods } from "@/interface-adapters/ports/http-server";
 import cookieParser from "cookie-parser";
 import express, { NextFunction, Request, Response, Express } from "express";
@@ -22,7 +22,7 @@ export class ExpressAdapter implements IHttpServer {
 				res.json(output);
 			} catch (error: any) {
                 console.error(error);
-                if (!(error instanceof ValidationError)) {
+                if (!(error instanceof BaseError)) {
                     return res.status(500).json({ message: "Internal Server Error" });
                 }
                 return res.status(error.status || 400).json({ message: error.clientMessage });

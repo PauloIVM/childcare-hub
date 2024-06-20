@@ -1,5 +1,5 @@
 import { IUsersGateway } from "@/application/gateways";
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 import axios, { AxiosRequestConfig } from "axios";
 
 export class UsersGateway implements IUsersGateway {
@@ -21,7 +21,7 @@ export class UsersGateway implements IUsersGateway {
             if (!userId) throw new Error();
             return result.data.userId;
         } catch (error) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Unauthorized user.",
                 clientMessage: "Falha na autenticação do usuário.",
                 status: 401

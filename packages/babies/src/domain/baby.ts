@@ -1,4 +1,4 @@
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class Baby {
     private _id: string;
@@ -30,7 +30,7 @@ export class Baby {
 
     setGender(gender: string) {
         if (gender !== "male" && gender !== "female") {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid gender.",
                 clientMessage: "O gênero fornecido é inválido.",
             });
@@ -41,7 +41,7 @@ export class Baby {
 
     setName(name: string) {
         if (!name || name.length < 2) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid name.",
                 clientMessage: "O nome fornecido é inválido.",
             });

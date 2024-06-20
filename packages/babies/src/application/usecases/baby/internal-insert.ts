@@ -1,6 +1,6 @@
 import { IBabiesRepository } from "@/application/repositories";
 import { IBabyDTO } from "@/application/dtos";
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class InternalInsertBabyUsecase {
     private babiesRepository: IBabiesRepository;
@@ -19,7 +19,7 @@ export class InternalInsertBabyUsecase {
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
         if (!isAllStringFields) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Some invalid field type",
                 clientMessage: "Algum campo do registro não é válido (string)",
                 status: 422
@@ -29,7 +29,7 @@ export class InternalInsertBabyUsecase {
             return d instanceof Date && !isNaN(d.getDate());
         }
         if (!isValidDate(dto.birthday)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to build birthday fields",
                 clientMessage: "O campo 'birthday' inválido.",
                 status: 422
@@ -38,7 +38,7 @@ export class InternalInsertBabyUsecase {
         // ----------------------------------------------
         const result = await this.babiesRepository.saveBaby(dto);
         if (!result) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to insert baby on 'babiesRepository.internalInsert'",
                 clientMessage: "Failed to insert baby on 'babiesRepository.internalInsert'"
             });   

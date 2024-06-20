@@ -1,6 +1,6 @@
 import { IBabyRecordRepository } from "@/application/repositories";
 import { IUsersGateway } from "@/application/gateways";
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class DeleteBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -17,14 +17,14 @@ export class DeleteBabyRecordUsecase {
     async exec(recordId: string, token: string) {
         // TODO: Create HttpRouter and HttpReqValidators
         if (!token) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Token required.",
                 clientMessage: "Token de autenticação não fornecido.",
                 status: 401
             });
         }
         if (!recordId) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "'id' required.",
                 clientMessage: "Passe um 'id' válido.",
             });
@@ -36,7 +36,7 @@ export class DeleteBabyRecordUsecase {
         ]);
         const baby = record.baby;
         if (!baby || !baby.parentIds.includes(userId)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "You have not permission to delete this record",
                 clientMessage: "Você não têm permissão para apagar este registro",
                 status: 403
@@ -44,7 +44,7 @@ export class DeleteBabyRecordUsecase {
         }
         const result = await this.babyRecordRepository.deleteRecord(recordId);
         if (!result) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to delete record on 'babyRecordRepository.delete'",
                 clientMessage: "Falhou em apagar o registro.",
                 status: 409

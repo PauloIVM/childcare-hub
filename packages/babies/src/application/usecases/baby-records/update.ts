@@ -1,7 +1,7 @@
 import { IBabyRecordDTO } from "@/application/dtos";
 import { IUsersGateway } from "@/application/gateways";
 import { IBabyRecordRepository } from "@/application/repositories";
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class UpdateBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -49,13 +49,13 @@ export class UpdateBabyRecordUsecase {
 
         // TODO: Create HttpRouter and HttpReqValidators
         if (!recordDTO?.recordId) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Missing essential fields.",
                 clientMessage: "Missing essential fields.",
             });
         }
         if (recordDTO.actionName) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Not allowed change action-name",
                 clientMessage: "Not allowed change action-name",
             });
@@ -66,7 +66,7 @@ export class UpdateBabyRecordUsecase {
             this.babyRecordRepository.findById(recordDTO.recordId)
         ]);
         if (!babyRecord.baby.parentIds.includes(userId)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "You have not permission to change this record",
                 clientMessage: "Você não tem permissão para alterar este registro.",
                 status: 403
@@ -83,7 +83,7 @@ export class UpdateBabyRecordUsecase {
         if (recordDTO.breastfeedingAmount) { babyRecord.setBreastfeedingAmount(recordDTO.breastfeedingAmount); }
         const result = await this.babyRecordRepository.updateRecord(babyRecord);
         if (!result) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to update record on 'babyRecordRepository.update'",
                 clientMessage: "Falhou em atualizar o registro.",
                 status: 400

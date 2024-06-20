@@ -1,7 +1,7 @@
 import { IBabyRecordRepository, IBabiesRepository } from "@/application/repositories";
 import { IBabyRecordDTO } from "@/application/dtos";
 import { IUsersGateway } from "@/application/gateways";
-import { ValidationError } from "@/domain";
+import { BaseError } from "@/domain";
 
 export class InsertBabyRecordUsecase {
     private babyRecordRepository: IBabyRecordRepository;
@@ -24,7 +24,7 @@ export class InsertBabyRecordUsecase {
             .filter((e) => !!e)
             .every((e) => typeof e === "string");
         if (!isAllStringFields) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Invalid some record field type",
                 clientMessage: "Algum campo do registro não é válido (string)",
                 status: 422
@@ -34,7 +34,7 @@ export class InsertBabyRecordUsecase {
             return d instanceof Date && !isNaN(d.getDate());
         }
         if (!isValidDate(dto.init) || (dto.end && !isValidDate(dto.end))) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to build record init/end fields",
                 clientMessage: "As datas nos campos 'início'/'fim' são inválidas.",
                 status: 422
@@ -46,7 +46,7 @@ export class InsertBabyRecordUsecase {
             this.babiesRepository.findById(dto.babyId)
         ]);
         if (!baby.parentIds.includes(userId)) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "You have not permission to change this record",
                 clientMessage: "Você não tem permissão para alterar este registro.",
                 status: 403
@@ -54,7 +54,7 @@ export class InsertBabyRecordUsecase {
         }
         const result = await this.babyRecordRepository.insertRecord(dto);
         if (!result) {
-            throw new ValidationError({
+            throw new BaseError({
                 message: "Failed to insert record on 'babyRecordRepository.insert'",
                 clientMessage: "Falhou em inserir o registro.",
                 status: 400
