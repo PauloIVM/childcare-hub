@@ -8,7 +8,6 @@
   },
   "scripts": {
     "dev": "concurrently -p \"[{name}]\" -n \"users,babies,web,docker\" -c \"green.bold,green.bold,cyan.bold,red.bold\" \"yarn dev:users\" \"yarn dev:babies\" \"yarn dev:web\" \"yarn docker:services\"",
-    "dev:legacy": "concurrently -p \"[{name}]\" -n \"users,babies,web,docker\" -c \"green.bold,green.bold,cyan.bold,red.bold\" \"yarn dev:users\" \"yarn dev:babies\" \"yarn dev:web\" \"yarn docker:services-legacy\"",
     "dev:web": "yarn workspace @childcare-hub/web dev",
     "dev:babies": "yarn workspace @childcare-hub/babies dev",
     "dev:posts": "yarn workspace @childcare-hub/posts dev",
@@ -16,8 +15,7 @@
     "test:babies": "yarn workspace @childcare-hub/babies test",
     "test:users": "yarn workspace @childcare-hub/users test",
     "build:babies": "yarn workspace @childcare-hub/babies build",
-    "docker:services": "docker compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo",
-    "docker:services:legacy": "docker-compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo"
+    "docker:services": "docker compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo"
   },
   "devDependencies": {
     "concurrently": "^6.4.0"

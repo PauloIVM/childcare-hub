@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { BabiesModel, BabyRecordModel } from "@/infra/models";
+import { BabyRecordModel } from "@/infra/models";
 import { BabyRecord, Baby, BabyAction } from "@/domain";
 import { IBabyRecordRepository } from "@/application/repositories";
 import { IBabyRecordDTO } from "@/application/dtos";
@@ -9,7 +9,7 @@ import { IBabyRecordDTO } from "@/application/dtos";
 export class BabyRecordRepository extends Repository<BabyRecordModel> implements IBabyRecordRepository {
     private constructor() { super(); }
 
-    static getInstance() {
+    static build() {
         return getCustomRepository(BabyRecordRepository);
     }
 

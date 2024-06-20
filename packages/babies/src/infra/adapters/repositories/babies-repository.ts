@@ -9,9 +9,7 @@ import { BabiesModel, ParenthoodModel } from "@/infra/models";
 export class BabiesRepository extends Repository<BabiesModel> implements IBabiesRepository {
     private constructor() { super(); }
 
-    // TODO: get-instance faz parecer q é um singleton... mas acho q não é o caso aqui...
-    //       renomear para "build" ou "create".
-    static getInstance() {
+    static build() {
         return getCustomRepository(BabiesRepository);
     }
 

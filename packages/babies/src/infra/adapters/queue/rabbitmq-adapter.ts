@@ -16,12 +16,13 @@ export class RabbitMQAdapter implements IQueue {
 	}
 
 	async on(queueName: string, callback: Parameters<IQueue["on"]>[1]): Promise<void> {
-		await this.channel.assertQueue(queueName, { durable: true });
-		this.channel.consume(queueName, async function (msg: any) {
+		const channel = this.channel;
+		await channel.assertQueue(queueName, { durable: true });
+		channel.consume(queueName, async function (msg: any) {
 			const input = JSON.parse(msg.content.toString());
 			try {
-				await callback(input);
-				this.channel.ack(msg);
+				callback(input);
+				channel.ack(msg);
 			} catch (e: any) {
 				// TODO: Talvez aqui seja interessante eu analisar o tipo de erro, se
 				// 		 é um base error.. ou se n... e a partir disso decidir se tento
@@ -29,6 +30,7 @@ export class RabbitMQAdapter implements IQueue {
 
 				// TODO: Além disso, refatorar o BaseError... remover aquele status como
 				//		 number e passar a ser uma flag errorType: "validation" | "unautorized" ...
+				// channel.nack(msg, false, true);
 				console.log(e);
 			}
 		});
