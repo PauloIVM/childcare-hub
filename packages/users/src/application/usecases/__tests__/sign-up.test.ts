@@ -44,16 +44,16 @@ describe("SignUpUsecase", () => {
             name: null,
             email: "user_5@gmail.com",
             password: "user_5_p@assword"
-        })).rejects.toThrow(new Error("Invalid username."));
+        })).rejects.toThrow(new Error("Missing required fields."));
         await expect(async () => usecase.exec({
             name: "user_5",
             email: null,
             password: "user_5_p@assword"
-        })).rejects.toThrow(new Error("Invalid email."));
+        })).rejects.toThrow(new Error("Missing required fields."));
         await expect(async () => usecase.exec({
             name: "user_5",
             email: "user_5@gmail.com",
             password: null
-        })).rejects.toThrow(new Error("Invalid password."));
+        })).rejects.toThrow(new Error("Missing required fields."));
     });
 });

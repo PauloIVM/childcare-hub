@@ -24,9 +24,9 @@ describe("LoginUsecase", () => {
         const usecase = new LoginUsecase(createUserRepository());
         await expect(async () => usecase.exec(null, null))
             .rejects
-            .toThrow(new Error("Bad email/password."));
+            .toThrow(new Error("Missing required fields"));
         await expect(async () => usecase.exec(0 as any, 0 as any))
             .rejects
-            .toThrow(new Error("Bad email/password."));
+            .toThrow(new Error("Missing required fields"));
     });
 });

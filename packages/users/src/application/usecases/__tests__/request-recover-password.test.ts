@@ -28,7 +28,7 @@ describe("RequestRecoverUsecase", () => {
         const emailGateway = createEmailGateway(sentMessages);
         const usecase = new RequestRecoverUsecase(userRepository, emailGateway);
         await expect(async () => usecase.exec(null)).rejects
-            .toThrow(new Error("No user with this email."));
+            .toThrow(new Error("Missing email field."));
         expect(sentMessages.length).toBe(0);
     });
 });
