@@ -18,38 +18,40 @@ interface RecordProps {
 
 export function Record(props: RecordProps) {
     const { record, onClickConfirm, onClickDelete, onClickUpdate } = props;
-    const { id, actionLabel, init, end } = record;
+    const { id, end } = record;
     const initialMode = end ? "default" : "confirm";
-    const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
 
-    useEffect(() => {
-        setMode(end ? "default" : "confirm");
-    }, [end]);
+    // TODO: Eu estava usando esse 'mode' pra ao deletar ou adicionar elemetos, fazer isso de forma
+    //       suavizada. Mas por alguma razão, ficou bugado no RecordConfirm quando eu deletava algo,
+    //       corrigir ou pensar em outra forma de diminuir o height.
+    // const [mode, setMode] = React.useState<"default" | "confirm" | "hide">(initialMode);
+
+    // useEffect(() => {
+    //     setMode(end ? "default" : "confirm");
+    // }, [end]);
 
     return (
         <>
-            <Fade show={mode === "confirm"} keepMounted>
+            <Fade show={initialMode === "confirm"} keepMounted>
                 <RecordConfirm
-                    id={id}
-                    action={actionLabel}
-                    init={init}
+                    record={record}
                     onClickConfirm={async () => {
+                        // setMode("default");
                         onClickConfirm(id);
-                        setMode("default");
                     }}
                     onClickDelete={async () => {
+                        // setMode("hide");
                         onClickDelete(id);
-                        setMode("hide");
                     }}
                 />
             </Fade>
-            <Fade show={mode === "default"} keepMounted>
+            <Fade show={initialMode === "default"} keepMounted>
                 <RecordDefault
                     record={record}
                     onClickUpdate={onClickUpdate}
                     onClickDelete={async () => {
+                        // setMode("hide");
                         onClickDelete(id);
-                        setMode("hide");
                     }}
                 />
             </Fade>

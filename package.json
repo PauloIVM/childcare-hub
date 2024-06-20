@@ -7,13 +7,17 @@
     "packages": ["packages/*"]
   },
   "scripts": {
-    "dev": "concurrently -k -p \"[{name}]\" -n \"server,web\" -c \"cyan.bold,green.bold\" \"yarn dev:server\" \"yarn dev:web\"",
+    "dev": "concurrently -p \"[{name}]\" -n \"users,babies,web,docker\" -c \"green.bold,green.bold,cyan.bold,red.bold\" \"yarn dev:users\" \"yarn dev:babies\" \"yarn dev:web\" \"yarn docker:services\"",
     "dev:web": "yarn workspace @childcare-hub/web dev",
-    "dev:server": "yarn workspace @childcare-hub/server dev",
-    "test:server": "yarn workspace @childcare-hub/server test",
-    "build:server": "yarn workspace @childcare-hub/server build"
+    "dev:babies": "yarn workspace @childcare-hub/babies dev",
+    "dev:posts": "yarn workspace @childcare-hub/posts dev",
+    "dev:users": "yarn workspace @childcare-hub/users dev",
+    "test:babies": "yarn workspace @childcare-hub/babies test",
+    "test:users": "yarn workspace @childcare-hub/users test",
+    "build:babies": "yarn workspace @childcare-hub/babies build",
+    "docker:services": "docker compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^6.4.0"
   }
 }

@@ -1,4 +1,4 @@
-import { getUser } from "@/gateways/user";
+import { getUser } from "@/gateways/auth";
 import { useEffect, useState } from "react";
 import { UserData } from "./types";
 import { UserDataCtx } from "./context";
@@ -16,11 +16,15 @@ export default function UserDataProvider({ children }: UserDataProps) {
                     setUserData({ isLogged: false });
                     return;
                 }
-                setUserData({ userEmail, userName, isLogged: true });
+                setUserData({
+                    userEmail,
+                    userName,
+                    isLogged: true
+                });
             })
             .catch(() => {
                 setUserData({ isLogged: false });
-            });
+            })
     }, []);
     return (
         <UserDataCtx.Provider value={{ userData, setUserData }}>

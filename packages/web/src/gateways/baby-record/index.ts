@@ -5,7 +5,7 @@ import * as Types from "./types";
 export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Types.IFetchRecordResponse> {
     const token = Cookie.get("np_user") || "";
     const result = await babyRecordApi.get("/", {
-        params: { s: input.skip, l: input.limit },
+        params: { s: input.skip, l: input.limit, bid: input.babyId },
         headers: { Authorization: `Bearer ${token}` }
     });
     return {
@@ -32,7 +32,8 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
 
 export async function insertRecord(input: Types.IInsertRecordInput): Promise<Types.IInsertRecordResponse> {
     const token = Cookie.get("np_user") || "";
-    const result = await babyRecordApi.put("/", {
+    const result = await babyRecordApi.post("/", {
+        babyId: input.babyId,
         actionName: input.actionName,
         observations: input.observations,
         init: input.init.toISOString(),

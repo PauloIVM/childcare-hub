@@ -3,8 +3,8 @@
     "configurations": [
       {
         "request": "launch",
-        "name": "server:test",
-        "runtimeArgs": ["workspace", "@childcare-hub/server", "test"],
+        "name": "babies:test",
+        "runtimeArgs": ["workspace", "@childcare-hub/babies", "test"],
         "runtimeExecutable": "yarn",
         "skipFiles": [
           "<node_internals>/**"
@@ -13,8 +13,18 @@
       },
       {
         "request": "launch",
-        "name": "server:debug",
-        "runtimeArgs": ["dev:server"],
+        "name": "babies:debug",
+        "runtimeArgs": ["dev:babies"],
+        "runtimeExecutable": "yarn",
+        "skipFiles": [
+          "<node_internals>/**"
+        ],
+        "type": "pwa-node",
+      },
+      {
+        "request": "launch",
+        "name": "users:debug",
+        "runtimeArgs": ["dev:users"],
         "runtimeExecutable": "yarn",
         "skipFiles": [
           "<node_internals>/**"

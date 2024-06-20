@@ -7,7 +7,7 @@ import { AddCircle } from "@mui/icons-material";
 import { IFetchRecordResponse } from "@/gateways/baby-record/types";
 import { Record } from "./parts/record";
 import { IUpdateRecordInput } from "@/gateways/baby-record/types";
-import { useUserData } from "@/context";
+import { useUserData, useBabyData } from "@/context";
 import { useRouter } from "next/router";
 import * as Api from "@/gateways/baby-record";
 import * as Styles from "./style";
@@ -15,6 +15,7 @@ import * as Styles from "./style";
 export function BabyRecord() {
     const router = useRouter();
     const { userData } = useUserData();
+    const { babyData } = useBabyData();
     const limit = 5;
     const [errorMessage, setErrorMessage] = React.useState("");
     const [successMessage, setSuccessMessage] = React.useState("");
@@ -26,7 +27,11 @@ export function BabyRecord() {
 
     async function fetchRecords() {
         try {
-            const result = await Api.fetchRecords({ skip: (page - 1) * limit, limit });
+            const result = await Api.fetchRecords({
+                skip: (page - 1) * limit,
+                limit,
+                babyId: babyData.selectedBabyId!
+            });
             setRecords(result.records);
             setValidActions(result.validActions);
             setCount(Math.ceil(result.count / limit));
@@ -37,8 +42,9 @@ export function BabyRecord() {
 
     async function onInsertClick(actionName: string) {
         try {
+            const babyId = babyData.selectedBabyId!;
             setBackdropOpen(true);
-            await Api.insertRecord({ actionName, observations: "", init: new Date() });
+            await Api.insertRecord({ babyId, actionName, observations: "", init: new Date() });
             page > 1 ? setPage(1) : await fetchRecords();
             setTimeout(() => {
                 setSuccessMessage("Iniciando contagem do evento.");
@@ -111,12 +117,12 @@ export function BabyRecord() {
     }
 
     useEffect(() => {
-        if (!userData.isLogged) { return; }
+        if (!userData.isLogged || !babyData.selectedBabyId) { return; }
         setBackdropOpen(true);
         fetchRecords()
             .then(() => { setTimeout(() => setBackdropOpen(false), 300); })
             .catch(() => setTimeout(() => setBackdropOpen(false), 300));
-    }, [page, userData.isLogged]);
+    }, [page, userData.isLogged, babyData.selectedBabyId]);
 
     useEffect(() => {
         if (!userData.isLoading && !userData.isLogged) {
