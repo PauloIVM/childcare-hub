@@ -27,6 +27,12 @@ export class GetBabyRecordsUsecase {
                 clientMessage: "Parâmetros 'skip'/'limit' inválidos."
             });
         }
+        if (!babyId) {
+            throw new ValidationError({
+                message: "Missing baby-id",
+                clientMessage: "Nenhum bebê selecionado."
+            });
+        }
         if (limit > 100) {
             throw new ValidationError({
                 message: "Records are limited by 100 elements per request.",

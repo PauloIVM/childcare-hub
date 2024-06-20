@@ -5,9 +5,9 @@ export interface IHttpServer {
 
 export type IHttpMethods = "post" | "get" | "put" | "delete" | "patch";
 
-type IHttpServerCallback = (params: IParams, body: IBody, headers: IHeaders) => Record<string, any> | void;
+type IHttpServerCallback = (query: IQuery, body: IBody, headers: IHeaders) => Record<string, any> | void;
 
-type IParams = Record<string, any>;
+type IQuery = Record<string, any>;
 
 type IBody = Record<string, any>;
 

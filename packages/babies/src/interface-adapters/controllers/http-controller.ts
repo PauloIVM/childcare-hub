@@ -11,8 +11,8 @@ export class HttpController {
         usersGateway: Gateways.IUsersGateway
     ) {
         // TODO: O correto do GET seria /baby-records e não /baby-record
-        httpServer.on("get", "/baby-record", async function (params, body, headers) {
-            const { s = "0", l = "20", bid } = params || {};
+        httpServer.on("get", "/baby-record", async function (query, body, headers) {
+            const { s = "0", l = "20", bid } = query || {};
             const skip = Number(s);
             const limit = Number(l);
             const babyId = bid as string;
@@ -43,7 +43,7 @@ export class HttpController {
             };
         });
 
-        httpServer.on("post", "/baby-record", async function (params, body, headers) {
+        httpServer.on("post", "/baby-record", async function (query, body, headers) {
             const {
                 babyId,
                 actionName,
@@ -67,7 +67,7 @@ export class HttpController {
             return { message: "ok" };
         });
 
-        httpServer.on("patch", "/baby-record", async function (params, body, headers) {
+        httpServer.on("patch", "/baby-record", async function (query, body, headers) {
             const { fields, id } = body || {};
             const token = headers.authorization?.split(' ')?.[1];
             const usecase = new Usecases.UpdateBabyRecordUsecase(
@@ -78,8 +78,8 @@ export class HttpController {
             return { message: "ok" };
         });
 
-        httpServer.on("delete", "/baby-record", async function (params, body, headers) {
-            const id = params?.id as string;
+        httpServer.on("delete", "/baby-record", async function (query, body, headers) {
+            const id = query?.id as string;
             const token = headers.authorization?.split(' ')?.[1];    
             const usecase = new Usecases.DeleteBabyRecordUsecase(
                 babyRecordRepository,
@@ -89,7 +89,7 @@ export class HttpController {
             return { message: "ok" };
         });
 
-        httpServer.on("post", "/baby", async function (params, body, headers) {
+        httpServer.on("post", "/baby", async function (query, body, headers) {
             const {
                 name,
                 gender,
@@ -109,7 +109,7 @@ export class HttpController {
             return { message: "ok" };
         });
 
-        httpServer.on("get", "/baby", async function (params, body, headers) {
+        httpServer.on("get", "/baby", async function (query, body, headers) {
             const token = headers.authorization?.split(' ')?.[1];
             const usecase = new Usecases.GetBabiesUsecase(
                 usersGateway,

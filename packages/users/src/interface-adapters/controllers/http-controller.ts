@@ -11,7 +11,7 @@ export class HttpController {
         usersMapper: IUsersDataMapper,
         servicesNotifier: IServicesNotifierGateway
     ) {
-		httpServer.on("post", "/user/login", async function (params, body, headers) {
+		httpServer.on("post", "/user/login", async function (query, body, headers) {
 			const { email, password } = body?.user || {};
             const usecase = new Usecases.LoginUsecase(new UserRepository(usersMapper));
             const { token, userEmail, userName } = await usecase.exec(
@@ -22,7 +22,7 @@ export class HttpController {
             return { token, userEmail, userName, message: "ok"  };
 		});
 
-        httpServer.on("post", "/user", async function (params, body, headers) {
+        httpServer.on("post", "/user", async function (query, body, headers) {
             const { email, name, password } = body?.user || {};
             const usecase = new Usecases.SignUpUsecase(
                 new UserRepository(usersMapper),
@@ -36,7 +36,7 @@ export class HttpController {
             return { token, userEmail, userName, message: "ok" };
 		});
 
-        httpServer.on("post", "/user/request-recover", async function (params, body, headers) {
+        httpServer.on("post", "/user/request-recover", async function (query, body, headers) {
 			const { email } = body?.user || {};
             const usecase = new Usecases.RequestRecoverUsecase(
                 new UserRepository(usersMapper),
@@ -46,7 +46,7 @@ export class HttpController {
             return { message: "Email sent." };
 		});
 
-        httpServer.on("patch", "/user/recover", async function (params, body, headers) {
+        httpServer.on("patch", "/user/recover", async function (query, body, headers) {
 			const { password } = body?.user || {};
             const token = headers?.authorization?.split(' ')[1] || "";
             const usecase = new Usecases.RecoverPasswordUsecase(new UserRepository(usersMapper));
@@ -57,7 +57,7 @@ export class HttpController {
         // TODO: Essa rota precisa ser 'internal', para n expor o user-id para o client. Trafegar
         //       o user-id no rabbitmq n vai ser tao problematico, mas nos endpoints http precisa
         //       ter mais cuidado.
-        httpServer.on("get", "/user/user-id", async function (params, body, headers) {
+        httpServer.on("get", "/user/user-id", async function (query, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Usecases.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);
@@ -65,7 +65,7 @@ export class HttpController {
             return { userId: userId, message: "ok" };
 		});
 
-        httpServer.on("get", "/user", async function (params, body, headers) {
+        httpServer.on("get", "/user", async function (query, body, headers) {
 			const token = headers?.authorization?.split(' ')[1] || "";
             const verifyUsecase = new Usecases.VerifyUsecase();
             const { userId } = verifyUsecase.exec(token);

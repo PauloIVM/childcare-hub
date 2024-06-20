@@ -18,7 +18,7 @@ export class ExpressAdapter implements IHttpServer {
 	on(method: IHttpMethods, url: string, callback: Function): void {
 		this.app[method](url, async function (req: Request, res: Response) {
 			try {
-				const output = await callback(req.params, req.body, req.headers);
+				const output = await callback(req.query, req.body, req.headers);
 				res.json(output);
 			} catch (error: any) {
                 console.error(error);
