@@ -15,7 +15,7 @@
     "test:babies": "yarn workspace @childcare-hub/babies test",
     "test:users": "yarn workspace @childcare-hub/users test",
     "build:babies": "yarn workspace @childcare-hub/babies build",
-    "docker:services": "docker compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo"
+    "docker:services": "docker-compose -f docker/docker-compose.dev.yml up mysql rabbitmq mongo"
   },
   "devDependencies": {
     "concurrently": "^6.4.0"
