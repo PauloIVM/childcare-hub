@@ -1,6 +1,21 @@
-# childcare-hub
+# Childcare Hub
 
-## Quick Start
+### Sumário:
+- [1 - Introdução](#1---introdução)
+- [2 - Quick Start](#2---quick-start)
+- [3 - Arquitetura](#3---arquitetura)
+
+## 1 - Introdução
+
+Este é um projeto para fins educacionais. Basicamente é servido um site para dar suporte a pais na criação de filhos, com ferramentas úteis para isso. Como o trabalho ainda está em progresso, muitas das telas no front ainda estão totalmente mockadas. As telas funcionais são:
+- http://localhost:3000/tools/baby-record
+- http://localhost:3000/sign-in
+- http://localhost:3000/sign-up
+- http://localhost:3000/recover-request
+
+As motivações para boa parte das decisões de arquitetura ou tecnologias podem parecer bastante esdrúxulas, e de fato as são. Na realidade, o meu objetivo é mais encontrar um pretexto para aplicar boas práticas e tecnologias que venho estudando.
+
+## 2 - Quick Start
 
 Requirements: OS linux, NodeJS, docker.
 
@@ -29,28 +44,19 @@ Caso queira debugar, você pode executar o script desejado do launch.json se est
 
 Caso queira utilizar alguma ferramenta para trabalhar com algum dos serviços containerizados, você pode fazer isso sem problemas. Por exemplo, você pode utilizar o `MySQL Workbench` para conectar com o container MySQL fornecido pela aplicação. Os dados dos serviços serão persistidos na sua máquina host, então não se preocupe pois não perderá nenhuma informação por encerrar os container e startá-los novamente cada vez que iniciar a aplicação.
 
+## 3 - Arquitetura
 
-## Theme (WIP)
+### 3.1 - O sistema
 
-``` js
-// INFO: Cores legais pra começar um theme:
-// #2E3B4F      // main
-// #3F3F3F      // dark (cor mais escura para fonte)
-// #DEDBD5      // gray (talvez usar essa cor como background do site inteiro??)
-// #565656      // cor suave para fonte
-// #F44336      // vermelho forte... usado no avatar do user
-// #F7EFDA      // amarelo suave (cor da logo).
-// #E1E9F0      // azul cinza claro
-// #C0C7CF      // azul cinza escuro
-// #D2E8FC      // azul claro
-// #ED6C02      // laranja
-// #A8DADC
-// #FFFFFF
-// #3B5998
-// linear-gradient(67.58deg, #d2e8fc 22.4%, #b6d9fc 90.14%) (foi na sorte, mas achei até legal)
-```
+No pé em que está, o projeto se baseia em um site que se alimenta de microserviços. Dentro da pasta `packages` você poderá encontrar cada um dos microserviços já implementados, bem como o pacote `web`, reponsável por prover o site em si, que se alimenta dos demais pacotes.
 
-## Arquitetura
+Eu queria encontrar um pretexto para lidar com algum tipo de assíncronismo. Então eu pensei no seguinte cenário: imagine um grande sistema, que possui vários subsistemas, ou, microserviços. Cada um desses microserviços lida com um domínio extremamente distinto, motivo para serem serviços separados; salvo por um ponto em comum: todos eles dependem de uma autenticação de usuário e do id deste.
+
+Por exemplo, na página `http://localhost:3000/tools/baby-record` já temos implementado um serviço para que o pai registre os principais acontecimentos com seu bebê ao longo do dia. Um outro serviço, que eu ainda não implementei, mas está em progresso, é o serviço de postagens. A tela desse serviço de postagens pode ser vista de forma mockada na página inicial `http://localhost:3000/`. Perceba então que, o serviço para adicionar informações referentes ao bebê e o serviço para fazer uma postagem nada têm em comum, exceto o fato de que ambos precisam de um user autenticado e logado.
+
+Sendo serviços distintos, os problemas de consistência começam a aparecer: E quando um user for adicionado ou removido? Por exemplo: um usuário fez várias postagens; ao deletar sua conta, suas postagens devem ser apagadas? Os `records` adicionados devem ser apagados? Provavelmente sim para ambos. E como fazer isso? Se solucionarmos esse problema de forma síncrona, ou seja, através de um web-hook http do serviço de `users` que se comunica com os demais quando um user é apagado ou removido, teremos errors se um desses serviços estiver indisponível, seja por um deploy ou por uma queda mesmo.
+
+Então começa a ficar interessante o uso de um sistema de mensageria para tornar essa comunicação assíncrona. Se está confuso até aqui, creio que o GIF a seguir pode ajudar:
 
 Arquitetura inspirada no Clean Architecture. Portanto, siga sempre a `Regra da Dependência`, que estabelece que um módulo interno não pode conhecer (importar) nada de um módulo externo. Ou seja, o módulo `domain` não deve importar nenhuma classe, função, interface ou o que quer que seja de `application` ou `infra`, `application` pode importar de `domain`, mas não de `infra`, e assim por diante.
 
@@ -71,11 +77,4 @@ Libs podem ser importadas no `domain`, mas use isso com cautela para não condic
     .....................................................
 ```
 
-## TODOs
 
-- IDEIA: Ter um cache que expira não por tempo, mas sim por alguma eventual mudança de estado. Exemplo: Hoje cada `user` tem vários `records`... toda vez que eu quero puxar os records de um user, eu preciso fazer uma consulta que busca os records de todos os users, da base inteira, e filtra os referentes à apenas aquele user. O difícil de cachear é justamente que é o tipo de coisa que pode mudar muito rápido, e pode parecer bug... mas e se eu fizer assim: eu cacheio... e na inserção ou remoção de qualquer `record` eu limpo o cache??? 
-
-- Lib para criar o sistema de postagens: https://github.com/niuware/mui-rte. A demo dessa lib me fez refletir que talvez eu esteja estilizando as coisas erradas com o MUI. Talvez eu devesse focar em criar um theme e estilizar cada componente via theme. Parece q nesse docs tem um pallete generator e alguns tutoriais interessantes https://mui.com/material-ui/customization/theming/; acho q vai valer um esforço nesse sentido mesmo.
-- Implementar cache do ioredis no mysql. Parece que é bem dizer uma config no orm e o setup do banco... eu apaguei a config pq não tinha feito o setup do banco.
-
-- INFO: Parece que um cache-manager pode ser classificado como um "gateway"... estudar um pouco mais.
