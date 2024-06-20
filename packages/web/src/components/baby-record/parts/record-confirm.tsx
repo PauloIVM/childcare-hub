@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import { Delete } from "@mui/icons-material";
 import { IconButton, CircularProgress } from "@mui/material";
 import * as Styles from "../style";
+import { IFetchRecordResponse } from "@/gateways/baby-record/types";
 
 interface RecordConfirmProps {
-    id: string;
-    action: string;
-    init: Date;
+    record: IFetchRecordResponse["records"][0];
     onClickConfirm: () => void;
     onClickDelete: () => void;
 }
 
-export function RecordConfirm({ id, action, init, onClickConfirm, onClickDelete }: RecordConfirmProps) {
+export function RecordConfirm({ record, onClickConfirm, onClickDelete }: RecordConfirmProps) {
+    const { id, actionLabel, init } = record;
     const [count, setCount] = React.useState<string>("0:00:00:00");
     const initParsed = init.toLocaleTimeString().slice(0, 5);
 
@@ -34,7 +34,7 @@ export function RecordConfirm({ id, action, init, onClickConfirm, onClickDelete 
 
     return (
         <Styles.RecordConfirmRoot>
-            <Styles.RecordConfirmName><p>{action}</p></Styles.RecordConfirmName>
+            <Styles.RecordConfirmName><p>{actionLabel}</p></Styles.RecordConfirmName>
             <Styles.RecordDateWrapper>
                 <Styles.RecordDate>{`${initParsed} a --:--`}</Styles.RecordDate>
                 <Styles.RecordDate>{count}</Styles.RecordDate>
