@@ -1,4 +1,4 @@
-import { BaseError } from "../";
+import { BaseError } from "..";
 
 describe("BaseError", () => {
     test("should throw error", async () => {
