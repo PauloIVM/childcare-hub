@@ -58,6 +58,9 @@ Sendo serviços distintos, os problemas de consistência começam a aparecer: E 
 
 Então começa a ficar interessante o uso de um sistema de mensageria para tornar essa comunicação assíncrona. Se está confuso até aqui, creio que o GIF a seguir pode ajudar:
 
+![Design sem nome](https://github.com/PauloIVM/childcare-hub/assets/59659732/61bd2baa-268f-4c04-b02e-cb85017c6229)
+
+
 Arquitetura inspirada no Clean Architecture. Portanto, siga sempre a `Regra da Dependência`, que estabelece que um módulo interno não pode conhecer (importar) nada de um módulo externo. Ou seja, o módulo `domain` não deve importar nenhuma classe, função, interface ou o que quer que seja de `application` ou `infra`, `application` pode importar de `domain`, mas não de `infra`, e assim por diante.
 
 Libs podem ser importadas no `domain`, mas use isso com cautela para não condicionar demais o funcionamento do código à dependências terceiras.
