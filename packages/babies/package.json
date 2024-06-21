@@ -4,7 +4,7 @@
   "private": true,
   "author": "PauloIVM",
   "scripts": {
-    "prod": "yarn prod:env yarn build && yarn start",
+    "prod": "yarn dev:env yarn build && yarn start",
     "dev": "yarn dev:env nodemon --watch 'src/' --exec 'yarn build && yarn start' -e .ts",
     "test": "yarn test:env yarn build && yarn test:env jest --forceExit --coverage --no-cache --verbose",
     "lint": "eslint src -c .eslintrc.json --no-eslintrc",
