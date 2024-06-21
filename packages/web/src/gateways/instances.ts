@@ -6,9 +6,9 @@ export const userApi = axios.create({
 });
 
 export const babyRecordApi = axios.create({
-    baseURL: "http://3.83.152.25:3001/baby-record"
+    baseURL: "http://3.83.184.83:3001/baby-record"
 });
 
 export const babyApi = axios.create({
-    baseURL: "http://3.83.152.25:3001/baby"
+    baseURL: "http://3.83.184.83:3001/baby"
 });
