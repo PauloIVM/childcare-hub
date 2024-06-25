@@ -14,7 +14,7 @@ export class InternalInsertBabyUsecase {
     async exec(dto: IBabyDTO) {
         // TODO: Talvez vários desses validadores estejam desatualizados, não estão
         //       conferindo o baby-id por exemplo.
-        // TODO: Create HttpRouter and HttpReqValidators
+        // TODO: Create QueueRouter and QueueBodyValidators
         const isAllStringFields = [dto.gender, dto.name]
             .filter((e) => !!e)
             .every((e) => typeof e === "string");

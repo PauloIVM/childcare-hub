@@ -53,13 +53,13 @@ export class QueryValidator {
         }
     }
 
-    // TODO: Adicionar validação de tipagem... o express mesmo tem aquela parada de transformar
-    //       query-params duplicados em um array.
     private validateSkip(value: string) {
+        if (typeof value !== "string") this.throwTypeError(value);
         this.validateNumberCast(value);
     }
 
     private validateLimit(value: string) {
+        if (typeof value !== "string") this.throwTypeError(value);
         this.validateNumberCast(value);
         if (Number(value) > this.maxLimit) {
             throw new BaseError({
@@ -69,16 +69,28 @@ export class QueryValidator {
         }
     }
 
-    private validateBabyId(value: string) {}
+    private validateBabyId(value: string) {
+        if (typeof value !== "string") this.throwTypeError(value);
+    }
 
-    private validateRecordId(value: string) {}
+    private validateRecordId(value: string) {
+        if (typeof value !== "string") this.throwTypeError(value);
+    }
 
     private validateNumberCast(value: string) {
+        if (typeof value !== "string") this.throwTypeError(value);
         if (isNaN(Number(value))) {
             throw new BaseError({
                 message: `Bad ${value} param`,
                 clientMessage: `Parâmetro ${value} inválido.`
             });
         }
+    }
+
+    private throwTypeError<T>(value: T) {
+        throw new BaseError({
+            message: `Bad '${value}' type.`,
+            clientMessage: `O valor '${value}' é inválido.`
+        });
     }
 }

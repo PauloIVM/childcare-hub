@@ -15,21 +15,6 @@ export class DeleteBabyRecordUsecase {
     }
 
     async exec(recordId: string, token: string) {
-        // TODO: Create HttpRouter and HttpReqValidators
-        if (!token) {
-            throw new BaseError({
-                message: "Token required.",
-                clientMessage: "Token de autenticação não fornecido.",
-                status: 401
-            });
-        }
-        if (!recordId) {
-            throw new BaseError({
-                message: "'id' required.",
-                clientMessage: "Passe um 'id' válido.",
-            });
-        }
-        // ---------------------------------------------
         const [userId, record] = await Promise.all([
             this.usersGateway.getUserId(token),
             this.babyRecordRepository.findById(recordId)

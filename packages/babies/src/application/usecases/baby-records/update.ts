@@ -16,20 +16,6 @@ export class UpdateBabyRecordUsecase {
         token: string,
         recordDTO: Partial<IBabyRecordDTO>,
     ) {
-        // TODO: Create HttpRouter and HttpReqValidators
-        if (!recordDTO?.recordId) {
-            throw new BaseError({
-                message: "Missing essential fields.",
-                clientMessage: "Missing essential fields.",
-            });
-        }
-        if (recordDTO.actionName) {
-            throw new BaseError({
-                message: "Not allowed change action-name",
-                clientMessage: "Not allowed change action-name",
-            });
-        }
-        // ---------------------------------------------
         const [userId, babyRecord] = await Promise.all([
             this.usersGateway.getUserId(token),
             this.babyRecordRepository.findById(recordDTO.recordId)
