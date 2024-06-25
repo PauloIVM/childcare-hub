@@ -16,51 +16,6 @@ export class UpdateBabyRecordUsecase {
         token: string,
         recordDTO: Partial<IBabyRecordDTO>,
     ) {
-        // TODO: Validar cada campo do recordDTO semelhante ao insert. Quando eu fizer o
-        //       refactor abstraindo o http-server, uma ideia é abstrair os validators e
-        //       presenters. Dessa forma eu poderia reutilizar a validação do body para
-        //       recordDTO aqui e no insert. Daí nesse refactor, ao invés de http-controller,
-        //       os controllers voltariam a ser definidos por usecase, ex.: update-http-controller
-        //       e etc... implementaria uma interface definida pelo http-server... da mesma
-        //       forma o http-server especificaria as interfaces dos validators e presenters
-        //       dele. E aí a implementação do http-server em infra poderia ficar algo como:
-        //           const httpServer = new ExpressAdapter();
-        //           const usersDataMapper = new UsersDataMapper();
-        //           new HttpRouter(httpServer, usersDataMapper)
-        //               .use("post", "/foo/bar", new UpdateBabyRecordController())
-        //               .use(
-        //                   "post",
-        //                   "/foo/bar/with-validation",
-        //                   new UpdateBabyRecordController(),
-        //                   [
-        //                       new RecordDTOBodyValidator(),
-        //                       new RecordDTOParamsValidator(),
-        //                       new BabyDTOBodyValidator()
-        //                   ],
-        //               );
-        //               .use(
-        //                   "post",
-        //                   "/foo/bar/csv",
-        //                   new UpdateBabyRecordController(),
-        //                   [],
-        //                   new BabyRecordCsvPresenter()
-        //               );
-        //           httpServer.listen(3003);
-
-        // TODO: Create HttpRouter and HttpReqValidators
-        if (!recordDTO?.recordId) {
-            throw new BaseError({
-                message: "Missing essential fields.",
-                clientMessage: "Missing essential fields.",
-            });
-        }
-        if (recordDTO.actionName) {
-            throw new BaseError({
-                message: "Not allowed change action-name",
-                clientMessage: "Not allowed change action-name",
-            });
-        }
-        // ---------------------------------------------
         const [userId, babyRecord] = await Promise.all([
             this.usersGateway.getUserId(token),
             this.babyRecordRepository.findById(recordDTO.recordId)

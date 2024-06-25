@@ -1,5 +1,6 @@
 import { Channel, Connection, connect, credentials } from "amqplib";
 import { IQueue } from "@/interface-adapters/ports/queue";
+import { sleep } from "@/utils";
 
 export class RabbitMQAdapter implements IQueue {
 	private conn: Connection;
@@ -7,12 +8,18 @@ export class RabbitMQAdapter implements IQueue {
 
 	constructor () {}
 
-	async connect(): Promise<void> {
-		const options = {
-			credentials: credentials.plain(process.env.RABBITMQ_USER, process.env.RABBITMQ_PASSWORD)
-		};
-        this.conn = await connect(process.env.RABBITMQ_URL, options);
-        this.channel = await this.conn.createChannel();
+	async connect(retries = 5, delay = 2000): Promise<void> {
+		await sleep(delay);
+		try {
+			const options = {
+				credentials: credentials.plain(process.env.RABBITMQ_USER, process.env.RABBITMQ_PASSWORD)
+			};
+			if (!this.conn) this.conn = await connect(process.env.RABBITMQ_URL, options);
+			if (!this.channel) this.channel = await this.conn.createChannel();
+		} catch (error) {
+			if (retries === 0) throw error;
+			return this.connect(retries - 1, delay);
+		}
 	}
 
 	async on(queueName: string, callback: Parameters<IQueue["on"]>[1]): Promise<void> {

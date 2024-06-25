@@ -1,4 +1,4 @@
-import { userApi } from "../instances";
+import { usersApi } from "../instances";
 import Cookie from "js-cookie";
 import * as Types from "./types";
 import { AxiosRequestConfig } from "axios";
@@ -11,7 +11,7 @@ import { AxiosRequestConfig } from "axios";
 
 export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResponse> {
     try {
-        const result = await userApi.post("/", {
+        const result = await usersApi.post("/user", {
             user: {
                 name: input.userName,
                 email: input.userEmail,
@@ -28,7 +28,7 @@ export async function signUp(input: Types.ISignUpInput): Promise<Types.IAuthResp
 
 export async function login(input: Types.ILoginInput): Promise<Types.IAuthResponse> {
     try {
-        const result = await userApi.post("/login", {
+        const result = await usersApi.post("/user/login", {
             user: {
                 email: input.userEmail,
                 password: input.userPassword,
@@ -44,7 +44,7 @@ export async function login(input: Types.ILoginInput): Promise<Types.IAuthRespon
 
 export async function requestRecover(input: Types.IRecoverRequestInput): Promise<void> {
     try {
-        await userApi.post("/request-recover", {
+        await usersApi.post("/user/request-recover", {
             user: { email: input.userEmail }
         });   
     } catch (error: any) {
@@ -58,7 +58,7 @@ export async function recover(input: Types.IRecoverInput): Promise<Types.IAuthRe
         Authorization: `Bearer ${token}`
     }};
     try {
-        const result = await userApi.patch("/recover", {
+        const result = await usersApi.patch("/user/recover", {
             user: { password: input.userPassword },
         }, config);
         const { token: resToken, userEmail, userName, message } = result.data;
@@ -74,7 +74,7 @@ export async function getUser(): Promise<Types.IGetUserResponse> {
     const config: AxiosRequestConfig = { headers: {
         Authorization: `Bearer ${token}`
     }};
-    const result = await userApi.get("/", config);
+    const result = await usersApi.get("/user", config);
     return result.data;
 }
 

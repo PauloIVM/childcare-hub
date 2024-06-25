@@ -19,28 +19,6 @@ export class InsertBabyRecordUsecase {
     }
 
     async exec(token: string, dto: IBabyRecordDTO) {
-        // TODO: Create HttpRouter and HttpReqValidators
-        const isAllStringFields = [dto.actionName, dto.observations, dto.babyId]
-            .filter((e) => !!e)
-            .every((e) => typeof e === "string");
-        if (!isAllStringFields) {
-            throw new BaseError({
-                message: "Invalid some record field type",
-                clientMessage: "Algum campo do registro não é válido (string)",
-                status: 422
-            });
-        }
-        const isValidDate = (d: Date): boolean => {
-            return d instanceof Date && !isNaN(d.getDate());
-        }
-        if (!isValidDate(dto.init) || (dto.end && !isValidDate(dto.end))) {
-            throw new BaseError({
-                message: "Failed to build record init/end fields",
-                clientMessage: "As datas nos campos 'início'/'fim' são inválidas.",
-                status: 422
-            });
-        }
-        // ----------------------------------------------
         const [userId, baby] = await Promise.all([
             this.usersGateway.getUserId(token),
             this.babiesRepository.findById(dto.babyId)

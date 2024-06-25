@@ -1,10 +1,10 @@
-import { babyRecordApi } from "../instances";
+import { babiesApi } from "../instances";
 import Cookie from "js-cookie";
 import * as Types from "./types";
 
 export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Types.IFetchRecordResponse> {
     const token = Cookie.get("np_user") || "";
-    const result = await babyRecordApi.get("/", {
+    const result = await babiesApi.get("/baby-records", {
         params: { s: input.skip, l: input.limit, bid: input.babyId },
         headers: { Authorization: `Bearer ${token}` }
     });
@@ -32,7 +32,7 @@ export async function fetchRecords(input: Types.IFetchRecordInput): Promise<Type
 
 export async function insertRecord(input: Types.IInsertRecordInput): Promise<Types.IInsertRecordResponse> {
     const token = Cookie.get("np_user") || "";
-    const result = await babyRecordApi.post("/", {
+    const result = await babiesApi.post("/baby-record", {
         babyId: input.babyId,
         actionName: input.actionName,
         observations: input.observations,
@@ -48,19 +48,17 @@ export async function insertRecord(input: Types.IInsertRecordInput): Promise<Typ
 export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Types.IUpdateRecordResponse> {
     try {
         const token = Cookie.get("np_user") || "";
-        const result = await babyRecordApi.patch("/", {
-            id: input.recordId,
-            fields: {
-                observations: input.fields.observations,
-                init: input.fields.init?.toISOString(),
-                end: input.fields.end?.toISOString(),
-                temperature: input.fields.temperature,
-                height: input.fields.height,
-                weight: input.fields.weight,
-                sleepQuality: input.fields.sleepQuality,
-                breastfeedingType: input.fields.breastfeedingType,
-                breastfeedingAmount: input.fields.breastfeedingAmount,
-            }
+        const result = await babiesApi.patch("/baby-record", {
+            recordId: input.recordId,
+            observations: input.fields.observations,
+            init: input.fields.init?.toISOString(),
+            end: input.fields.end?.toISOString(),
+            temperature: input.fields.temperature,
+            height: input.fields.height,
+            weight: input.fields.weight,
+            sleepQuality: input.fields.sleepQuality,
+            breastfeedingType: input.fields.breastfeedingType,
+            breastfeedingAmount: input.fields.breastfeedingAmount,
         }, { headers: { Authorization: `Bearer ${token}` } });
         return {
             ok: result.status === 200,
@@ -73,8 +71,8 @@ export async function updateRecord(input: Types.IUpdateRecordInput): Promise<Typ
 
 export async function deleteRecord(input: Types.IDeleteRecordInput): Promise<Types.IDeleteRecordResponse> {
     const token = Cookie.get("np_user") || "";
-    const result = await babyRecordApi.delete("/", {
-        params: { id: input.recordId },
+    const result = await babiesApi.delete("/baby-record", {
+        params: { rid: input.recordId },
         headers: { Authorization: `Bearer ${token}` }
     });
     return {

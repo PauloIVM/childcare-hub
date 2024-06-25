@@ -1,10 +1,10 @@
-import { babyApi } from "../instances";
+import { babiesApi } from "../instances";
 import Cookie from "js-cookie";
 import * as Types from "./types";
 
 export async function fetchBabies(): Promise<Types.IFetchBabiesResponse> {
     const token = Cookie.get("np_user") || "";
-    const result = await babyApi.get("/", {
+    const result = await babiesApi.get("/babies", {
         headers: { Authorization: `Bearer ${token}` }
     });
     return {
